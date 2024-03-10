@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "RotaryKnob"
 include(":app")
+include(":rotaryknob")

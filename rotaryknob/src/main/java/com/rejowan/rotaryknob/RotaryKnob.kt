@@ -1,4 +1,5 @@
-package com.rejowan.rotaryknobsample
+package com.rejowan.rotaryknob
+
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,7 +8,9 @@ import android.graphics.Paint
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
+import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -24,9 +27,12 @@ class RotaryKnob @JvmOverloads constructor(
     // paint
     private var circlePaint: Paint = Paint()
     private val outerCirclePaint: Paint = Paint()
-    private val stepCirclePaint: Paint = Paint()
-    private val stepCircleFillPaint: Paint = Paint()
+    private val stepPaint: Paint = Paint()
+    private val stepFilledPaint: Paint = Paint()
     private val indicatorPaint: Paint = Paint()
+    private val labelPaint: Paint = Paint()
+    private val textPaint: Paint = Paint()
+
 
     // bound
     private val circleBounds = RectF()
@@ -59,31 +65,41 @@ class RotaryKnob @JvmOverloads constructor(
 //        circlePaint.style = Paint.Style.FILL
 
 
-
         outerCirclePaint.isAntiAlias = true
-        outerCirclePaint.color = Color.parseColor("#6042B5")
+        outerCirclePaint.color = Color.parseColor("#8062D6")
         outerCirclePaint.style = Paint.Style.FILL
 
-        stepCirclePaint.isAntiAlias = true
-        stepCirclePaint.color = Color.parseColor("#000000")
-        stepCirclePaint.style = Paint.Style.FILL
+        stepPaint.isAntiAlias = true
+        stepPaint.color = Color.parseColor("#000000")
+        stepPaint.style = Paint.Style.FILL
 
-        stepCircleFillPaint.isAntiAlias = true
-        stepCircleFillPaint.color = Color.parseColor("#8062D6")
-        stepCircleFillPaint.style = Paint.Style.FILL
+        stepFilledPaint.isAntiAlias = true
+        stepFilledPaint.color = Color.parseColor("#8062D6")
+        stepFilledPaint.style = Paint.Style.FILL
 
         indicatorPaint.isAntiAlias = true
         indicatorPaint.color = Color.parseColor("#FFFFFF")
         indicatorPaint.style = Paint.Style.FILL
         indicatorPaint.strokeWidth = 7f
 
+        labelPaint.isAntiAlias = true
+        labelPaint.color = Color.parseColor("#000000")
+        labelPaint.style = Paint.Style.FILL
+        labelPaint.textSize = 40f
+
+        textPaint.isAntiAlias = true
+        textPaint.color = Color.parseColor("#FFFFFF")
+        textPaint.style = Paint.Style.FILL
+        textPaint.textSize = 70f
+        textPaint.typeface = Typeface.DEFAULT_BOLD
+
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        val minWidth = Utils.convertDpToPixel(160f, context).toInt()
-        val minHeight = Utils.convertDpToPixel(160f, context).toInt()
+        val minWidth = convertDpToPixel(160f, context).toInt()
+        val minHeight = convertDpToPixel(160f, context).toInt()
 
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
@@ -111,9 +127,9 @@ class RotaryKnob @JvmOverloads constructor(
 
         calculateAreas()
 
-        drawProgressCircle(canvas)
+        drawProgressSteps(canvas)
 
-        drawProgressFillCircle(canvas)
+        drawProgressStepsFilled(canvas)
 
         drawOuterCircle(canvas)
 
@@ -121,8 +137,44 @@ class RotaryKnob @JvmOverloads constructor(
 
         drawIndicator(canvas)
 
+        drawLabel(canvas)
+
+        drawText(canvas)
+
         //    drawCircle(canvas)
 
+
+        canvas.restore()
+
+    }
+
+    private fun drawText(canvas: Canvas) {
+
+        canvas.save()
+
+        val text = "$progress"
+        val textWidth = textPaint.measureText(text)
+        val textHeight = textPaint.descent() - textPaint.ascent()
+        val textX = midX - textWidth / 2
+        val textY = midY + textHeight / 2
+
+        canvas.drawText(text, textX, textY, textPaint)
+
+        canvas.restore()
+
+    }
+
+    private fun drawLabel(canvas: Canvas) {
+
+        canvas.save()
+
+        val text = "Progress"
+        val textWidth = labelPaint.measureText(text)
+        val textHeight = labelPaint.descent() - labelPaint.ascent()
+        val textX = midX - textWidth / 2
+        val textY = midY + radius
+
+        canvas.drawText(text, textX, textY, labelPaint)
 
         canvas.restore()
 
@@ -132,7 +184,7 @@ class RotaryKnob @JvmOverloads constructor(
     private var midX = 0f
     private var midY = 0f
 
-    var max = 40
+    var max = 20
     var startOffset = 45f
     var endOffset = 45f
     var sweepAngle = 360f - startOffset - endOffset
@@ -167,16 +219,14 @@ class RotaryKnob @JvmOverloads constructor(
         canvas.save()
 
         val startColor = Color.parseColor("#8062D6") // Light blue
-        val endColor = Color.parseColor("#7457C6")   // Purple
+        val endColor = Color.parseColor("#644AAC")   // Purple
 
         // Calculate the radius of the circle
         val radius = mainCircleRadius
 
         // Create a RadialGradient object
         val gradient = RadialGradient(
-            width / 2.toFloat(), height / 2.toFloat(), radius,
-            startColor, endColor,
-            Shader.TileMode.CLAMP
+            midX, midY, radius, startColor, endColor, Shader.TileMode.CLAMP
         )
 
         // Set the shader to the paint object
@@ -200,11 +250,14 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
-    private fun drawProgressCircle(canvas: Canvas) {
+    private fun drawProgressSteps(canvas: Canvas) {
+
+        val isCircle = false
 
         canvas.save()
 
         val largerDotIndices = listOf(0, (max - 1) / 4, (max - 1) / 2, 3 * (max - 1) / 4, max - 1)
+
 
         for (i in 0 until max) {
             // Calculate normalized progress for each dot
@@ -217,16 +270,44 @@ class RotaryKnob @JvmOverloads constructor(
             val x = midX + (progressRadius * sin(Math.toRadians(angle.toDouble()))).toFloat()
             val y = midY + (progressRadius * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
-            // Calculate dot size based on max count and available space
-            val dotSize = if (i in largerDotIndices && max > 20) {
-                progressRadius / 15 * (20f / max) // Larger circle size for specified indices
+
+            if (isCircle) {
+                // Calculate dot size based on max count and available space
+                val dotSize = if (i in largerDotIndices && max > 20) {
+                    progressRadius / 15 * (20f / max) // Larger circle size for specified indices
+                } else {
+                    progressRadius / 30 * (20f / max) // Regular circle size
+                }
+
+                // Draw the dot
+                canvas.drawCircle(x, y, dotSize, stepPaint)
             } else {
-                progressRadius / 30 * (20f / max) // Regular circle size
+                // Draw the line
+
+                var lineSize = 0f
+
+                if (i in largerDotIndices && max > 20) {
+                    lineSize =
+                        progressRadius / 10 * (20f / max) // Larger rectangle width for specified indices
+                    stepPaint.strokeWidth = progressRadius / 20 * (20f / max)
+
+                } else {
+                    lineSize = progressRadius / 20 * (20f / max) // Regular rectangle width
+                    stepPaint.strokeWidth = progressRadius / 40 * (20f / max)
+                }
+
+
+                val indicatorEndX =
+                    midX + (progressRadius - lineSize) * sin(Math.toRadians(angle.toDouble())).toFloat()
+                val indicatorEndY =
+                    midY + (progressRadius - lineSize) * cos(Math.toRadians(angle.toDouble())).toFloat()
+
+                canvas.drawLine(
+                    x, y, indicatorEndX, indicatorEndY, stepPaint
+                )
+
+
             }
-
-            // Draw the dot
-            canvas.drawCircle(x, y, dotSize, stepCirclePaint)
-
 
 
         }
@@ -235,7 +316,65 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
-    private fun drawProgressFillCircle(canvas: Canvas) {
+
+    private fun drawIndicator(canvas: Canvas) {
+
+
+        canvas.save()
+
+        val isCircle = true
+
+
+        val progress1 = (progress - 1).toFloat() / (max - 1)
+
+        Log.e("drawIndicator", "progress1: $progress1")
+
+        val angle = 360f - (endOffset + progress1 * sweepAngle)
+
+        Log.e("drawIndicator", "angle: $angle")
+
+        if (isCircle){
+            // Calculate x and y coordinates for the indicator
+            val x = midX + (mainCircleRadius * 2/3 * sin(Math.toRadians(angle.toDouble()))).toFloat()
+            val y = midY + (mainCircleRadius * 2/3 * cos(Math.toRadians(angle.toDouble()))).toFloat()
+
+            // Calculate the size of the indicator
+            val indicatorSize = mainCircleRadius / 8
+
+            // Draw the indicator
+            canvas.drawCircle(x, y, indicatorSize, indicatorPaint)
+
+        } else {
+            // Calculate the starting position of the indicator line
+
+            val startMargin = radius * (2f / 5) // Starting from 2/5 radius margin
+            val indicatorStartX =
+                midX + (startMargin * sin(Math.toRadians(angle.toDouble()))).toFloat()
+            val indicatorStartY =
+                midY + (startMargin * cos(Math.toRadians(angle.toDouble()))).toFloat()
+
+            // Calculate the length of the indicator line (1/3 of the radius)
+            val indicatorLength = radius * (1f / 5)
+
+            // Calculate the ending position of the indicator line
+            val indicatorEndX =
+                midX + (startMargin + indicatorLength) * sin(Math.toRadians(angle.toDouble())).toFloat()
+            val indicatorEndY =
+                midY + (startMargin + indicatorLength) * cos(Math.toRadians(angle.toDouble())).toFloat()
+
+            // Draw the indicator line
+            canvas.drawLine(
+                indicatorStartX, indicatorStartY, indicatorEndX, indicatorEndY, indicatorPaint
+            )
+
+        }
+
+        canvas.restore()
+
+    }
+
+
+    private fun drawProgressStepsFilled(canvas: Canvas) {
 
         canvas.save()
 
@@ -264,46 +403,10 @@ class RotaryKnob @JvmOverloads constructor(
             }
 
             // Draw the dot
-            canvas.drawCircle(x, y, dotSize, stepCircleFillPaint)
+            canvas.drawCircle(x, y, dotSize, stepFilledPaint)
 
 
         }
-
-        canvas.restore()
-
-    }
-
-    private fun drawIndicator(canvas: Canvas) {
-
-        canvas.save()
-
-
-        val progress1 = (progress - 1).toFloat() / (max - 1)
-
-        Log.e("drawIndicator", "progress1: $progress1")
-
-        val angle = 360f - (endOffset + progress1 * sweepAngle)
-
-        Log.e("drawIndicator", "angle: $angle")
-
-        val startMargin = radius * (2f / 5) // Starting from 2/5 radius margin
-        val indicatorStartX = midX + (startMargin * sin(Math.toRadians(angle.toDouble()))).toFloat()
-        val indicatorStartY = midY + (startMargin * cos(Math.toRadians(angle.toDouble()))).toFloat()
-
-        // Calculate the length of the indicator line (1/3 of the radius)
-        val indicatorLength = radius * (1f / 5)
-
-        // Calculate the ending position of the indicator line
-        val indicatorEndX =
-            midX + (startMargin + indicatorLength) * sin(Math.toRadians(angle.toDouble())).toFloat()
-        val indicatorEndY =
-            midY + (startMargin + indicatorLength) * cos(Math.toRadians(angle.toDouble())).toFloat()
-
-        // Draw the indicator line
-        canvas.drawLine(
-            indicatorStartX, indicatorStartY, indicatorEndX, indicatorEndY, indicatorPaint
-        )
-
 
         canvas.restore()
 
@@ -367,9 +470,7 @@ class RotaryKnob @JvmOverloads constructor(
 
             return true
 
-        }
-
-        else if (action == MotionEvent.ACTION_MOVE) {
+        } else if (action == MotionEvent.ACTION_MOVE) {
 
             val touchX = event.getX(pointerIndex)
             val touchY = event.getY(pointerIndex)
@@ -430,6 +531,18 @@ class RotaryKnob @JvmOverloads constructor(
 
         return super.onTouchEvent(event)
 
+    }
+
+    fun convertDpToPixel(dp: Float, context: Context): Float {
+        val resources = context.resources
+        val metrics = resources.displayMetrics
+        return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+    fun convertPixelsToDp(px: Float, context: Context): Float {
+        val resources = context.resources
+        val metrics = resources.displayMetrics
+        return px / (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 
 

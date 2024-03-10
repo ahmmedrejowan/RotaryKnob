@@ -7,103 +7,13 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-<!--    <com.rejowan.rotaryknobsample.RotaryKnob-->
-<!--        android:id="@+id/croller"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="220dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        app:back_circle_color="#EDEDED"-->
-<!--        app:enabled="true"-->
-<!--        app:indicator_color="#0B3C49"-->
-<!--        app:indicator_width="10"-->
-<!--        app:is_continuous="false"-->
-<!--        app:label="Label"-->
-<!--        app:label_color="#000000"-->
-<!--        app:label_disabled_color="#8DFAA091"-->
-<!--        app:label_style="italic"-->
-<!--        app:main_circle_color="#FFFFFF"-->
-<!--        app:max="50"-->
-<!--        app:progress_primary_color="#0B3C49"-->
-<!--        app:progress_secondary_color="#EDEDED"-->
-<!--        app:start_offset="45" />-->
-
-
-
-
-
-<!--    <com.rejowan.rotaryknobsample.Knob-->
-<!--        android:id="@+id/knob"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-
-<!--        android:background="@drawable/drawable_knob_background"-->
-
-<!--        app:debug="false"-->
-<!--        app:debug_drawBounds="false"-->
-<!--        app:debug_drawTouchArea="false"-->
-
-<!--        app:debug_drawTouchRadius="false"-->
-<!--        app:debug_drawTrack="false"-->
-<!--        app:fillColor="@android:color/transparent"-->
-<!--        app:fillStartAngle="0"-->
-
-<!--        app:fillSweepAngle="360"-->
-<!--        app:knobSize="250dp"-->
-<!--        app:maxProgress="100"-->
-
-<!--        app:progress="0"-->
-<!--        app:progressMode="continuous"-->
-<!--        app:progressStartAngle="135"-->
-<!--        app:progressStrokeCap="butt"-->
-<!--        app:progressStrokeColor="#FFEBBA64"-->
-<!--        app:progressStrokeOffset="-14dp"-->
-
-<!--        app:progressStrokeWidth="20dp"-->
-<!--        app:progressSweepAngle="270"-->
-<!--        app:stepAnchorX="50%"-->
-<!--        app:stepAnchorY="0%"-->
-<!--        app:stepCount="5"-->
-
-<!--        app:stepDrawable="@drawable/drawable_knob_step"-->
-<!--        app:stepOffset="-4dp"-->
-<!--        app:substepAnchorX="50%"-->
-<!--        app:substepAnchorY="0%"-->
-<!--        app:substepCount="145"-->
-
-<!--        app:substepDrawable="@drawable/drawable_knob_substep"-->
-<!--        app:substepOffset="-4dp"-->
-<!--        app:thumbAnchorX="50%"-->
-<!--        app:thumbAnchorY="0%"-->
-<!--        app:thumbDrawable="@drawable/drawable_knob_thumb"-->
-
-<!--        app:thumbOffset="-4dp"-->
-<!--        app:thumbRotation="true"-->
-
-<!--        app:touchOffset="-16dp"-->
-<!--        app:touchThreshold="48dp"-->
-<!--        app:trackStrokeCap="butt"-->
-<!--        app:trackStrokeColor="#18FFFFFF"-->
-<!--        app:trackStrokeOffset="-14dp"-->
-
-<!--        app:trackStrokeWidth="28dp" />-->
-
-
-<!--    <com.rejowan.rotaryknobsample.Croller2-->
-<!--        android:id="@+id/croller2"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="220dp"-->
-<!--        app:label="Label"-->
-<!--        android:layout_gravity="center"-->
-<!--        />-->
-
-    <com.rejowan.rotaryknobsample.RotaryKnob
+    <com.rejowan.rotaryknob.RotaryKnob
         android:id="@+id/rotaryKnob"
         android:layout_width="match_parent"
         android:layout_marginTop="100dp"
         android:layout_height="300dp"
         android:layout_gravity="center" />
+
 
 
 </LinearLayout>
