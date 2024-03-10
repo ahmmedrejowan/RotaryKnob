@@ -4,11 +4,18 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.RadialGradient
 import android.graphics.RectF
+import android.graphics.Shader
 import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import kotlin.math.atan2
 import kotlin.math.cos
+import kotlin.math.pow
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 class RotaryKnob @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -34,8 +41,7 @@ class RotaryKnob @JvmOverloads constructor(
     private var outerCircleRadius = 0f
     private var progressRadius = 0f
 
-    private var midX = 0f
-    private var midY = 0f
+    private var startingRadius = 0f
 
 
     init {
@@ -49,11 +55,13 @@ class RotaryKnob @JvmOverloads constructor(
     private fun initAttributes(attrs: AttributeSet?) {
 
         circlePaint.isAntiAlias = true
-        circlePaint.color = Color.parseColor("#FF0000")
-        circlePaint.style = Paint.Style.FILL
+//        circlePaint.color = Color.parseColor("#FF0000")
+//        circlePaint.style = Paint.Style.FILL
+
+
 
         outerCirclePaint.isAntiAlias = true
-        outerCirclePaint.color = Color.parseColor("#0000FF")
+        outerCirclePaint.color = Color.parseColor("#6042B5")
         outerCirclePaint.style = Paint.Style.FILL
 
         stepCirclePaint.isAntiAlias = true
@@ -61,11 +69,11 @@ class RotaryKnob @JvmOverloads constructor(
         stepCirclePaint.style = Paint.Style.FILL
 
         stepCircleFillPaint.isAntiAlias = true
-        stepCircleFillPaint.color = Color.parseColor("#ff00ff")
+        stepCircleFillPaint.color = Color.parseColor("#8062D6")
         stepCircleFillPaint.style = Paint.Style.FILL
 
         indicatorPaint.isAntiAlias = true
-        indicatorPaint.color = Color.parseColor("#00FF00")
+        indicatorPaint.color = Color.parseColor("#FFFFFF")
         indicatorPaint.style = Paint.Style.FILL
         indicatorPaint.strokeWidth = 7f
 
@@ -119,6 +127,18 @@ class RotaryKnob @JvmOverloads constructor(
         canvas.restore()
 
     }
+
+
+    private var midX = 0f
+    private var midY = 0f
+
+    var max = 40
+    var startOffset = 45f
+    var endOffset = 45f
+    var sweepAngle = 360f - startOffset - endOffset
+    var progress = 1
+
+
     private fun calculateAreas() {
         // mid x and y of the view
         midX = width / 2f
@@ -127,11 +147,8 @@ class RotaryKnob @JvmOverloads constructor(
         // side margin of the view. total 5% of the min of midX and midY, and each side 2.5%
         sideMargin = (midX.coerceAtMost(midY) * (5f / 100))
 
-        // inner margin of the view. total 7.5% of the min of midX and midY, and each side 3.75%
-        innerMargin = (midX.coerceAtMost(midY) * (7.5f / 100))
-
         // radius of the view. 95% of the min of midX and midY
-        radius = (midX.coerceAtMost(midY) * (95f / 100))
+        radius = (midX.coerceAtMost(midY) * (90f / 100))
 
         // main circle radius. 70% of the radius
         mainCircleRadius = radius * (70f / 100)
@@ -139,8 +156,8 @@ class RotaryKnob @JvmOverloads constructor(
         // outer circle radius. 80% of the radius
         outerCircleRadius = radius * (80f / 100)
 
-        // progress circle radius. 90% of the radius
-        progressRadius = radius * (90f / 100)
+        // progress circle radius.
+        progressRadius = radius * (95f / 100)
 
 
     }
@@ -148,6 +165,23 @@ class RotaryKnob @JvmOverloads constructor(
     private fun drawMainCircle(canvas: Canvas) {
 
         canvas.save()
+
+        val startColor = Color.parseColor("#8062D6") // Light blue
+        val endColor = Color.parseColor("#7457C6")   // Purple
+
+        // Calculate the radius of the circle
+        val radius = mainCircleRadius
+
+        // Create a RadialGradient object
+        val gradient = RadialGradient(
+            width / 2.toFloat(), height / 2.toFloat(), radius,
+            startColor, endColor,
+            Shader.TileMode.CLAMP
+        )
+
+        // Set the shader to the paint object
+        circlePaint.shader = gradient
+
 
         canvas.drawCircle(midX, midY, mainCircleRadius, circlePaint)
 
@@ -170,15 +204,7 @@ class RotaryKnob @JvmOverloads constructor(
 
         canvas.save()
 
-
-        val max = 30
-        val startOffset = 30f
-        val endOffset = 30f
-
-        val sweepAngle = 360f - startOffset - endOffset
-
         val largerDotIndices = listOf(0, (max - 1) / 4, (max - 1) / 2, 3 * (max - 1) / 4, max - 1)
-
 
         for (i in 0 until max) {
             // Calculate normalized progress for each dot
@@ -192,14 +218,17 @@ class RotaryKnob @JvmOverloads constructor(
             val y = midY + (progressRadius * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
             // Calculate dot size based on max count and available space
-            val dotSize = if (i in largerDotIndices  && max > 20) {
-                progressRadius / 15 * (15f / max) // Larger circle size for specified indices
+            val dotSize = if (i in largerDotIndices && max > 20) {
+                progressRadius / 15 * (20f / max) // Larger circle size for specified indices
             } else {
-                progressRadius / 25 * (15f / max) // Regular circle size
+                progressRadius / 30 * (20f / max) // Regular circle size
             }
 
             // Draw the dot
             canvas.drawCircle(x, y, dotSize, stepCirclePaint)
+
+
+
         }
 
         canvas.restore()
@@ -210,22 +239,18 @@ class RotaryKnob @JvmOverloads constructor(
 
         canvas.save()
 
-
-        val max = 30
-        val startOffset = 30f
-        val endOffset = 30f
-
-        val sweepAngle = 360f - startOffset - endOffset
-
         val largerDotIndices = listOf(0, (max - 1) / 4, (max - 1) / 2, 3 * (max - 1) / 4, max - 1)
 
-
-        for (i in 0..2) {
+        for (i in 0..<progress) {
             // Calculate normalized progress for each dot
             val progress = i.toFloat() / (max - 1)
 
+            Log.e("drawProgressFillCircle", "progress: $progress")
+
             // Calculate angle for current dot
             val angle = 360f - (endOffset + progress * sweepAngle)
+
+            Log.e("drawProgressFillCircle", "angle: $angle")
 
             // Calculate x and y coordinates for the dot
             val x = midX + (progressRadius * sin(Math.toRadians(angle.toDouble()))).toFloat()
@@ -233,13 +258,15 @@ class RotaryKnob @JvmOverloads constructor(
 
             // Calculate dot size based on max count and available space
             val dotSize = if (i in largerDotIndices && max > 20) {
-                progressRadius / 15 * (15f / max) // Larger circle size for specified indices
+                progressRadius / 15 * (25f / max) // Larger circle size for specified indices
             } else {
-                progressRadius / 25 * (15f / max) // Regular circle size
+                progressRadius / 30 * (25f / max) // Regular circle size
             }
 
             // Draw the dot
             canvas.drawCircle(x, y, dotSize, stepCircleFillPaint)
+
+
         }
 
         canvas.restore()
@@ -250,15 +277,14 @@ class RotaryKnob @JvmOverloads constructor(
 
         canvas.save()
 
-        val max = 30
-        val startOffset = 30f
-        val endOffset = 30f
-        val sweepAngle = 360f - startOffset - endOffset
 
-        val progress = 2f / (max - 1) // Assuming 1 dots are filled, change this based on your actual progress
+        val progress1 = (progress - 1).toFloat() / (max - 1)
 
-        val angle = 360f - (endOffset + progress * sweepAngle)
+        Log.e("drawIndicator", "progress1: $progress1")
 
+        val angle = 360f - (endOffset + progress1 * sweepAngle)
+
+        Log.e("drawIndicator", "angle: $angle")
 
         val startMargin = radius * (2f / 5) // Starting from 2/5 radius margin
         val indicatorStartX = midX + (startMargin * sin(Math.toRadians(angle.toDouble()))).toFloat()
@@ -268,14 +294,141 @@ class RotaryKnob @JvmOverloads constructor(
         val indicatorLength = radius * (1f / 5)
 
         // Calculate the ending position of the indicator line
-        val indicatorEndX = midX + (startMargin + indicatorLength) * sin(Math.toRadians(angle.toDouble())).toFloat()
-        val indicatorEndY = midY + (startMargin + indicatorLength) * cos(Math.toRadians(angle.toDouble())).toFloat()
+        val indicatorEndX =
+            midX + (startMargin + indicatorLength) * sin(Math.toRadians(angle.toDouble())).toFloat()
+        val indicatorEndY =
+            midY + (startMargin + indicatorLength) * cos(Math.toRadians(angle.toDouble())).toFloat()
 
         // Draw the indicator line
-        canvas.drawLine(indicatorStartX, indicatorStartY, indicatorEndX, indicatorEndY, indicatorPaint)
+        canvas.drawLine(
+            indicatorStartX, indicatorStartY, indicatorEndX, indicatorEndY, indicatorPaint
+        )
 
 
         canvas.restore()
+
+    }
+
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+
+        val action = event.actionMasked
+        val pointerIndex = event.actionIndex
+
+        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+
+            val touchX = event.getX(pointerIndex)
+            val touchY = event.getY(pointerIndex)
+
+
+            val distanceToCenter = sqrt((midX - touchX).pow(2) + (midY - touchY).pow(2))
+
+
+            if (distanceToCenter in (mainCircleRadius - 5)..radius) {
+
+                parent.requestDisallowInterceptTouchEvent(true)
+
+
+                val dx = touchX - midX
+                val dy = touchY - midY
+
+                var currentAngle = (atan2(dy.toDouble(), dx.toDouble()) * 180 / Math.PI).toFloat()
+                Log.e("onTouchEvent", "currentAngle: $currentAngle")
+
+                currentAngle -= 90
+                Log.e("onTouchEvent", "currentAngle - 90: $currentAngle")
+
+                currentAngle -= startOffset
+
+                if (currentAngle < 0) {
+                    currentAngle += 360
+                    Log.e("onTouchEvent", "currentAngle + 360: $currentAngle")
+                }
+
+                var reVerseAngle = 360 - currentAngle
+                Log.e("onTouchEvent", "reVerseAngle: $reVerseAngle")
+
+                val temp1 = (reVerseAngle - 360) / sweepAngle
+                Log.e("onTouchEvent", "temp1: $temp1")
+
+                val temp = -(temp1 * (max - 1)).toInt() + 1
+                Log.e("onTouchEvent", "temp: $temp")
+
+                return if (temp in 1..max) {
+                    progress = temp
+                    invalidate()
+                    true
+                } else {
+                    false
+                }
+
+
+            }
+
+            return true
+
+        }
+
+        else if (action == MotionEvent.ACTION_MOVE) {
+
+            val touchX = event.getX(pointerIndex)
+            val touchY = event.getY(pointerIndex)
+
+            val distanceToCenter = sqrt((midX - touchX).pow(2) + (midY - touchY).pow(2))
+
+            Log.e("onTouchEvent", "distanceToCenter: $distanceToCenter")
+
+            startingRadius = if (startingRadius == 0f) distanceToCenter else startingRadius
+
+            Log.e("onTouchEvent", "startingRadius: $startingRadius")
+
+            if (startingRadius < radius) {
+
+                val dx = touchX - midX
+                val dy = touchY - midY
+
+                var currentAngle = (atan2(dy.toDouble(), dx.toDouble()) * 180 / Math.PI).toFloat()
+                Log.e("onTouchEvent", "currentAngle: $currentAngle")
+
+                currentAngle -= 90
+                Log.e("onTouchEvent", "currentAngle - 90: $currentAngle")
+
+                currentAngle -= startOffset
+
+                if (currentAngle < 0) {
+                    currentAngle += 360
+                    Log.e("onTouchEvent", "currentAngle + 360: $currentAngle")
+                }
+
+                var reVerseAngle = 360 - currentAngle
+                Log.e("onTouchEvent", "reVerseAngle: $reVerseAngle")
+
+                val temp1 = (reVerseAngle - 360) / sweepAngle
+                Log.e("onTouchEvent", "temp1: $temp1")
+
+                val temp = -(temp1 * (max - 1)).toInt() + 1
+                Log.e("onTouchEvent", "temp: $temp")
+
+                return if (temp in 1..max) {
+                    progress = temp
+                    invalidate()
+                    true
+                } else {
+                    false
+                }
+
+            }
+
+        } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
+
+            startingRadius = 0f
+
+            return true
+
+        }
+
+
+        return super.onTouchEvent(event)
 
     }
 
