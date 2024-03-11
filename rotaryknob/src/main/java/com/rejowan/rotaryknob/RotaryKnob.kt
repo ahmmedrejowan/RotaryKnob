@@ -64,14 +64,14 @@ class RotaryKnob @JvmOverloads constructor(
 
     // progress normal
     var progressStyle = ProgressStyle.DOT
-    var progressColor = Color.parseColor("#FF0000")
+    var progressColor = Color.parseColor("#444444")
     var showBigProgress = true
-    var bigProgressMultiplier = 1.2f
+    var bigProgressMultiplier = 0f
     var bigProgressDiff = 10
 
     // progress filled
-    var progressFilledColor = Color.parseColor("#FF0000")
-    var progressFilledMultiplier = 1.2f
+    var progressFilledColor = Color.parseColor("#8062D6")
+    var progressFilledMultiplier = 0f
 
     // indicator
     var indicatorStyle = IndicatorStyle.CIRCLE
@@ -123,7 +123,7 @@ class RotaryKnob @JvmOverloads constructor(
     // value
     var min = 1
     var max = 30
-    var currentProgress = 1
+    var currentProgress = 15
 
 
     // margin
@@ -140,6 +140,9 @@ class RotaryKnob @JvmOverloads constructor(
     private var startOffset = 45f
     private var endOffset = 45f
     private var sweepAngle = 360f - startOffset - endOffset
+
+    private var normalDotSize = 0f
+    private var largerDotSize = 0f
 
     init {
 
@@ -232,8 +235,7 @@ class RotaryKnob @JvmOverloads constructor(
             val progressFontString = typedArray.getString(R.styleable.RotaryKnob_progress_text_font)
             progressTextFont = if (progressFontString != null) {
                 Typeface.createFromAsset(
-                    context.assets,
-                    progressFontString
+                    context.assets, progressFontString
                 )
             } else {
                 null
@@ -257,9 +259,8 @@ class RotaryKnob @JvmOverloads constructor(
             suffixTextStyle = TextStyle.values()[suffixTextStyleOrdinal]
             val suffixFontString = typedArray.getString(R.styleable.RotaryKnob_suffix_text_font)
             suffixTextFont = if (suffixFontString != null) {
-                 Typeface.createFromAsset(
-                    context.assets,
-                    suffixFontString
+                Typeface.createFromAsset(
+                    context.assets, suffixFontString
                 )
             } else {
                 null
@@ -283,8 +284,7 @@ class RotaryKnob @JvmOverloads constructor(
             val labelTextFontString = typedArray.getString(R.styleable.RotaryKnob_label_text_font)
             labelTextFont = if (labelTextFontString != null) {
                 Typeface.createFromAsset(
-                    context.assets,
-                    labelTextFontString
+                    context.assets, labelTextFontString
                 )
             } else {
                 null
@@ -353,14 +353,6 @@ class RotaryKnob @JvmOverloads constructor(
 
 
 
-
-        progressPaint.isAntiAlias = true
-        progressPaint.color = Color.parseColor("#000000")
-        progressPaint.style = Paint.Style.FILL
-
-        progressFilled.isAntiAlias = true
-        progressFilled.color = Color.parseColor("#8062D6")
-        progressFilled.style = Paint.Style.FILL
 
         indicatorPaint.isAntiAlias = true
         indicatorPaint.color = Color.parseColor("#FFFFFF")
@@ -577,11 +569,20 @@ class RotaryKnob @JvmOverloads constructor(
 
     private fun drawProgressSteps(canvas: Canvas) {
 
-        val isCircle = false
-
         canvas.save()
 
-        val largerDotIndices = listOf(0, (max - 1) / 4, (max - 1) / 2, 3 * (max - 1) / 4, max - 1)
+        setupProgressPaint()
+
+
+        // large progress indices, it's every big_progress_diff-th index
+        val largerDotIndices = mutableListOf<Int>()
+        if (showBigProgress) {
+            for (i in 0 until max) {
+                if (i % bigProgressDiff == 0) {
+                    largerDotIndices.add(i)
+                }
+            }
+        }
 
 
         for (i in 0 until max) {
@@ -596,12 +597,30 @@ class RotaryKnob @JvmOverloads constructor(
             val y = midY + (progressRadius * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
 
-            if (isCircle) {
-                // Calculate dot size based on max count and available space
-                val dotSize = if (i in largerDotIndices && max > 20) {
-                    progressRadius / 15 * (20f / max) // Larger circle size for specified indices
+            if (progressStyle == ProgressStyle.DOT) {
+
+                var dotSize = 0f
+
+                if (showBigProgress) {
+                    if (i in largerDotIndices) {
+
+                        dotSize = if (bigProgressMultiplier == 0f) {
+                            progressRadius / 15 * (20f / max)
+                        } else {
+                            progressRadius / 30 * (20f / max) * bigProgressMultiplier
+                        }
+
+                        largerDotSize = dotSize
+
+                    } else {
+                        dotSize = progressRadius / 30 * (20f / max)
+                        normalDotSize = dotSize
+                    }
+
+
                 } else {
-                    progressRadius / 30 * (20f / max) // Regular circle size
+                    dotSize = progressRadius / 30 * (20f / max)
+                    normalDotSize = dotSize
                 }
 
                 // Draw the dot
@@ -638,6 +657,14 @@ class RotaryKnob @JvmOverloads constructor(
         }
 
         canvas.restore()
+
+    }
+
+    private fun setupProgressPaint() {
+
+        progressPaint.isAntiAlias = true
+        progressPaint.color = progressColor
+        progressPaint.style = Paint.Style.FILL
 
     }
 
@@ -705,38 +732,98 @@ class RotaryKnob @JvmOverloads constructor(
 
         canvas.save()
 
-        val largerDotIndices = listOf(0, (max - 1) / 4, (max - 1) / 2, 3 * (max - 1) / 4, max - 1)
+        setupProgressFilledPaint()
+
+        // large progress indices, it's every big_progress_diff-th index
+        val largerDotIndices = mutableListOf<Int>()
+        if (showBigProgress) {
+            for (i in 0 until max) {
+                if (i % bigProgressDiff == 0) {
+                    largerDotIndices.add(i)
+                }
+            }
+        }
 
         for (i in 0..<currentProgress) {
             // Calculate normalized progress for each dot
             val progress = i.toFloat() / (max - 1)
 
-            Log.e("drawProgressFillCircle", "progress: $progress")
-
             // Calculate angle for current dot
             val angle = 360f - (endOffset + progress * sweepAngle)
 
-            Log.e("drawProgressFillCircle", "angle: $angle")
 
             // Calculate x and y coordinates for the dot
             val x = midX + (progressRadius * sin(Math.toRadians(angle.toDouble()))).toFloat()
             val y = midY + (progressRadius * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
-            // Calculate dot size based on max count and available space
-            val dotSize = if (i in largerDotIndices && max > 20) {
-                progressRadius / 15 * (25f / max) // Larger circle size for specified indices
+            if (progressStyle == ProgressStyle.DOT) {
+
+                val dotSize: Float = if (progressFilledMultiplier == 0f) {
+                    if (i in largerDotIndices) {
+                        largerDotSize * 1.5f
+                    } else {
+                        normalDotSize * 1.5f
+
+                    }
+                } else {
+                    if (i in largerDotIndices) {
+                        largerDotSize * progressFilledMultiplier
+                    } else {
+                        normalDotSize * progressFilledMultiplier
+                    }
+                }
+
+
+                // Draw the dot
+                canvas.drawCircle(x, y, dotSize, progressFilled)
+
             } else {
-                progressRadius / 30 * (25f / max) // Regular circle size
+
+                var lineSize: Float
+
+                if (i in largerDotIndices && max > 20) {
+
+                    if (progressFilledMultiplier == 0f) {
+                        lineSize = progressRadius / 10 * (25f / max)
+                        progressFilled.strokeWidth = progressRadius / 20 * (25f / max)
+                    } else {
+                        lineSize = progressRadius / 10 * (25f / max)
+                        progressFilled.strokeWidth = progressRadius / 20 * (25f / max) * progressFilledMultiplier
+                    }
+
+
+                } else {
+                   if (progressFilledMultiplier == 0f) {
+                        lineSize = progressRadius / 20 * (25f / max)
+                        progressFilled.strokeWidth = progressRadius / 40 * (25f / max)
+                    } else {
+                        lineSize = progressRadius / 20 * (25f / max)
+                        progressFilled.strokeWidth = progressRadius / 40 * (25f / max) * progressFilledMultiplier
+                    }
+                }
+
+                val indicatorEndX =
+                    midX + (progressRadius - lineSize) * sin(Math.toRadians(angle.toDouble())).toFloat()
+                val indicatorEndY =
+                    midY + (progressRadius - lineSize) * cos(Math.toRadians(angle.toDouble())).toFloat()
+
+                canvas.drawLine(
+                    x, y, indicatorEndX, indicatorEndY, progressFilled
+                )
+
             }
-
-            // Draw the dot
-            canvas.drawCircle(x, y, dotSize, progressFilled)
-
 
         }
 
         canvas.restore()
 
+    }
+
+    private fun setupProgressFilledPaint() {
+
+        progressFilled.isAntiAlias = true
+        progressFilled.color = progressFilledColor
+        progressFilled.style = Paint.Style.FILL
     }
 
 
