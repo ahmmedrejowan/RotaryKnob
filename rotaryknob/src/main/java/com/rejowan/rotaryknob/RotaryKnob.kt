@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RadialGradient
-import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.Typeface
 import android.util.AttributeSet
@@ -24,35 +23,125 @@ class RotaryKnob @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+
+    enum class CircleStyle {
+        SOLID, GRADIENT
+    }
+
+    enum class ProgressStyle {
+        DOT, LINE
+    }
+
+    enum class IndicatorStyle {
+        CIRCLE, LINE
+    }
+
+    enum class TextStyle {
+        Normal, BOLD, ITALIC, BOLD_ITALIC
+    }
+
     // paint
     private var circlePaint: Paint = Paint()
-    private val outerCirclePaint: Paint = Paint()
-    private val stepPaint: Paint = Paint()
-    private val stepFilledPaint: Paint = Paint()
+    private val borderPaint: Paint = Paint()
+    private val progressPaint: Paint = Paint()
+    private val progressFilled: Paint = Paint()
     private val indicatorPaint: Paint = Paint()
     private val labelPaint: Paint = Paint()
     private val textPaint: Paint = Paint()
+    private val subTextPaint: Paint = Paint()
 
 
-    // bound
-    private val circleBounds = RectF()
+    // attrs - circle
+    var circleStyle = CircleStyle.GRADIENT
+    var circleColor = Color.parseColor("#8062D6")
+    var circleGradientCenterColor = Color.parseColor("#8062D6")
+    var circleGradientOuterColor = Color.parseColor("#6040B8")
+
+    // attrs - border
+    var showBorder = true
+    var borderColor = Color.parseColor("#8062D6")
+    var borderWidth = 0f
+
+    // progress normal
+    var progressStyle = ProgressStyle.DOT
+    var progressColor = Color.parseColor("#FF0000")
+    var showBigProgress = true
+    var bigProgressMultiplier = 1.2f
+    var bigProgressDiff = 10
+
+    // progress filled
+    var progressFilledColor = Color.parseColor("#FF0000")
+    var progressFilledMultiplier = 1.2f
+
+    // indicator
+    var indicatorStyle = IndicatorStyle.CIRCLE
+    var indicatorColor = Color.parseColor("#FF0000")
+    var indicatorSize = 10f
+
+    // progress text
+    var showProgressText = true
+    var progressText = ""
+    var progressTextColor = Color.parseColor("#FF0000")
+    var progressTextSize = 10f
+    var progressTextStyle = TextStyle.BOLD
+    var progressTextFont: Typeface? = null
+
+    // suffix text
+    var showSuffixText = true
+    var suffixText = ""
+    var suffixTextColor = Color.parseColor("#FF0000")
+    var suffixTextSize = 10f
+    var suffixTextStyle = TextStyle.BOLD
+    var suffixTextFont: Typeface? = null
+
+    // Label
+    var showLabel = true
+    var labelText = ""
+    var labelTextColor = Color.parseColor("#FF0000")
+    var labelTextSize = 10f
+    var labelTextStyle = TextStyle.BOLD
+    var labelTextFont: Typeface? = null
+    var labelMargin = 10f
+
+    // enabled
+    var knobEnable = true
+    var touchToEnable = true
+    var doubleTouchToEnable = true
+    var disabledCircleColor = Color.parseColor("#FF0000")
+    var disabledCircleGradientCenterColor = Color.parseColor("#FF0000")
+    var disabledCircleGradientOuterColor = Color.parseColor("#FF0000")
+    var disabledBorderColor = Color.parseColor("#FF0000")
+    var disabledProgressColor = Color.parseColor("#FF0000")
+    var disabledBigProgressColor = Color.parseColor("#FF0000")
+    var disabledProgressFilledColor = Color.parseColor("#FF0000")
+    var disabledIndicatorColor = Color.parseColor("#FF0000")
+    var disabledProgressTextColor = Color.parseColor("#FF0000")
+    var disabledsuffixTextColor = Color.parseColor("#FF0000")
+    var disabledLabelTextColor = Color.parseColor("#FF0000")
+
+
+    // value
+    var min = 1
+    var max = 30
+    var currentProgress = 1
+
 
     // margin
     private var sideMargin = 0f
-    private var innerMargin = 0f
-
-    // radius
     private var radius = 0f
     private var mainCircleRadius = 0f
     private var outerCircleRadius = 0f
     private var progressRadius = 0f
-
     private var startingRadius = 0f
 
+    private var midX = 0f
+    private var midY = 0f
+
+    private var startOffset = 45f
+    private var endOffset = 45f
+    private var sweepAngle = 360f - startOffset - endOffset
 
     init {
-        // Do something here
-
 
         initAttributes(attrs)
 
@@ -60,22 +149,218 @@ class RotaryKnob @JvmOverloads constructor(
 
     private fun initAttributes(attrs: AttributeSet?) {
 
-        circlePaint.isAntiAlias = true
-//        circlePaint.color = Color.parseColor("#FF0000")
-//        circlePaint.style = Paint.Style.FILL
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RotaryKnob)
+
+        try {
+
+            //  circle
+            val circleStyleOrdinal =
+                typedArray.getInt(R.styleable.RotaryKnob_circle_style, circleStyle.ordinal)
+            circleStyle = CircleStyle.values()[circleStyleOrdinal]
+            circleColor = typedArray.getColor(R.styleable.RotaryKnob_circle_color, circleColor)
+            circleGradientCenterColor = typedArray.getColor(
+                R.styleable.RotaryKnob_circle_gradient_center_color, circleGradientCenterColor
+            )
+            circleGradientOuterColor = typedArray.getColor(
+                R.styleable.RotaryKnob_circle_gradient_outer_color, circleGradientOuterColor
+            )
+
+            // border
+            showBorder = typedArray.getBoolean(R.styleable.RotaryKnob_show_border, showBorder)
+            borderColor = typedArray.getColor(R.styleable.RotaryKnob_border_color, borderColor)
+            borderWidth = convertDpToPixel(
+                typedArray.getDimension(
+                    R.styleable.RotaryKnob_border_width, borderWidth
+                ), context
+            )
 
 
-        outerCirclePaint.isAntiAlias = true
-        outerCirclePaint.color = Color.parseColor("#8062D6")
-        outerCirclePaint.style = Paint.Style.FILL
+            // progress normal
+            val progressStyleOrdinal =
+                typedArray.getInt(R.styleable.RotaryKnob_progress_style, progressStyle.ordinal)
+            progressStyle = ProgressStyle.values()[progressStyleOrdinal]
+            progressColor =
+                typedArray.getColor(R.styleable.RotaryKnob_progress_color, progressColor)
+            showBigProgress =
+                typedArray.getBoolean(R.styleable.RotaryKnob_show_big_progress, showBigProgress)
+            bigProgressMultiplier = typedArray.getFloat(
+                R.styleable.RotaryKnob_big_progress_multiplier, bigProgressMultiplier
+            )
+            bigProgressDiff =
+                typedArray.getInt(R.styleable.RotaryKnob_big_progress_diff, bigProgressDiff)
 
-        stepPaint.isAntiAlias = true
-        stepPaint.color = Color.parseColor("#000000")
-        stepPaint.style = Paint.Style.FILL
 
-        stepFilledPaint.isAntiAlias = true
-        stepFilledPaint.color = Color.parseColor("#8062D6")
-        stepFilledPaint.style = Paint.Style.FILL
+            // progress filled
+            progressFilledColor = typedArray.getColor(
+                R.styleable.RotaryKnob_progress_filled_color, progressFilledColor
+            )
+            progressFilledMultiplier = typedArray.getFloat(
+                R.styleable.RotaryKnob_progress_filled_multiplier, progressFilledMultiplier
+            )
+
+
+            // indicator
+            val indicatorStyleOrdinal =
+                typedArray.getInt(R.styleable.RotaryKnob_indicator_style, indicatorStyle.ordinal)
+            indicatorStyle = IndicatorStyle.values()[indicatorStyleOrdinal]
+            indicatorColor = typedArray.getColor(
+                R.styleable.RotaryKnob_indicator_color, indicatorColor
+            )
+            indicatorSize = convertDpToPixel(
+                typedArray.getDimension(
+                    R.styleable.RotaryKnob_indicator_size, indicatorSize
+                ), context
+            )
+
+
+            // progress text
+            showProgressText =
+                typedArray.getBoolean(R.styleable.RotaryKnob_show_progress_text, showProgressText)
+            progressText = typedArray.getString(R.styleable.RotaryKnob_progress_text).toString()
+            progressTextColor = typedArray.getColor(
+                R.styleable.RotaryKnob_progress_text_color, progressTextColor
+            )
+            progressTextSize = convertDpToPixel(
+                typedArray.getDimension(
+                    R.styleable.RotaryKnob_progress_text_size, progressTextSize
+                ), context
+            )
+            val progressTextStyleOrdinal = typedArray.getInt(
+                R.styleable.RotaryKnob_progress_text_style, progressTextStyle.ordinal
+            )
+            progressTextStyle = TextStyle.values()[progressTextStyleOrdinal]
+            val progressFontString = typedArray.getString(R.styleable.RotaryKnob_progress_text_font)
+            progressTextFont = if (progressFontString != null) {
+                Typeface.createFromAsset(
+                    context.assets,
+                    progressFontString
+                )
+            } else {
+                null
+            }
+
+
+            // suffix text
+            showSuffixText =
+                typedArray.getBoolean(R.styleable.RotaryKnob_show_suffix_text, showSuffixText)
+            suffixText = typedArray.getString(R.styleable.RotaryKnob_suffix_text).toString()
+            suffixTextColor = typedArray.getColor(
+                R.styleable.RotaryKnob_suffix_text_color, suffixTextColor
+            )
+            suffixTextSize = convertDpToPixel(
+                typedArray.getDimension(
+                    R.styleable.RotaryKnob_suffix_text_size, suffixTextSize
+                ), context
+            )
+            val suffixTextStyleOrdinal =
+                typedArray.getInt(R.styleable.RotaryKnob_suffix_text_style, suffixTextStyle.ordinal)
+            suffixTextStyle = TextStyle.values()[suffixTextStyleOrdinal]
+            val suffixFontString = typedArray.getString(R.styleable.RotaryKnob_suffix_text_font)
+            suffixTextFont = if (suffixFontString != null) {
+                 Typeface.createFromAsset(
+                    context.assets,
+                    suffixFontString
+                )
+            } else {
+                null
+            }
+
+
+            // Label
+            showLabel = typedArray.getBoolean(R.styleable.RotaryKnob_show_label, showLabel)
+            labelText = typedArray.getString(R.styleable.RotaryKnob_label_text).toString()
+            labelTextColor = typedArray.getColor(
+                R.styleable.RotaryKnob_label_text_color, labelTextColor
+            )
+            labelTextSize = convertDpToPixel(
+                typedArray.getDimension(
+                    R.styleable.RotaryKnob_label_text_size, labelTextSize
+                ), context
+            )
+            val labelTextStyleOrdinal =
+                typedArray.getInt(R.styleable.RotaryKnob_label_text_style, labelTextStyle.ordinal)
+            labelTextStyle = TextStyle.values()[labelTextStyleOrdinal]
+            val labelTextFontString = typedArray.getString(R.styleable.RotaryKnob_label_text_font)
+            labelTextFont = if (labelTextFontString != null) {
+                Typeface.createFromAsset(
+                    context.assets,
+                    labelTextFontString
+                )
+            } else {
+                null
+            }
+            labelMargin = convertDpToPixel(
+                typedArray.getDimension(
+                    R.styleable.RotaryKnob_label_margin, labelMargin
+                ), context
+            )
+
+            // enabled
+            knobEnable = typedArray.getBoolean(R.styleable.RotaryKnob_knob_enable, knobEnable)
+            touchToEnable =
+                typedArray.getBoolean(R.styleable.RotaryKnob_touch_to_enable, touchToEnable)
+            doubleTouchToEnable = typedArray.getBoolean(
+                R.styleable.RotaryKnob_d_touch_to_enable, doubleTouchToEnable
+            )
+            disabledCircleColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_circle_color, disabledCircleColor
+            )
+            disabledCircleGradientCenterColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_circle_gradient_center_color,
+                disabledCircleGradientCenterColor
+            )
+            disabledCircleGradientOuterColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_circle_gradient_outer_color,
+                disabledCircleGradientOuterColor
+            )
+            disabledBorderColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_border_color, disabledBorderColor
+            )
+            disabledProgressColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_progress_color, disabledProgressColor
+            )
+            disabledBigProgressColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_big_progress_color, disabledBigProgressColor
+            )
+            disabledProgressFilledColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_progress_filled_color, disabledProgressFilledColor
+            )
+            disabledIndicatorColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_indicator_color, disabledIndicatorColor
+            )
+            disabledProgressTextColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_progress_text_color, disabledProgressTextColor
+            )
+            disabledsuffixTextColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_suffix_text_color, disabledsuffixTextColor
+            )
+            disabledLabelTextColor = typedArray.getColor(
+                R.styleable.RotaryKnob_d_label_text_color, disabledLabelTextColor
+            )
+
+
+            // value
+            min = typedArray.getInt(R.styleable.RotaryKnob_min, min)
+            max = typedArray.getInt(R.styleable.RotaryKnob_max, max)
+            currentProgress =
+                typedArray.getInt(R.styleable.RotaryKnob_current_progress, currentProgress)
+
+
+        } finally {
+            typedArray.recycle()
+        }
+
+
+
+
+
+        progressPaint.isAntiAlias = true
+        progressPaint.color = Color.parseColor("#000000")
+        progressPaint.style = Paint.Style.FILL
+
+        progressFilled.isAntiAlias = true
+        progressFilled.color = Color.parseColor("#8062D6")
+        progressFilled.style = Paint.Style.FILL
 
         indicatorPaint.isAntiAlias = true
         indicatorPaint.color = Color.parseColor("#FFFFFF")
@@ -90,8 +375,33 @@ class RotaryKnob @JvmOverloads constructor(
         textPaint.isAntiAlias = true
         textPaint.color = Color.parseColor("#FFFFFF")
         textPaint.style = Paint.Style.FILL
-        textPaint.textSize = 70f
+        textPaint.textSize = 100f
         textPaint.typeface = Typeface.DEFAULT_BOLD
+
+        subTextPaint.isAntiAlias = true
+        subTextPaint.color = Color.parseColor("#FFFFFF")
+        subTextPaint.style = Paint.Style.FILL
+        subTextPaint.textSize = 30f
+        subTextPaint.typeface = Typeface.DEFAULT
+
+    }
+
+    private fun setupCirclePaint() {
+        circlePaint.isAntiAlias = true
+
+        if (circleStyle == CircleStyle.SOLID) {
+            circlePaint.color = circleColor
+            circlePaint.style = Paint.Style.FILL
+        } else {
+
+            val startColor = Color.parseColor("#8062D6") // Light blue
+            val endColor = Color.parseColor("#644AAC")   // Purple
+            val radius = mainCircleRadius
+            val gradient = RadialGradient(
+                midX, midY, radius, startColor, endColor, Shader.TileMode.CLAMP
+            )
+            circlePaint.shader = gradient
+        }
 
     }
 
@@ -131,9 +441,9 @@ class RotaryKnob @JvmOverloads constructor(
 
         drawProgressStepsFilled(canvas)
 
-        drawOuterCircle(canvas)
+        drawBorder(canvas)
 
-        drawMainCircle(canvas)
+        drawCircle(canvas)
 
         drawIndicator(canvas)
 
@@ -152,13 +462,24 @@ class RotaryKnob @JvmOverloads constructor(
 
         canvas.save()
 
-        val text = "$progress"
-        val textWidth = textPaint.measureText(text)
-        val textHeight = textPaint.descent() - textPaint.ascent()
-        val textX = midX - textWidth / 2
-        val textY = midY + textHeight / 2
+        val progressText = "$currentProgress"
+        val progressTextWidth = textPaint.measureText(progressText)
+        val progressTextHeight = textPaint.descent() - textPaint.ascent()
+        val progressTextX = midX - progressTextWidth / 2
+        val progressTextY = midY + progressTextHeight / 3f
 
-        canvas.drawText(text, textX, textY, textPaint)
+        // Draw progress text
+        canvas.drawText(progressText, progressTextX, progressTextY, textPaint)
+
+        val additionalText = "%"
+        val additionalTextWidth = subTextPaint.measureText(additionalText)
+        val additionalTextHeight = subTextPaint.descent() - subTextPaint.ascent()
+        val additionalTextX = progressTextX + progressTextWidth + additionalTextHeight / 4
+        val additionalTextY = progressTextY - progressTextHeight + additionalTextHeight
+
+        // Draw additional text on top-right corner
+        canvas.drawText(additionalText, additionalTextX, additionalTextY, subTextPaint)
+
 
         canvas.restore()
 
@@ -181,16 +502,6 @@ class RotaryKnob @JvmOverloads constructor(
     }
 
 
-    private var midX = 0f
-    private var midY = 0f
-
-    var max = 20
-    var startOffset = 45f
-    var endOffset = 45f
-    var sweepAngle = 360f - startOffset - endOffset
-    var progress = 1
-
-
     private fun calculateAreas() {
         // mid x and y of the view
         midX = width / 2f
@@ -202,36 +513,42 @@ class RotaryKnob @JvmOverloads constructor(
         // radius of the view. 95% of the min of midX and midY
         radius = (midX.coerceAtMost(midY) * (90f / 100))
 
-        // main circle radius. 70% of the radius
-        mainCircleRadius = radius * (70f / 100)
 
-        // outer circle radius. 80% of the radius
-        outerCircleRadius = radius * (80f / 100)
+        if (showBorder) {
 
-        // progress circle radius.
-        progressRadius = radius * (95f / 100)
+            // main circle radius. 70% of the radius
+            mainCircleRadius = radius * (70f / 100)
+
+            outerCircleRadius = if (borderWidth == 0f) {
+                radius * (80f / 100)
+            } else {
+                mainCircleRadius + borderWidth
+            }
+
+            // progress circle radius.
+            progressRadius = radius * (95f / 100)
+
+        } else {
+
+            // main circle radius. 70% of the radius
+            mainCircleRadius = radius * (80f / 100)
+
+            // outer circle radius. 80% of the radius
+            outerCircleRadius = mainCircleRadius
+
+            // progress circle radius.
+            progressRadius = radius * (95f / 100)
+
+        }
 
 
     }
 
-    private fun drawMainCircle(canvas: Canvas) {
+    private fun drawCircle(canvas: Canvas) {
 
         canvas.save()
 
-        val startColor = Color.parseColor("#8062D6") // Light blue
-        val endColor = Color.parseColor("#644AAC")   // Purple
-
-        // Calculate the radius of the circle
-        val radius = mainCircleRadius
-
-        // Create a RadialGradient object
-        val gradient = RadialGradient(
-            midX, midY, radius, startColor, endColor, Shader.TileMode.CLAMP
-        )
-
-        // Set the shader to the paint object
-        circlePaint.shader = gradient
-
+        setupCirclePaint()
 
         canvas.drawCircle(midX, midY, mainCircleRadius, circlePaint)
 
@@ -240,14 +557,22 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
-    private fun drawOuterCircle(canvas: Canvas) {
+    private fun drawBorder(canvas: Canvas) {
 
         canvas.save()
 
-        canvas.drawCircle(midX, midY, outerCircleRadius, outerCirclePaint)
+        setupBorderPaint()
+
+        canvas.drawCircle(midX, midY, outerCircleRadius, borderPaint)
 
         canvas.restore()
 
+    }
+
+    private fun setupBorderPaint() {
+        borderPaint.isAntiAlias = true
+        borderPaint.color = borderColor
+        borderPaint.style = Paint.Style.FILL
     }
 
     private fun drawProgressSteps(canvas: Canvas) {
@@ -280,7 +605,7 @@ class RotaryKnob @JvmOverloads constructor(
                 }
 
                 // Draw the dot
-                canvas.drawCircle(x, y, dotSize, stepPaint)
+                canvas.drawCircle(x, y, dotSize, progressPaint)
             } else {
                 // Draw the line
 
@@ -289,11 +614,11 @@ class RotaryKnob @JvmOverloads constructor(
                 if (i in largerDotIndices && max > 20) {
                     lineSize =
                         progressRadius / 10 * (20f / max) // Larger rectangle width for specified indices
-                    stepPaint.strokeWidth = progressRadius / 20 * (20f / max)
+                    progressPaint.strokeWidth = progressRadius / 20 * (20f / max)
 
                 } else {
                     lineSize = progressRadius / 20 * (20f / max) // Regular rectangle width
-                    stepPaint.strokeWidth = progressRadius / 40 * (20f / max)
+                    progressPaint.strokeWidth = progressRadius / 40 * (20f / max)
                 }
 
 
@@ -303,7 +628,7 @@ class RotaryKnob @JvmOverloads constructor(
                     midY + (progressRadius - lineSize) * cos(Math.toRadians(angle.toDouble())).toFloat()
 
                 canvas.drawLine(
-                    x, y, indicatorEndX, indicatorEndY, stepPaint
+                    x, y, indicatorEndX, indicatorEndY, progressPaint
                 )
 
 
@@ -325,7 +650,7 @@ class RotaryKnob @JvmOverloads constructor(
         val isCircle = true
 
 
-        val progress1 = (progress - 1).toFloat() / (max - 1)
+        val progress1 = (currentProgress - 1).toFloat() / (max - 1)
 
         Log.e("drawIndicator", "progress1: $progress1")
 
@@ -333,10 +658,12 @@ class RotaryKnob @JvmOverloads constructor(
 
         Log.e("drawIndicator", "angle: $angle")
 
-        if (isCircle){
+        if (isCircle) {
             // Calculate x and y coordinates for the indicator
-            val x = midX + (mainCircleRadius * 2/3 * sin(Math.toRadians(angle.toDouble()))).toFloat()
-            val y = midY + (mainCircleRadius * 2/3 * cos(Math.toRadians(angle.toDouble()))).toFloat()
+            val x =
+                midX + (mainCircleRadius * 2 / 3 * sin(Math.toRadians(angle.toDouble()))).toFloat()
+            val y =
+                midY + (mainCircleRadius * 2 / 3 * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
             // Calculate the size of the indicator
             val indicatorSize = mainCircleRadius / 8
@@ -380,7 +707,7 @@ class RotaryKnob @JvmOverloads constructor(
 
         val largerDotIndices = listOf(0, (max - 1) / 4, (max - 1) / 2, 3 * (max - 1) / 4, max - 1)
 
-        for (i in 0..<progress) {
+        for (i in 0..<currentProgress) {
             // Calculate normalized progress for each dot
             val progress = i.toFloat() / (max - 1)
 
@@ -403,7 +730,7 @@ class RotaryKnob @JvmOverloads constructor(
             }
 
             // Draw the dot
-            canvas.drawCircle(x, y, dotSize, stepFilledPaint)
+            canvas.drawCircle(x, y, dotSize, progressFilled)
 
 
         }
@@ -458,7 +785,7 @@ class RotaryKnob @JvmOverloads constructor(
                 Log.e("onTouchEvent", "temp: $temp")
 
                 return if (temp in 1..max) {
-                    progress = temp
+                    currentProgress = temp
                     invalidate()
                     true
                 } else {
@@ -511,7 +838,7 @@ class RotaryKnob @JvmOverloads constructor(
                 Log.e("onTouchEvent", "temp: $temp")
 
                 return if (temp in 1..max) {
-                    progress = temp
+                    currentProgress = temp
                     invalidate()
                     true
                 } else {
