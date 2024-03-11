@@ -75,7 +75,7 @@ class RotaryKnob @JvmOverloads constructor(
 
     // indicator
     var indicatorStyle = IndicatorStyle.CIRCLE
-    var indicatorColor = Color.parseColor("#FF0000")
+    var indicatorColor = Color.parseColor("#FFFFFF")
     var indicatorSize = 10f
 
     // progress text
@@ -352,8 +352,6 @@ class RotaryKnob @JvmOverloads constructor(
 
 
 
-
-
         indicatorPaint.isAntiAlias = true
         indicatorPaint.color = Color.parseColor("#FFFFFF")
         indicatorPaint.style = Paint.Style.FILL
@@ -424,9 +422,6 @@ class RotaryKnob @JvmOverloads constructor(
 
         drawText(canvas)
 
-        //    drawCircle(canvas)
-
-
         canvas.restore()
 
     }
@@ -470,93 +465,6 @@ class RotaryKnob @JvmOverloads constructor(
 
         }
 
-
-    }
-
-    private fun setupCirclePaint() {
-        circlePaint.isAntiAlias = true
-
-        if (circleStyle == CircleStyle.SOLID) {
-            circlePaint.color = circleColor
-            circlePaint.style = Paint.Style.FILL
-        } else {
-
-            val startColor = Color.parseColor("#8062D6") // Light blue
-            val endColor = Color.parseColor("#644AAC")   // Purple
-            val radius = mainCircleRadius
-            val gradient = RadialGradient(
-                midX, midY, radius, startColor, endColor, Shader.TileMode.CLAMP
-            )
-            circlePaint.shader = gradient
-        }
-
-    }
-
-    private fun drawText(canvas: Canvas) {
-
-        canvas.save()
-
-        val progressText = "$currentProgress"
-        val progressTextWidth = textPaint.measureText(progressText)
-        val progressTextHeight = textPaint.descent() - textPaint.ascent()
-        val progressTextX = midX - progressTextWidth / 2
-        val progressTextY = midY + progressTextHeight / 3f
-
-        // Draw progress text
-        canvas.drawText(progressText, progressTextX, progressTextY, textPaint)
-
-        val additionalText = "%"
-        val additionalTextWidth = subTextPaint.measureText(additionalText)
-        val additionalTextHeight = subTextPaint.descent() - subTextPaint.ascent()
-        val additionalTextX = progressTextX + progressTextWidth + additionalTextHeight / 4
-        val additionalTextY = progressTextY - progressTextHeight + additionalTextHeight
-
-        // Draw additional text on top-right corner
-        canvas.drawText(additionalText, additionalTextX, additionalTextY, subTextPaint)
-
-
-        canvas.restore()
-
-    }
-
-    private fun drawLabel(canvas: Canvas) {
-
-        canvas.save()
-
-        val text = "Progress"
-        val textWidth = labelPaint.measureText(text)
-        val textHeight = labelPaint.descent() - labelPaint.ascent()
-        val textX = midX - textWidth / 2
-        val textY = midY + radius
-
-        canvas.drawText(text, textX, textY, labelPaint)
-
-        canvas.restore()
-
-    }
-
-    private fun drawCircle(canvas: Canvas) {
-
-        canvas.save()
-
-        setupCirclePaint()
-
-        canvas.drawCircle(midX, midY, mainCircleRadius, circlePaint)
-
-        canvas.restore()
-
-
-    }
-
-    private fun drawBorder(canvas: Canvas) {
-
-        canvas.save()
-
-        setupBorderPaint()
-
-        canvas.drawCircle(midX, midY, outerCircleRadius, borderPaint)
-
-        canvas.restore()
 
     }
 
@@ -744,13 +652,37 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
+    private fun drawBorder(canvas: Canvas) {
+
+        canvas.save()
+
+        setupBorderPaint()
+
+        canvas.drawCircle(midX, midY, outerCircleRadius, borderPaint)
+
+        canvas.restore()
+
+    }
+
+    private fun drawCircle(canvas: Canvas) {
+
+        canvas.save()
+
+        setupCirclePaint()
+
+        canvas.drawCircle(midX, midY, mainCircleRadius, circlePaint)
+
+        canvas.restore()
+
+
+    }
+
     private fun drawIndicator(canvas: Canvas) {
 
 
         canvas.save()
 
-        val isCircle = true
-
+        setupDrawIndicator()
 
         val progress1 = (currentProgress - 1).toFloat() / (max - 1)
 
@@ -760,7 +692,7 @@ class RotaryKnob @JvmOverloads constructor(
 
         Log.e("drawIndicator", "angle: $angle")
 
-        if (isCircle) {
+        if (indicatorStyle == IndicatorStyle.CIRCLE) {
             // Calculate x and y coordinates for the indicator
             val x =
                 midX + (mainCircleRadius * 2 / 3 * sin(Math.toRadians(angle.toDouble()))).toFloat()
@@ -802,6 +734,76 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
+    private fun setupDrawIndicator() {
+
+        indicatorPaint.isAntiAlias = true
+        indicatorPaint.color = indicatorColor
+        indicatorPaint.style = Paint.Style.FILL
+        indicatorPaint.strokeWidth = 7f
+    }
+
+    private fun drawLabel(canvas: Canvas) {
+
+        canvas.save()
+
+        val text = "Progress"
+        val textWidth = labelPaint.measureText(text)
+        val textHeight = labelPaint.descent() - labelPaint.ascent()
+        val textX = midX - textWidth / 2
+        val textY = midY + radius
+
+        canvas.drawText(text, textX, textY, labelPaint)
+
+        canvas.restore()
+
+    }
+
+    private fun drawText(canvas: Canvas) {
+
+        canvas.save()
+
+        val progressText = "$currentProgress"
+        val progressTextWidth = textPaint.measureText(progressText)
+        val progressTextHeight = textPaint.descent() - textPaint.ascent()
+        val progressTextX = midX - progressTextWidth / 2
+        val progressTextY = midY + progressTextHeight / 3f
+
+        // Draw progress text
+        canvas.drawText(progressText, progressTextX, progressTextY, textPaint)
+
+        val additionalText = "%"
+        val additionalTextWidth = subTextPaint.measureText(additionalText)
+        val additionalTextHeight = subTextPaint.descent() - subTextPaint.ascent()
+        val additionalTextX = progressTextX + progressTextWidth + additionalTextHeight / 4
+        val additionalTextY = progressTextY - progressTextHeight + additionalTextHeight
+
+        // Draw additional text on top-right corner
+        canvas.drawText(additionalText, additionalTextX, additionalTextY, subTextPaint)
+
+
+        canvas.restore()
+
+    }
+
+    private fun setupCirclePaint() {
+        circlePaint.isAntiAlias = true
+
+        if (circleStyle == CircleStyle.SOLID) {
+            circlePaint.color = circleColor
+            circlePaint.style = Paint.Style.FILL
+        } else {
+
+            val startColor = Color.parseColor("#8062D6") // Light blue
+            val endColor = Color.parseColor("#644AAC")   // Purple
+            val radius = mainCircleRadius
+            val gradient = RadialGradient(
+                midX, midY, radius, startColor, endColor, Shader.TileMode.CLAMP
+            )
+            circlePaint.shader = gradient
+        }
+
+    }
+
     private fun setupBorderPaint() {
         borderPaint.isAntiAlias = true
         borderPaint.color = borderColor
@@ -822,6 +824,9 @@ class RotaryKnob @JvmOverloads constructor(
         progressFilled.color = progressFilledColor
         progressFilled.style = Paint.Style.FILL
     }
+
+
+
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
 

@@ -10,14 +10,13 @@
     <com.rejowan.rotaryknob.RotaryKnob
         android:id="@+id/rotaryKnob"
         android:layout_width="match_parent"
-        android:layout_marginTop="100dp"
         android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
         app:big_progress_multiplier="2"
-        app:show_big_progress="true"
-        app:progress_style="line"
+        app:indicator_style="line"
         app:progress_filled_multiplier="1"
-        android:layout_gravity="center" />
-
-
+        app:progress_style="line"
+        app:show_big_progress="true" />
 
 </LinearLayout>
