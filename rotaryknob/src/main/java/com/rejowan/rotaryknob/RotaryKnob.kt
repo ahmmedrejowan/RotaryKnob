@@ -378,25 +378,6 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
-    private fun setupCirclePaint() {
-        circlePaint.isAntiAlias = true
-
-        if (circleStyle == CircleStyle.SOLID) {
-            circlePaint.color = circleColor
-            circlePaint.style = Paint.Style.FILL
-        } else {
-
-            val startColor = Color.parseColor("#8062D6") // Light blue
-            val endColor = Color.parseColor("#644AAC")   // Purple
-            val radius = mainCircleRadius
-            val gradient = RadialGradient(
-                midX, midY, radius, startColor, endColor, Shader.TileMode.CLAMP
-            )
-            circlePaint.shader = gradient
-        }
-
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -450,6 +431,67 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
+    private fun calculateAreas() {
+        // mid x and y of the view
+        midX = width / 2f
+        midY = height / 2f
+
+        // side margin of the view. total 5% of the min of midX and midY, and each side 2.5%
+        sideMargin = (midX.coerceAtMost(midY) * (5f / 100))
+
+        // radius of the view. 95% of the min of midX and midY
+        radius = (midX.coerceAtMost(midY) * (90f / 100))
+
+
+        if (showBorder) {
+
+            // main circle radius. 70% of the radius
+            mainCircleRadius = radius * (70f / 100)
+
+            outerCircleRadius = if (borderWidth == 0f) {
+                radius * (80f / 100)
+            } else {
+                mainCircleRadius + borderWidth
+            }
+
+            // progress circle radius.
+            progressRadius = radius * (95f / 100)
+
+        } else {
+
+            // main circle radius. 70% of the radius
+            mainCircleRadius = radius * (80f / 100)
+
+            // outer circle radius. 80% of the radius
+            outerCircleRadius = mainCircleRadius
+
+            // progress circle radius.
+            progressRadius = radius * (95f / 100)
+
+        }
+
+
+    }
+
+    private fun setupCirclePaint() {
+        circlePaint.isAntiAlias = true
+
+        if (circleStyle == CircleStyle.SOLID) {
+            circlePaint.color = circleColor
+            circlePaint.style = Paint.Style.FILL
+        } else {
+
+            val startColor = Color.parseColor("#8062D6") // Light blue
+            val endColor = Color.parseColor("#644AAC")   // Purple
+            val radius = mainCircleRadius
+            val gradient = RadialGradient(
+                midX, midY, radius, startColor, endColor, Shader.TileMode.CLAMP
+            )
+            circlePaint.shader = gradient
+        }
+
+    }
+
     private fun drawText(canvas: Canvas) {
 
         canvas.save()
@@ -493,49 +535,6 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
-
-    private fun calculateAreas() {
-        // mid x and y of the view
-        midX = width / 2f
-        midY = height / 2f
-
-        // side margin of the view. total 5% of the min of midX and midY, and each side 2.5%
-        sideMargin = (midX.coerceAtMost(midY) * (5f / 100))
-
-        // radius of the view. 95% of the min of midX and midY
-        radius = (midX.coerceAtMost(midY) * (90f / 100))
-
-
-        if (showBorder) {
-
-            // main circle radius. 70% of the radius
-            mainCircleRadius = radius * (70f / 100)
-
-            outerCircleRadius = if (borderWidth == 0f) {
-                radius * (80f / 100)
-            } else {
-                mainCircleRadius + borderWidth
-            }
-
-            // progress circle radius.
-            progressRadius = radius * (95f / 100)
-
-        } else {
-
-            // main circle radius. 70% of the radius
-            mainCircleRadius = radius * (80f / 100)
-
-            // outer circle radius. 80% of the radius
-            outerCircleRadius = mainCircleRadius
-
-            // progress circle radius.
-            progressRadius = radius * (95f / 100)
-
-        }
-
-
-    }
-
     private fun drawCircle(canvas: Canvas) {
 
         canvas.save()
@@ -559,12 +558,6 @@ class RotaryKnob @JvmOverloads constructor(
 
         canvas.restore()
 
-    }
-
-    private fun setupBorderPaint() {
-        borderPaint.isAntiAlias = true
-        borderPaint.color = borderColor
-        borderPaint.style = Paint.Style.FILL
     }
 
     private fun drawProgressSteps(canvas: Canvas) {
@@ -660,74 +653,6 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
-    private fun setupProgressPaint() {
-
-        progressPaint.isAntiAlias = true
-        progressPaint.color = progressColor
-        progressPaint.style = Paint.Style.FILL
-
-    }
-
-
-    private fun drawIndicator(canvas: Canvas) {
-
-
-        canvas.save()
-
-        val isCircle = true
-
-
-        val progress1 = (currentProgress - 1).toFloat() / (max - 1)
-
-        Log.e("drawIndicator", "progress1: $progress1")
-
-        val angle = 360f - (endOffset + progress1 * sweepAngle)
-
-        Log.e("drawIndicator", "angle: $angle")
-
-        if (isCircle) {
-            // Calculate x and y coordinates for the indicator
-            val x =
-                midX + (mainCircleRadius * 2 / 3 * sin(Math.toRadians(angle.toDouble()))).toFloat()
-            val y =
-                midY + (mainCircleRadius * 2 / 3 * cos(Math.toRadians(angle.toDouble()))).toFloat()
-
-            // Calculate the size of the indicator
-            val indicatorSize = mainCircleRadius / 8
-
-            // Draw the indicator
-            canvas.drawCircle(x, y, indicatorSize, indicatorPaint)
-
-        } else {
-            // Calculate the starting position of the indicator line
-
-            val startMargin = radius * (2f / 5) // Starting from 2/5 radius margin
-            val indicatorStartX =
-                midX + (startMargin * sin(Math.toRadians(angle.toDouble()))).toFloat()
-            val indicatorStartY =
-                midY + (startMargin * cos(Math.toRadians(angle.toDouble()))).toFloat()
-
-            // Calculate the length of the indicator line (1/3 of the radius)
-            val indicatorLength = radius * (1f / 5)
-
-            // Calculate the ending position of the indicator line
-            val indicatorEndX =
-                midX + (startMargin + indicatorLength) * sin(Math.toRadians(angle.toDouble())).toFloat()
-            val indicatorEndY =
-                midY + (startMargin + indicatorLength) * cos(Math.toRadians(angle.toDouble())).toFloat()
-
-            // Draw the indicator line
-            canvas.drawLine(
-                indicatorStartX, indicatorStartY, indicatorEndX, indicatorEndY, indicatorPaint
-            )
-
-        }
-
-        canvas.restore()
-
-    }
-
-
     private fun drawProgressStepsFilled(canvas: Canvas) {
 
         canvas.save()
@@ -793,7 +718,7 @@ class RotaryKnob @JvmOverloads constructor(
 
 
                 } else {
-                   if (progressFilledMultiplier == 0f) {
+                    if (progressFilledMultiplier == 0f) {
                         lineSize = progressRadius / 20 * (25f / max)
                         progressFilled.strokeWidth = progressRadius / 40 * (25f / max)
                     } else {
@@ -819,13 +744,84 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
+    private fun drawIndicator(canvas: Canvas) {
+
+
+        canvas.save()
+
+        val isCircle = true
+
+
+        val progress1 = (currentProgress - 1).toFloat() / (max - 1)
+
+        Log.e("drawIndicator", "progress1: $progress1")
+
+        val angle = 360f - (endOffset + progress1 * sweepAngle)
+
+        Log.e("drawIndicator", "angle: $angle")
+
+        if (isCircle) {
+            // Calculate x and y coordinates for the indicator
+            val x =
+                midX + (mainCircleRadius * 2 / 3 * sin(Math.toRadians(angle.toDouble()))).toFloat()
+            val y =
+                midY + (mainCircleRadius * 2 / 3 * cos(Math.toRadians(angle.toDouble()))).toFloat()
+
+            // Calculate the size of the indicator
+            val indicatorSize = mainCircleRadius / 8
+
+            // Draw the indicator
+            canvas.drawCircle(x, y, indicatorSize, indicatorPaint)
+
+        } else {
+            // Calculate the starting position of the indicator line
+
+            val startMargin = radius * (2f / 5) // Starting from 2/5 radius margin
+            val indicatorStartX =
+                midX + (startMargin * sin(Math.toRadians(angle.toDouble()))).toFloat()
+            val indicatorStartY =
+                midY + (startMargin * cos(Math.toRadians(angle.toDouble()))).toFloat()
+
+            // Calculate the length of the indicator line (1/3 of the radius)
+            val indicatorLength = radius * (1f / 5)
+
+            // Calculate the ending position of the indicator line
+            val indicatorEndX =
+                midX + (startMargin + indicatorLength) * sin(Math.toRadians(angle.toDouble())).toFloat()
+            val indicatorEndY =
+                midY + (startMargin + indicatorLength) * cos(Math.toRadians(angle.toDouble())).toFloat()
+
+            // Draw the indicator line
+            canvas.drawLine(
+                indicatorStartX, indicatorStartY, indicatorEndX, indicatorEndY, indicatorPaint
+            )
+
+        }
+
+        canvas.restore()
+
+    }
+
+    private fun setupBorderPaint() {
+        borderPaint.isAntiAlias = true
+        borderPaint.color = borderColor
+        borderPaint.style = Paint.Style.FILL
+    }
+
+    private fun setupProgressPaint() {
+
+        progressPaint.isAntiAlias = true
+        progressPaint.color = progressColor
+        progressPaint.style = Paint.Style.FILL
+
+    }
+
     private fun setupProgressFilledPaint() {
 
         progressFilled.isAntiAlias = true
         progressFilled.color = progressFilledColor
         progressFilled.style = Paint.Style.FILL
     }
-
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
 
@@ -958,6 +954,5 @@ class RotaryKnob @JvmOverloads constructor(
         val metrics = resources.displayMetrics
         return px / (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
-
 
 }
