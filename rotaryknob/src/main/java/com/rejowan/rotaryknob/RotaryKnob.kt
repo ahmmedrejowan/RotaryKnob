@@ -75,6 +75,7 @@ class RotaryKnob @JvmOverloads constructor(
     var indicatorColor = Color.parseColor("#FFFFFF")
     var indicatorSize = 0f
 
+
     // progress text
     var showProgressText = true
     var progressText = ""
@@ -118,9 +119,9 @@ class RotaryKnob @JvmOverloads constructor(
 
 
     // value
-    var min = 10
+    var min = 0
     var max = 30
-    var currentProgress = 15
+    var currentProgress = 5
 
 
     // margin
@@ -240,7 +241,14 @@ class RotaryKnob @JvmOverloads constructor(
             // suffix text
             showSuffixText =
                 typedArray.getBoolean(R.styleable.RotaryKnob_show_suffix_text, showSuffixText)
-            suffixText = typedArray.getString(R.styleable.RotaryKnob_suffix_text).toString()
+
+            val suffixTextTemp = typedArray.getString(R.styleable.RotaryKnob_suffix_text)
+
+            suffixTextTemp?.let {
+                suffixText = it
+            }
+
+
             suffixTextColor = typedArray.getColor(
                 R.styleable.RotaryKnob_suffix_text_color, suffixTextColor
             )
@@ -447,12 +455,19 @@ class RotaryKnob @JvmOverloads constructor(
         // large progress indices, it's every big_progress_diff-th index
         val largerDotIndices = mutableListOf<Int>()
         if (showBigProgress) {
-            for (i in min ..< max) {
-                if (i % bigProgressDiff == 0) {
+            for (i in min..<max) {
+                if (bigProgressDiff <= 0) {
+                    continue
+                }
+                if ((i + 1) % bigProgressDiff == 0) {
+                    if (i == max - 1 && bigProgressDiff > 2) {
+                        continue
+                    }
                     largerDotIndices.add(i)
                 }
             }
         }
+
 
 
         for (i in 0 until max - min) {
@@ -540,11 +555,19 @@ class RotaryKnob @JvmOverloads constructor(
         val largerDotIndices = mutableListOf<Int>()
         if (showBigProgress) {
             for (i in min..<max) {
-                if (i % bigProgressDiff == 0) {
+                if (bigProgressDiff <= 0) {
+                    continue
+                }
+                if ((i + 1) % bigProgressDiff == 0) {
+                    if (i == max) {
+                        continue
+                    }
                     largerDotIndices.add(i)
                 }
             }
         }
+
+
 
         for (i in 0..<currentProgress - min) {
             // Calculate normalized progress for each dot
@@ -586,23 +609,23 @@ class RotaryKnob @JvmOverloads constructor(
                 if (i in largerDotIndices) {
 
                     if (progressFilledMultiplier == 0f) {
-                        lineSize = progressRadius / 10 * (25f /  (max - min))
-                        progressFilled.strokeWidth = progressRadius / 20 * (25f / (max - min) )
+                        lineSize = progressRadius / 10 * (25f / (max - min))
+                        progressFilled.strokeWidth = progressRadius / 20 * (25f / (max - min))
                     } else {
-                        lineSize = progressRadius / 10 * (25f /  (max - min))
+                        lineSize = progressRadius / 10 * (25f / (max - min))
                         progressFilled.strokeWidth =
-                            progressRadius / 20 * (25f /  (max - min)) * progressFilledMultiplier
+                            progressRadius / 20 * (25f / (max - min)) * progressFilledMultiplier
                     }
 
 
                 } else {
                     if (progressFilledMultiplier == 0f) {
-                        lineSize = progressRadius / 20 * (25f /  (max - min))
-                        progressFilled.strokeWidth = progressRadius / 40 * (25f /  (max - min))
+                        lineSize = progressRadius / 20 * (25f / (max - min))
+                        progressFilled.strokeWidth = progressRadius / 40 * (25f / (max - min))
                     } else {
-                        lineSize = progressRadius / 20 * (25f /  (max - min))
+                        lineSize = progressRadius / 20 * (25f / (max - min))
                         progressFilled.strokeWidth =
-                            progressRadius / 40 * (25f /  (max - min)) * progressFilledMultiplier
+                            progressRadius / 40 * (25f / (max - min)) * progressFilledMultiplier
                     }
                 }
 
@@ -725,11 +748,16 @@ class RotaryKnob @JvmOverloads constructor(
             canvas.drawText(progressText, progressTextX, progressTextY, textPaint)
         }
 
-        val additionalText = "%"
+        var additionalText: String = if (suffixText.isNullOrEmpty()) {
+            "%"
+        } else {
+            suffixText
+        }
+
         val additionalTextWidth = suffixTextPaint.measureText(additionalText)
         val additionalTextHeight = suffixTextPaint.descent() - suffixTextPaint.ascent()
-        val additionalTextX = progressTextX + progressTextWidth + additionalTextHeight / 4
-        val additionalTextY = progressTextY - progressTextHeight + additionalTextHeight
+        val additionalTextX = midX + progressTextWidth * 5 / 12
+        val additionalTextY = progressTextY - progressTextHeight / 2
 
         if (showSuffixText) {
             canvas.drawText(additionalText, additionalTextX, additionalTextY, suffixTextPaint)
@@ -860,28 +888,32 @@ class RotaryKnob @JvmOverloads constructor(
                 val dy = touchY - midY
 
                 var currentAngle = (atan2(dy.toDouble(), dx.toDouble()) * 180 / Math.PI).toFloat()
-                Log.e("onTouchEvent", "currentAngle: $currentAngle")
+                //    Log.e("onTouchEvent", "currentAngle: $currentAngle")
 
                 currentAngle -= 90
-                Log.e("onTouchEvent", "currentAngle - 90: $currentAngle")
+                //     Log.e("onTouchEvent", "currentAngle - 90: $currentAngle")
 
                 currentAngle -= startOffset
 
                 if (currentAngle < 0) {
                     currentAngle += 360
-                    Log.e("onTouchEvent", "currentAngle + 360: $currentAngle")
+                    //     Log.e("onTouchEvent", "currentAngle + 360: $currentAngle")
                 }
 
                 var reVerseAngle = 360 - currentAngle
-                Log.e("onTouchEvent", "reVerseAngle: $reVerseAngle")
+                //  Log.e("onTouchEvent", "temp angle: $reVerseAngle -----------------")
 
                 val temp1 = (reVerseAngle - 360) / sweepAngle
-                Log.e("onTouchEvent", "temp1: $temp1")
+                Log.e("onTouchEvent", "temp angle: $temp1 -----------------")
 
-                val temp = -(temp1 * (max - 1)).toInt() + 1
-                Log.e("onTouchEvent", "temp: $temp")
+                var temp = -(temp1 * (max - min)).toInt()
+                Log.e("onTouchEvent", "temp init: $temp")
 
-                return if (temp in 1..max) {
+                temp += min + 1
+                Log.e("onTouchEvent", "temp final: $temp")
+
+
+                return if (temp in min..<max + 1) {
                     currentProgress = temp
                     invalidate()
                     true
@@ -907,7 +939,7 @@ class RotaryKnob @JvmOverloads constructor(
 
             Log.e("onTouchEvent", "startingRadius: $startingRadius")
 
-            if (startingRadius < radius) {
+            if (startingRadius < radius && startingRadius > mainCircleRadius * 2 / 3) {
 
                 val dx = touchX - midX
                 val dy = touchY - midY
@@ -931,10 +963,15 @@ class RotaryKnob @JvmOverloads constructor(
                 val temp1 = (reVerseAngle - 360) / sweepAngle
                 Log.e("onTouchEvent", "temp1: $temp1")
 
-                val temp = -(temp1 * (max - 1)).toInt() + 1
-                Log.e("onTouchEvent", "temp: $temp")
 
-                return if (temp in 1..max) {
+                var temp = -(temp1 * (max - min)).toInt()
+                Log.e("onTouchEvent", "temp init: $temp")
+
+                temp += min + 1
+                Log.e("onTouchEvent", "temp final: $temp")
+
+
+                return if (temp in min..<max + 1) {
                     currentProgress = temp
                     invalidate()
                     true
