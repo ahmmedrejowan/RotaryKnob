@@ -17,7 +17,11 @@
         app:indicator_style="line"
         app:indicator_color="@color/black"
         app:progress_filled_multiplier="1"
-        app:label_margin="10dp"
+        app:label_text="Rotary Knob"
+        app:label_text_size="5sp"
+        app:label_text_style="normal"
+        app:label_text_font="@font/android_normal"
+        app:show_label="true"
         app:progress_style="line"
         app:show_big_progress="true" />
 
