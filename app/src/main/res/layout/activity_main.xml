@@ -14,15 +14,21 @@
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
         app:big_progress_multiplier="2"
-        app:indicator_style="line"
-        app:indicator_color="@color/black"
-        app:progress_filled_multiplier="1"
+        app:indicator_color="@color/white"
+        app:indicator_style="circle"
         app:label_text="Rotary Knob"
+        app:label_text_font="@font/android_normal"
         app:label_text_size="5sp"
         app:label_text_style="normal"
-        app:label_text_font="@font/android_normal"
-        app:show_label="true"
+        app:progress_filled_multiplier="1"
         app:progress_style="line"
-        app:show_big_progress="true" />
+        app:progress_text_font="@font/ubuntu_normal"
+        app:show_big_progress="true"
+        app:show_label="true"
+        app:show_progress_text="true"
+        app:min="10"
+        app:max="30"
+        app:current_progress="12"
+        app:suffix_text_font="@font/ubuntu_normal" />
 
 </LinearLayout>

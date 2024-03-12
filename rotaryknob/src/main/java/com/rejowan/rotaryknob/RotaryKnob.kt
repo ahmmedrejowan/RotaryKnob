@@ -45,7 +45,7 @@ class RotaryKnob @JvmOverloads constructor(
     private val indicatorPaint: Paint = Paint()
     private val labelPaint: Paint = Paint()
     private val textPaint: Paint = Paint()
-    private val subTextPaint: Paint = Paint()
+    private val suffixTextPaint: Paint = Paint()
 
 
     // attrs - circle
@@ -78,15 +78,15 @@ class RotaryKnob @JvmOverloads constructor(
     // progress text
     var showProgressText = true
     var progressText = ""
-    var progressTextColor = Color.parseColor("#FF0000")
-    var progressTextSize = 10f
+    var progressTextColor = Color.parseColor("#FFFFFF")
+    var progressTextSize = 30f
     var progressTextStyle = TextStyle.BOLD
     var progressTextFont: Typeface? = null
 
     // suffix text
-    var showSuffixText = true
+    var showSuffixText = false
     var suffixText = ""
-    var suffixTextColor = Color.parseColor("#FF0000")
+    var suffixTextColor = Color.parseColor("#FFFFFF")
     var suffixTextSize = 10f
     var suffixTextStyle = TextStyle.BOLD
     var suffixTextFont: Typeface? = null
@@ -118,7 +118,7 @@ class RotaryKnob @JvmOverloads constructor(
 
 
     // value
-    var min = 1
+    var min = 10
     var max = 30
     var currentProgress = 15
 
@@ -229,13 +229,11 @@ class RotaryKnob @JvmOverloads constructor(
                 R.styleable.RotaryKnob_progress_text_style, progressTextStyle.ordinal
             )
             progressTextStyle = TextStyle.values()[progressTextStyleOrdinal]
-            val progressFontString = typedArray.getString(R.styleable.RotaryKnob_progress_text_font)
-            progressTextFont = if (progressFontString != null) {
-                Typeface.createFromAsset(
-                    context.assets, progressFontString
-                )
-            } else {
-                null
+
+            val progressFontID =
+                typedArray.getResourceId(R.styleable.RotaryKnob_progress_text_font, 0)
+            if (progressFontID != 0) {
+                progressTextFont = ResourcesCompat.getFont(context, progressFontID)
             }
 
 
@@ -254,15 +252,11 @@ class RotaryKnob @JvmOverloads constructor(
             val suffixTextStyleOrdinal =
                 typedArray.getInt(R.styleable.RotaryKnob_suffix_text_style, suffixTextStyle.ordinal)
             suffixTextStyle = TextStyle.values()[suffixTextStyleOrdinal]
-            val suffixFontString = typedArray.getString(R.styleable.RotaryKnob_suffix_text_font)
-            suffixTextFont = if (suffixFontString != null) {
-                Typeface.createFromAsset(
-                    context.assets, suffixFontString
-                )
-            } else {
-                null
-            }
 
+            val suffixFontID = typedArray.getResourceId(R.styleable.RotaryKnob_suffix_text_font, 0)
+            if (suffixFontID != 0) {
+                suffixTextFont = ResourcesCompat.getFont(context, suffixFontID)
+            }
 
             // Label
             showLabel = typedArray.getBoolean(R.styleable.RotaryKnob_show_label, showLabel)
@@ -281,9 +275,9 @@ class RotaryKnob @JvmOverloads constructor(
                 typedArray.getInt(R.styleable.RotaryKnob_label_text_style, labelTextStyle.ordinal)
             labelTextStyle = TextStyle.values()[labelTextStyleOrdinal]
 
-            val fontResId = typedArray.getResourceId(R.styleable.RotaryKnob_label_text_font, 0)
-            if (fontResId != 0) {
-                labelTextFont = ResourcesCompat.getFont(context, fontResId)
+            val labelFontID = typedArray.getResourceId(R.styleable.RotaryKnob_label_text_font, 0)
+            if (labelFontID != 0) {
+                labelTextFont = ResourcesCompat.getFont(context, labelFontID)
             }
 
 
@@ -349,20 +343,6 @@ class RotaryKnob @JvmOverloads constructor(
         }
 
 
-
-
-        textPaint.isAntiAlias = true
-        textPaint.color = Color.parseColor("#FFFFFF")
-        textPaint.style = Paint.Style.FILL
-        textPaint.textSize = 100f
-        textPaint.typeface = Typeface.DEFAULT_BOLD
-
-        subTextPaint.isAntiAlias = true
-        subTextPaint.color = Color.parseColor("#FFFFFF")
-        subTextPaint.style = Paint.Style.FILL
-        subTextPaint.textSize = 30f
-        subTextPaint.typeface = Typeface.DEFAULT
-
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -409,7 +389,7 @@ class RotaryKnob @JvmOverloads constructor(
 
         drawLabel(canvas)
 
-        drawText(canvas)
+        drawProgressText(canvas)
 
         canvas.restore()
 
@@ -467,7 +447,7 @@ class RotaryKnob @JvmOverloads constructor(
         // large progress indices, it's every big_progress_diff-th index
         val largerDotIndices = mutableListOf<Int>()
         if (showBigProgress) {
-            for (i in 0 until max) {
+            for (i in min ..< max) {
                 if (i % bigProgressDiff == 0) {
                     largerDotIndices.add(i)
                 }
@@ -475,9 +455,9 @@ class RotaryKnob @JvmOverloads constructor(
         }
 
 
-        for (i in 0 until max) {
+        for (i in 0 until max - min) {
             // Calculate normalized progress for each dot
-            val progress = i.toFloat() / (max - 1)
+            val progress = i.toFloat() / (max - 1 - min)
 
             // Calculate angle for current dot
             val angle = 360f - (endOffset + progress * sweepAngle)
@@ -495,21 +475,21 @@ class RotaryKnob @JvmOverloads constructor(
                     if (i in largerDotIndices) {
 
                         dotSize = if (bigProgressMultiplier == 0f) {
-                            progressRadius / 15 * (20f / max)
+                            progressRadius / 15 * (20f / (max - min))
                         } else {
-                            progressRadius / 30 * (20f / max) * bigProgressMultiplier
+                            progressRadius / 30 * (20f / (max - min)) * bigProgressMultiplier
                         }
 
                         largerDotSize = dotSize
 
                     } else {
-                        dotSize = progressRadius / 30 * (20f / max)
+                        dotSize = progressRadius / 30 * (20f / (max - min))
                         normalDotSize = dotSize
                     }
 
 
                 } else {
-                    dotSize = progressRadius / 30 * (20f / max)
+                    dotSize = progressRadius / 30 * (20f / (max - min))
                     normalDotSize = dotSize
                 }
 
@@ -520,14 +500,14 @@ class RotaryKnob @JvmOverloads constructor(
 
                 var lineSize = 0f
 
-                if (i in largerDotIndices && max > 20) {
+                if (i in largerDotIndices) {
                     lineSize =
-                        progressRadius / 10 * (20f / max) // Larger rectangle width for specified indices
-                    progressPaint.strokeWidth = progressRadius / 20 * (20f / max)
+                        progressRadius / 10 * (20f / (max - min)) // Larger rectangle width for specified indices
+                    progressPaint.strokeWidth = progressRadius / 20 * (20f / (max - min))
 
                 } else {
-                    lineSize = progressRadius / 20 * (20f / max) // Regular rectangle width
-                    progressPaint.strokeWidth = progressRadius / 40 * (20f / max)
+                    lineSize = progressRadius / 20 * (20f / (max - min)) // Regular rectangle width
+                    progressPaint.strokeWidth = progressRadius / 40 * (20f / (max - min))
                 }
 
 
@@ -559,16 +539,16 @@ class RotaryKnob @JvmOverloads constructor(
         // large progress indices, it's every big_progress_diff-th index
         val largerDotIndices = mutableListOf<Int>()
         if (showBigProgress) {
-            for (i in 0 until max) {
+            for (i in min..<max) {
                 if (i % bigProgressDiff == 0) {
                     largerDotIndices.add(i)
                 }
             }
         }
 
-        for (i in 0..<currentProgress) {
+        for (i in 0..<currentProgress - min) {
             // Calculate normalized progress for each dot
-            val progress = i.toFloat() / (max - 1)
+            val progress = i.toFloat() / (max - 1 - min)
 
             // Calculate angle for current dot
             val angle = 360f - (endOffset + progress * sweepAngle)
@@ -603,26 +583,26 @@ class RotaryKnob @JvmOverloads constructor(
 
                 var lineSize: Float
 
-                if (i in largerDotIndices && max > 20) {
+                if (i in largerDotIndices) {
 
                     if (progressFilledMultiplier == 0f) {
-                        lineSize = progressRadius / 10 * (25f / max)
-                        progressFilled.strokeWidth = progressRadius / 20 * (25f / max)
+                        lineSize = progressRadius / 10 * (25f /  (max - min))
+                        progressFilled.strokeWidth = progressRadius / 20 * (25f / (max - min) )
                     } else {
-                        lineSize = progressRadius / 10 * (25f / max)
+                        lineSize = progressRadius / 10 * (25f /  (max - min))
                         progressFilled.strokeWidth =
-                            progressRadius / 20 * (25f / max) * progressFilledMultiplier
+                            progressRadius / 20 * (25f /  (max - min)) * progressFilledMultiplier
                     }
 
 
                 } else {
                     if (progressFilledMultiplier == 0f) {
-                        lineSize = progressRadius / 20 * (25f / max)
-                        progressFilled.strokeWidth = progressRadius / 40 * (25f / max)
+                        lineSize = progressRadius / 20 * (25f /  (max - min))
+                        progressFilled.strokeWidth = progressRadius / 40 * (25f /  (max - min))
                     } else {
-                        lineSize = progressRadius / 20 * (25f / max)
+                        lineSize = progressRadius / 20 * (25f /  (max - min))
                         progressFilled.strokeWidth =
-                            progressRadius / 40 * (25f / max) * progressFilledMultiplier
+                            progressRadius / 40 * (25f /  (max - min)) * progressFilledMultiplier
                     }
                 }
 
@@ -671,7 +651,7 @@ class RotaryKnob @JvmOverloads constructor(
     private fun drawIndicator(canvas: Canvas) {
         canvas.save()
         setupDrawIndicator()
-        val progress1 = (currentProgress - 1).toFloat() / (max - 1)
+        val progress1 = (currentProgress - min - 1).toFloat() / (max - 1 - min)
         val angle = 360f - (endOffset + progress1 * sweepAngle)
         if (indicatorStyle == SizeStyle.CIRCLE) {
             val x =
@@ -710,7 +690,7 @@ class RotaryKnob @JvmOverloads constructor(
 
     private fun drawLabel(canvas: Canvas) {
 
-        if (!showLabel || labelText.isBlank() || labelText=="") return
+        if (!showLabel || labelText.isBlank() || labelText == "") return
 
         canvas.save()
 
@@ -719,7 +699,7 @@ class RotaryKnob @JvmOverloads constructor(
         val textWidth = labelPaint.measureText(labelText)
         val textHeight = labelPaint.descent() - labelPaint.ascent()
         val textX = midX - textWidth / 2
-        val textY = if (labelMargin == 0f){
+        val textY = if (labelMargin == 0f) {
             midY + radius
         } else {
             midY + borderRadius + labelMargin
@@ -728,48 +708,66 @@ class RotaryKnob @JvmOverloads constructor(
         canvas.restore()
     }
 
-    private fun setupLabelPaint() {
-
-        labelPaint.isAntiAlias = true
-        labelPaint.color = labelTextColor
-        labelPaint.style = Paint.Style.FILL
-        labelPaint.textSize = labelTextSize
-        labelPaint.typeface = when (labelTextStyle) {
-            TextStyle.NORMAL -> Typeface.DEFAULT
-            TextStyle.BOLD -> Typeface.DEFAULT_BOLD
-            TextStyle.ITALIC -> Typeface.defaultFromStyle(Typeface.ITALIC)
-            TextStyle.BOLD_ITALIC -> Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
-        }
-        if (labelTextFont != null) {
-            labelPaint.typeface = labelTextFont
-        }
-
-    }
-
-    private fun drawText(canvas: Canvas) {
+    private fun drawProgressText(canvas: Canvas) {
 
         canvas.save()
 
-        val progressText = "$currentProgress"
+        setupTextPaint()
+
+
+        val progressText = "$currentProgress "
         val progressTextWidth = textPaint.measureText(progressText)
         val progressTextHeight = textPaint.descent() - textPaint.ascent()
         val progressTextX = midX - progressTextWidth / 2
         val progressTextY = midY + progressTextHeight / 3f
 
-        // Draw progress text
-        canvas.drawText(progressText, progressTextX, progressTextY, textPaint)
+        if (showProgressText) {
+            canvas.drawText(progressText, progressTextX, progressTextY, textPaint)
+        }
 
         val additionalText = "%"
-        val additionalTextWidth = subTextPaint.measureText(additionalText)
-        val additionalTextHeight = subTextPaint.descent() - subTextPaint.ascent()
+        val additionalTextWidth = suffixTextPaint.measureText(additionalText)
+        val additionalTextHeight = suffixTextPaint.descent() - suffixTextPaint.ascent()
         val additionalTextX = progressTextX + progressTextWidth + additionalTextHeight / 4
         val additionalTextY = progressTextY - progressTextHeight + additionalTextHeight
 
-        // Draw additional text on top-right corner
-        canvas.drawText(additionalText, additionalTextX, additionalTextY, subTextPaint)
-
+        if (showSuffixText) {
+            canvas.drawText(additionalText, additionalTextX, additionalTextY, suffixTextPaint)
+        }
 
         canvas.restore()
+
+    }
+
+    private fun setupTextPaint() {
+
+        textPaint.isAntiAlias = true
+        textPaint.color = progressTextColor
+        textPaint.style = Paint.Style.FILL
+        textPaint.textSize = progressTextSize
+        textPaint.typeface = when (progressTextStyle) {
+            TextStyle.NORMAL -> Typeface.DEFAULT
+            TextStyle.BOLD -> Typeface.DEFAULT_BOLD
+            TextStyle.ITALIC -> Typeface.defaultFromStyle(Typeface.ITALIC)
+            TextStyle.BOLD_ITALIC -> Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
+        }
+        if (progressTextFont != null) {
+            textPaint.typeface = progressTextFont
+        }
+
+        suffixTextPaint.isAntiAlias = true
+        suffixTextPaint.color = suffixTextColor
+        suffixTextPaint.style = Paint.Style.FILL
+        suffixTextPaint.textSize = suffixTextSize
+        suffixTextPaint.typeface = when (suffixTextStyle) {
+            TextStyle.NORMAL -> Typeface.DEFAULT
+            TextStyle.BOLD -> Typeface.DEFAULT_BOLD
+            TextStyle.ITALIC -> Typeface.defaultFromStyle(Typeface.ITALIC)
+            TextStyle.BOLD_ITALIC -> Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
+        }
+        if (suffixTextFont != null) {
+            suffixTextPaint.typeface = suffixTextFont
+        }
 
     }
 
@@ -818,6 +816,24 @@ class RotaryKnob @JvmOverloads constructor(
         indicatorPaint.color = indicatorColor
         indicatorPaint.style = Paint.Style.FILL
         indicatorPaint.strokeWidth = 7f
+    }
+
+    private fun setupLabelPaint() {
+
+        labelPaint.isAntiAlias = true
+        labelPaint.color = labelTextColor
+        labelPaint.style = Paint.Style.FILL
+        labelPaint.textSize = labelTextSize
+        labelPaint.typeface = when (labelTextStyle) {
+            TextStyle.NORMAL -> Typeface.DEFAULT
+            TextStyle.BOLD -> Typeface.DEFAULT_BOLD
+            TextStyle.ITALIC -> Typeface.defaultFromStyle(Typeface.ITALIC)
+            TextStyle.BOLD_ITALIC -> Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
+        }
+        if (labelTextFont != null) {
+            labelPaint.typeface = labelTextFont
+        }
+
     }
 
 

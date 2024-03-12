@@ -50,7 +50,7 @@
             <enum name="italic" value="2" />
             <enum name="bold_italic" value="3" />
         </attr>
-        <attr name="progress_text_font" format="string" />
+        <attr name="progress_text_font" format="reference" />
 
         <!--suffix Text-->
         <attr name="show_suffix_text" format="boolean" />
@@ -63,7 +63,7 @@
             <enum name="italic" value="2" />
             <enum name="bold_italic" value="3" />
         </attr>
-        <attr name="suffix_text_font" format="string" />
+        <attr name="suffix_text_font" format="reference" />
 
         <!--Label-->
         <attr name="show_label" format="boolean" />
