@@ -121,7 +121,7 @@ class RotaryKnob @JvmOverloads constructor(
     // value
     var min = 0
     var max = 30
-    var currentProgress = 5
+    var currentProgress = 0
 
 
     // margin
@@ -342,8 +342,7 @@ class RotaryKnob @JvmOverloads constructor(
             // value
             min = typedArray.getInt(R.styleable.RotaryKnob_min, min)
             max = typedArray.getInt(R.styleable.RotaryKnob_max, max)
-            currentProgress =
-                typedArray.getInt(R.styleable.RotaryKnob_current_progress, currentProgress)
+            currentProgress = typedArray.getInt(R.styleable.RotaryKnob_current_progress, min + 1)
 
 
         } finally {
@@ -377,29 +376,6 @@ class RotaryKnob @JvmOverloads constructor(
         }
 
         setMeasuredDimension(width, height)
-
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        canvas.save()
-
-        calculateAreas()
-
-        drawProgressSteps(canvas)
-
-        drawProgressStepsFilled(canvas)
-
-        drawBorder(canvas)
-
-        drawCircle(canvas)
-
-        drawIndicator(canvas)
-
-        drawLabel(canvas)
-
-        drawProgressText(canvas)
-
-        canvas.restore()
 
     }
 
@@ -445,6 +421,30 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
+    override fun onDraw(canvas: Canvas) {
+        canvas.save()
+
+        calculateAreas()
+
+        drawProgressSteps(canvas)
+
+        drawProgressStepsFilled(canvas)
+
+        drawBorder(canvas)
+
+        drawCircle(canvas)
+
+        drawIndicator(canvas)
+
+        drawLabel(canvas)
+
+        drawProgressText(canvas)
+
+        canvas.restore()
+
+    }
+
+
     private fun drawProgressSteps(canvas: Canvas) {
 
         canvas.save()
@@ -468,11 +468,15 @@ class RotaryKnob @JvmOverloads constructor(
             }
         }
 
+        for (largeIndex in largerDotIndices) {
+            Log.e("drawProgressStepsFilled", "largeIndex: $largeIndex")
+        }
 
 
-        for (i in 0 until max - min) {
+
+        for (i in min until max) {
             // Calculate normalized progress for each dot
-            val progress = i.toFloat() / (max - 1 - min)
+            val progress = (i - min).toFloat() / (max - 1 - min)
 
             // Calculate angle for current dot
             val angle = 360f - (endOffset + progress * sweepAngle)
@@ -569,9 +573,11 @@ class RotaryKnob @JvmOverloads constructor(
 
 
 
-        for (i in 0..<currentProgress - min) {
+
+
+        for (i in min..<currentProgress) {
             // Calculate normalized progress for each dot
-            val progress = i.toFloat() / (max - 1 - min)
+            val progress = (i - min).toFloat() / (max - 1 - min)
 
             // Calculate angle for current dot
             val angle = 360f - (endOffset + progress * sweepAngle)
@@ -767,37 +773,6 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
-    private fun setupTextPaint() {
-
-        textPaint.isAntiAlias = true
-        textPaint.color = progressTextColor
-        textPaint.style = Paint.Style.FILL
-        textPaint.textSize = progressTextSize
-        textPaint.typeface = when (progressTextStyle) {
-            TextStyle.NORMAL -> Typeface.DEFAULT
-            TextStyle.BOLD -> Typeface.DEFAULT_BOLD
-            TextStyle.ITALIC -> Typeface.defaultFromStyle(Typeface.ITALIC)
-            TextStyle.BOLD_ITALIC -> Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
-        }
-        if (progressTextFont != null) {
-            textPaint.typeface = progressTextFont
-        }
-
-        suffixTextPaint.isAntiAlias = true
-        suffixTextPaint.color = suffixTextColor
-        suffixTextPaint.style = Paint.Style.FILL
-        suffixTextPaint.textSize = suffixTextSize
-        suffixTextPaint.typeface = when (suffixTextStyle) {
-            TextStyle.NORMAL -> Typeface.DEFAULT
-            TextStyle.BOLD -> Typeface.DEFAULT_BOLD
-            TextStyle.ITALIC -> Typeface.defaultFromStyle(Typeface.ITALIC)
-            TextStyle.BOLD_ITALIC -> Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
-        }
-        if (suffixTextFont != null) {
-            suffixTextPaint.typeface = suffixTextFont
-        }
-
-    }
 
     private fun setupProgressPaint() {
 
@@ -864,8 +839,41 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
+    private fun setupTextPaint() {
+
+        textPaint.isAntiAlias = true
+        textPaint.color = progressTextColor
+        textPaint.style = Paint.Style.FILL
+        textPaint.textSize = progressTextSize
+        textPaint.typeface = when (progressTextStyle) {
+            TextStyle.NORMAL -> Typeface.DEFAULT
+            TextStyle.BOLD -> Typeface.DEFAULT_BOLD
+            TextStyle.ITALIC -> Typeface.defaultFromStyle(Typeface.ITALIC)
+            TextStyle.BOLD_ITALIC -> Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
+        }
+        if (progressTextFont != null) {
+            textPaint.typeface = progressTextFont
+        }
+
+        suffixTextPaint.isAntiAlias = true
+        suffixTextPaint.color = suffixTextColor
+        suffixTextPaint.style = Paint.Style.FILL
+        suffixTextPaint.textSize = suffixTextSize
+        suffixTextPaint.typeface = when (suffixTextStyle) {
+            TextStyle.NORMAL -> Typeface.DEFAULT
+            TextStyle.BOLD -> Typeface.DEFAULT_BOLD
+            TextStyle.ITALIC -> Typeface.defaultFromStyle(Typeface.ITALIC)
+            TextStyle.BOLD_ITALIC -> Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
+        }
+        if (suffixTextFont != null) {
+            suffixTextPaint.typeface = suffixTextFont
+        }
+
+    }
+
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+
 
         val action = event.actionMasked
         val pointerIndex = event.actionIndex
@@ -880,6 +888,10 @@ class RotaryKnob @JvmOverloads constructor(
 
 
             if (distanceToCenter in (mainCircleRadius - 5)..radius) {
+
+                if (!knobEnable){
+                    return false
+                }
 
                 parent.requestDisallowInterceptTouchEvent(true)
 
@@ -924,9 +936,21 @@ class RotaryKnob @JvmOverloads constructor(
 
             }
 
+            if (distanceToCenter < mainCircleRadius * 2 / 5) {
+                if (touchToEnable){
+                    knobEnable = !knobEnable
+                    Log.e("onTouchEvent", "knobEnable: $knobEnable")
+                    invalidate()
+                }
+            }
+
             return true
 
         } else if (action == MotionEvent.ACTION_MOVE) {
+
+            if (!knobEnable){
+                return false
+            }
 
             val touchX = event.getX(pointerIndex)
             val touchY = event.getY(pointerIndex)
@@ -939,7 +963,7 @@ class RotaryKnob @JvmOverloads constructor(
 
             Log.e("onTouchEvent", "startingRadius: $startingRadius")
 
-            if (startingRadius < radius && startingRadius > mainCircleRadius * 2 / 3) {
+            if (startingRadius < radius && startingRadius > mainCircleRadius * 3 / 5) {
 
                 val dx = touchX - midX
                 val dy = touchY - midY
