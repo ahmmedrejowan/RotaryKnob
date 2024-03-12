@@ -19,7 +19,7 @@
 
         <!--Progress Normal-->
         <attr name="progress_style" format="enum">
-            <enum name="dot" value="0" />
+            <enum name="circle" value="0" />
             <enum name="line" value="1" />
         </attr>
         <attr name="progress_color" format="color" />
@@ -76,7 +76,7 @@
             <enum name="italic" value="2" />
             <enum name="bold_italic" value="3" />
         </attr>
-        <attr name="label_text_font" format="string" />
+        <attr name="label_text_font" format="reference" />
         <attr name="label_margin" format="dimension" />
 
 
