@@ -83,7 +83,7 @@
         <!--Enabled-->
         <attr name="knob_enable" format="boolean" />
         <attr name="touch_to_enable" format="boolean" />
-        <attr name="d_touch_to_enable" format="boolean" />
+        <attr name="double_touch_to_enable" format="boolean" />
         <attr name="d_circle_color" format="color" />
         <attr name="d_circle_gradient_center_color" format="color" />
         <attr name="d_circle_gradient_outer_color" format="color" />

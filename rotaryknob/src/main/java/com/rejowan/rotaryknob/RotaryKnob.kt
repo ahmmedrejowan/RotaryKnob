@@ -11,6 +11,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
@@ -52,7 +53,7 @@ class RotaryKnob @JvmOverloads constructor(
     var circleStyle = CircleStyle.GRADIENT
     var circleColor = Color.parseColor("#8062D6")
     var circleGradientCenterColor = Color.parseColor("#8062D6")
-    var circleGradientOuterColor = Color.parseColor("#6040B8")
+    var circleGradientOuterColor = Color.parseColor("#644AAC")
 
     // attrs - border
     var showBorder = true
@@ -80,7 +81,7 @@ class RotaryKnob @JvmOverloads constructor(
     var showProgressText = true
     var progressText = ""
     var progressTextColor = Color.parseColor("#FFFFFF")
-    var progressTextSize = 30f
+    var progressTextSize = 100f
     var progressTextStyle = TextStyle.BOLD
     var progressTextFont: Typeface? = null
 
@@ -88,7 +89,7 @@ class RotaryKnob @JvmOverloads constructor(
     var showSuffixText = false
     var suffixText = ""
     var suffixTextColor = Color.parseColor("#FFFFFF")
-    var suffixTextSize = 10f
+    var suffixTextSize = 30f
     var suffixTextStyle = TextStyle.BOLD
     var suffixTextFont: Typeface? = null
 
@@ -96,7 +97,7 @@ class RotaryKnob @JvmOverloads constructor(
     var showLabel = true
     var labelText = "Label"
     var labelTextColor = Color.parseColor("#444444")
-    var labelTextSize = 13f
+    var labelTextSize = 45f
     var labelTextStyle = TextStyle.BOLD
     var labelTextFont: Typeface? = null
     var labelMargin = 0f
@@ -105,17 +106,17 @@ class RotaryKnob @JvmOverloads constructor(
     var knobEnable = true
     var touchToEnable = true
     var doubleTouchToEnable = true
-    var disabledCircleColor = Color.parseColor("#FF0000")
-    var disabledCircleGradientCenterColor = Color.parseColor("#FF0000")
-    var disabledCircleGradientOuterColor = Color.parseColor("#FF0000")
-    var disabledBorderColor = Color.parseColor("#FF0000")
-    var disabledProgressColor = Color.parseColor("#FF0000")
-    var disabledBigProgressColor = Color.parseColor("#FF0000")
-    var disabledProgressFilledColor = Color.parseColor("#FF0000")
-    var disabledIndicatorColor = Color.parseColor("#FF0000")
-    var disabledProgressTextColor = Color.parseColor("#FF0000")
-    var disabledsuffixTextColor = Color.parseColor("#FF0000")
-    var disabledLabelTextColor = Color.parseColor("#FF0000")
+    var disabledCircleColor = Color.parseColor("#555555")
+    var disabledCircleGradientCenterColor = Color.parseColor("#555555")
+    var disabledCircleGradientOuterColor = Color.parseColor("#444444")
+    var disabledBorderColor = Color.parseColor("#333333")
+    var disabledProgressColor = Color.parseColor("#888888")
+    var disabledBigProgressColor = Color.parseColor("#888888")
+    var disabledProgressFilledColor = Color.parseColor("#555555")
+    var disabledIndicatorColor = Color.parseColor("#cccccc")
+    var disabledProgressTextColor = Color.parseColor("#cccccc")
+    var disabledsuffixTextColor = Color.parseColor("#cccccc")
+    var disabledLabelTextColor = Color.parseColor("#555555")
 
 
     // value
@@ -142,7 +143,45 @@ class RotaryKnob @JvmOverloads constructor(
     private var normalDotSize = 0f
     private var largerDotSize = 0f
 
+    private var gestureDetector: GestureDetector? = null
+
     init {
+
+        gestureDetector =
+            GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    val action = e.actionMasked
+                    val pointerIndex = e.actionIndex
+                    val touchX = e.getX(pointerIndex)
+                    val touchY = e.getY(pointerIndex)
+                    val distanceToCenter = sqrt((midX - touchX).pow(2) + (midY - touchY).pow(2))
+                    if (distanceToCenter < mainCircleRadius * 2 / 5) {
+                        if (doubleTouchToEnable) {
+                            knobEnable = !knobEnable
+                            Log.e("onTouchEvent", "knobEnable: $knobEnable")
+                            invalidate()
+                        }
+                    }
+                    return super.onDoubleTap(e)
+                }
+
+                override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                    val action = e.actionMasked
+                    val pointerIndex = e.actionIndex
+                    val touchX = e.getX(pointerIndex)
+                    val touchY = e.getY(pointerIndex)
+                    val distanceToCenter = sqrt((midX - touchX).pow(2) + (midY - touchY).pow(2))
+                    if (distanceToCenter < mainCircleRadius * 2 / 5) {
+                        if (touchToEnable) {
+                            knobEnable = !knobEnable
+                            Log.e("onTouchEvent", "knobEnable: $knobEnable")
+                            invalidate()
+                        }
+                    }
+                    return super.onSingleTapConfirmed(e)
+                }
+
+            })
 
         initAttributes(attrs)
 
@@ -169,11 +208,10 @@ class RotaryKnob @JvmOverloads constructor(
             // border
             showBorder = typedArray.getBoolean(R.styleable.RotaryKnob_show_border, showBorder)
             borderColor = typedArray.getColor(R.styleable.RotaryKnob_border_color, borderColor)
-            borderWidth = convertDpToPixel(
+            borderWidth =
                 typedArray.getDimension(
                     R.styleable.RotaryKnob_border_width, borderWidth
-                ), context
-            )
+                )
 
 
             // progress normal
@@ -207,11 +245,10 @@ class RotaryKnob @JvmOverloads constructor(
             indicatorColor = typedArray.getColor(
                 R.styleable.RotaryKnob_indicator_color, indicatorColor
             )
-            indicatorSize = convertDpToPixel(
+            indicatorSize =
                 typedArray.getDimension(
                     R.styleable.RotaryKnob_indicator_size, indicatorSize
-                ), context
-            )
+                )
 
 
             // progress text
@@ -221,11 +258,10 @@ class RotaryKnob @JvmOverloads constructor(
             progressTextColor = typedArray.getColor(
                 R.styleable.RotaryKnob_progress_text_color, progressTextColor
             )
-            progressTextSize = convertDpToPixel(
+            progressTextSize =
                 typedArray.getDimension(
                     R.styleable.RotaryKnob_progress_text_size, progressTextSize
-                ), context
-            )
+                )
             val progressTextStyleOrdinal = typedArray.getInt(
                 R.styleable.RotaryKnob_progress_text_style, progressTextStyle.ordinal
             )
@@ -252,11 +288,11 @@ class RotaryKnob @JvmOverloads constructor(
             suffixTextColor = typedArray.getColor(
                 R.styleable.RotaryKnob_suffix_text_color, suffixTextColor
             )
-            suffixTextSize = convertDpToPixel(
+            suffixTextSize =
                 typedArray.getDimension(
                     R.styleable.RotaryKnob_suffix_text_size, suffixTextSize
-                ), context
-            )
+                )
+
             val suffixTextStyleOrdinal =
                 typedArray.getInt(R.styleable.RotaryKnob_suffix_text_style, suffixTextStyle.ordinal)
             suffixTextStyle = TextStyle.values()[suffixTextStyleOrdinal]
@@ -274,11 +310,10 @@ class RotaryKnob @JvmOverloads constructor(
             labelTextColor = typedArray.getColor(
                 R.styleable.RotaryKnob_label_text_color, labelTextColor
             )
-            labelTextSize = convertDpToPixel(
+            labelTextSize =
                 typedArray.getDimension(
                     R.styleable.RotaryKnob_label_text_size, labelTextSize
-                ), context
-            )
+                )
             val labelTextStyleOrdinal =
                 typedArray.getInt(R.styleable.RotaryKnob_label_text_style, labelTextStyle.ordinal)
             labelTextStyle = TextStyle.values()[labelTextStyleOrdinal]
@@ -289,18 +324,17 @@ class RotaryKnob @JvmOverloads constructor(
             }
 
 
-            labelMargin = convertDpToPixel(
+            labelMargin =
                 typedArray.getDimension(
                     R.styleable.RotaryKnob_label_margin, labelMargin
-                ), context
-            )
+                )
 
             // enabled
             knobEnable = typedArray.getBoolean(R.styleable.RotaryKnob_knob_enable, knobEnable)
             touchToEnable =
                 typedArray.getBoolean(R.styleable.RotaryKnob_touch_to_enable, touchToEnable)
             doubleTouchToEnable = typedArray.getBoolean(
-                R.styleable.RotaryKnob_d_touch_to_enable, doubleTouchToEnable
+                R.styleable.RotaryKnob_double_touch_to_enable, doubleTouchToEnable
             )
             disabledCircleColor = typedArray.getColor(
                 R.styleable.RotaryKnob_d_circle_color, disabledCircleColor
@@ -777,7 +811,11 @@ class RotaryKnob @JvmOverloads constructor(
     private fun setupProgressPaint() {
 
         progressPaint.isAntiAlias = true
-        progressPaint.color = progressColor
+        progressPaint.color = if (knobEnable) {
+            progressColor
+        } else {
+            disabledProgressColor
+        }
         progressPaint.style = Paint.Style.FILL
 
     }
@@ -785,13 +823,21 @@ class RotaryKnob @JvmOverloads constructor(
     private fun setupProgressFilledPaint() {
 
         progressFilled.isAntiAlias = true
-        progressFilled.color = progressFilledColor
+        progressFilled.color = if (knobEnable) {
+            progressFilledColor
+        } else {
+            disabledProgressFilledColor
+        }
         progressFilled.style = Paint.Style.FILL
     }
 
     private fun setupBorderPaint() {
         borderPaint.isAntiAlias = true
-        borderPaint.color = borderColor
+        borderPaint.color = if (knobEnable) {
+            borderColor
+        } else {
+            disabledBorderColor
+        }
         borderPaint.style = Paint.Style.FILL
     }
 
@@ -799,15 +845,28 @@ class RotaryKnob @JvmOverloads constructor(
         circlePaint.isAntiAlias = true
 
         if (circleStyle == CircleStyle.SOLID) {
-            circlePaint.color = circleColor
+            circlePaint.color = if (knobEnable) {
+                circleColor
+            } else {
+                disabledCircleColor
+            }
             circlePaint.style = Paint.Style.FILL
         } else {
 
-            val startColor = Color.parseColor("#8062D6") // Light blue
-            val endColor = Color.parseColor("#644AAC")   // Purple
+            val cColor = if (knobEnable) {
+                circleGradientCenterColor
+            } else {
+                disabledCircleGradientCenterColor
+            }
+            val oColor = if (knobEnable) {
+                circleGradientOuterColor
+            } else {
+                disabledCircleGradientOuterColor
+            }
+
             val radius = mainCircleRadius
             val gradient = RadialGradient(
-                midX, midY, radius, startColor, endColor, Shader.TileMode.CLAMP
+                midX, midY, radius, cColor, oColor, Shader.TileMode.CLAMP
             )
             circlePaint.shader = gradient
         }
@@ -816,7 +875,11 @@ class RotaryKnob @JvmOverloads constructor(
 
     private fun setupDrawIndicator() {
         indicatorPaint.isAntiAlias = true
-        indicatorPaint.color = indicatorColor
+        indicatorPaint.color = if (knobEnable) {
+            indicatorColor
+        } else {
+            disabledIndicatorColor
+        }
         indicatorPaint.style = Paint.Style.FILL
         indicatorPaint.strokeWidth = 7f
     }
@@ -824,7 +887,11 @@ class RotaryKnob @JvmOverloads constructor(
     private fun setupLabelPaint() {
 
         labelPaint.isAntiAlias = true
-        labelPaint.color = labelTextColor
+        labelPaint.color = if (knobEnable) {
+            labelTextColor
+        } else {
+            disabledLabelTextColor
+        }
         labelPaint.style = Paint.Style.FILL
         labelPaint.textSize = labelTextSize
         labelPaint.typeface = when (labelTextStyle) {
@@ -842,7 +909,11 @@ class RotaryKnob @JvmOverloads constructor(
     private fun setupTextPaint() {
 
         textPaint.isAntiAlias = true
-        textPaint.color = progressTextColor
+        textPaint.color = if (knobEnable) {
+            progressTextColor
+        } else {
+            disabledProgressTextColor
+        }
         textPaint.style = Paint.Style.FILL
         textPaint.textSize = progressTextSize
         textPaint.typeface = when (progressTextStyle) {
@@ -856,7 +927,11 @@ class RotaryKnob @JvmOverloads constructor(
         }
 
         suffixTextPaint.isAntiAlias = true
-        suffixTextPaint.color = suffixTextColor
+        suffixTextPaint.color = if (knobEnable) {
+            suffixTextColor
+        } else {
+            disabledsuffixTextColor
+        }
         suffixTextPaint.style = Paint.Style.FILL
         suffixTextPaint.textSize = suffixTextSize
         suffixTextPaint.typeface = when (suffixTextStyle) {
@@ -874,6 +949,11 @@ class RotaryKnob @JvmOverloads constructor(
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
 
+        val handled = gestureDetector?.onTouchEvent(event) ?: false
+        if (handled) {
+            return true
+        }
+
 
         val action = event.actionMasked
         val pointerIndex = event.actionIndex
@@ -889,7 +969,7 @@ class RotaryKnob @JvmOverloads constructor(
 
             if (distanceToCenter in (mainCircleRadius - 5)..radius) {
 
-                if (!knobEnable){
+                if (!knobEnable) {
                     return false
                 }
 
@@ -935,20 +1015,20 @@ class RotaryKnob @JvmOverloads constructor(
 
 
             }
-
-            if (distanceToCenter < mainCircleRadius * 2 / 5) {
-                if (touchToEnable){
-                    knobEnable = !knobEnable
-                    Log.e("onTouchEvent", "knobEnable: $knobEnable")
-                    invalidate()
-                }
-            }
+//
+//            if (distanceToCenter < mainCircleRadius * 2 / 5) {
+//                if (touchToEnable) {
+//                    knobEnable = !knobEnable
+//                    Log.e("onTouchEvent", "knobEnable: $knobEnable")
+//                    invalidate()
+//                }
+//            }
 
             return true
 
         } else if (action == MotionEvent.ACTION_MOVE) {
 
-            if (!knobEnable){
+            if (!knobEnable) {
                 return false
             }
 

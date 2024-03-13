@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <com.rejowan.rotaryknob.RotaryKnob
         android:id="@+id/rotaryKnob"
         android:layout_width="match_parent"
@@ -15,25 +16,23 @@
         android:layout_marginTop="100dp"
         app:big_progress_diff="5"
         app:big_progress_multiplier="2"
-        app:indicator_color="@color/white"
-        app:indicator_style="circle"
-        app:label_text="Rotary Knob"
-        app:label_text_font="@font/android_normal"
-        app:label_text_size="5sp"
-        app:label_text_style="normal"
+        app:current_progress="20"
+        app:double_touch_to_enable="true"
+        app:indicator_style="line"
+        app:label_text="Rotary"
+        app:label_text_font="@font/ubuntu_normal"
+        app:label_text_size="10sp"
         app:max="30"
-        app:knob_enable="false"
         app:min="10"
         app:progress_filled_multiplier="1"
-        app:progress_style="circle"
+        app:progress_style="line"
         app:progress_text_font="@font/ubuntu_normal"
-        app:progress_text_size="18sp"
         app:show_big_progress="true"
         app:show_label="true"
         app:show_progress_text="true"
         app:show_suffix_text="true"
         app:suffix_text="db"
         app:suffix_text_font="@font/ubuntu_normal"
-        app:suffix_text_size="5dp" />
+        app:touch_to_enable="false" />
 
 </LinearLayout>
