@@ -556,7 +556,11 @@ class RotaryKnob @JvmOverloads constructor(
                 if (i in largerDotIndices) {
                     lineSize =
                         progressRadius / 10 * (20f / (max - min)) // Larger rectangle width for specified indices
-                    progressPaint.strokeWidth = progressRadius / 20 * (20f / (max - min))
+                    progressPaint.strokeWidth = if (bigProgressMultiplier == 0f) {
+                        progressRadius / 20 * (20f / (max - min))
+                    } else {
+                        progressRadius / 40 * (20f / (max - min)) * bigProgressMultiplier
+                    }
 
                 } else {
                     lineSize = progressRadius / 20 * (20f / (max - min)) // Regular rectangle width
