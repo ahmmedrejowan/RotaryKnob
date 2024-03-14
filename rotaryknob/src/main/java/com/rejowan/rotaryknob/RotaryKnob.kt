@@ -90,7 +90,7 @@ class RotaryKnob @JvmOverloads constructor(
     var suffixText = ""
     var suffixTextColor = Color.parseColor("#FFFFFF")
     var suffixTextSize = 30f
-    var suffixTextStyle = TextStyle.BOLD
+    var suffixTextStyle = TextStyle.NORMAL
     var suffixTextFont: Typeface? = null
 
     // Label
@@ -98,7 +98,7 @@ class RotaryKnob @JvmOverloads constructor(
     var labelText = "Label"
     var labelTextColor = Color.parseColor("#444444")
     var labelTextSize = 45f
-    var labelTextStyle = TextStyle.BOLD
+    var labelTextStyle = TextStyle.NORMAL
     var labelTextFont: Typeface? = null
     var labelMargin = 0f
 

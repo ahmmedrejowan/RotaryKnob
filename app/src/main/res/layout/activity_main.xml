@@ -60,6 +60,20 @@
                 app:progress_text_size="26sp"
                 app:progress_text_style="bold"
                 app:progress_text_font="@font/ubuntu_normal"
+                app:show_suffix_text="true"
+                app:suffix_text="db"
+                app:suffix_text_color="#8062D6"
+                app:suffix_text_size="10sp"
+                app:suffix_text_style="normal"
+                app:show_label="true"
+                app:label_text="Rotary"
+                app:label_text_size="12sp"
+                app:label_text_font="@font/ubuntu_normal"
+                app:label_text_color="#8062D6"
+                app:double_touch_to_enable="true"
+                app:min="0"
+                app:max="20"
+                app:current_progress="10"
 
                 />
 
