@@ -1,6 +1,7 @@
 package com.rejowan.rotaryknob
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -97,7 +98,7 @@ class RotaryKnob @JvmOverloads constructor(
     var showLabel = true
     var labelText = "Label"
     var labelTextColor = Color.parseColor("#444444")
-    var labelTextSize = 45f
+    var labelTextSize = 40f
     var labelTextStyle = TextStyle.NORMAL
     var labelTextFont: Typeface? = null
     var labelMargin = 0f
@@ -124,6 +125,8 @@ class RotaryKnob @JvmOverloads constructor(
     var max = 30
     var currentProgress = 0
 
+    var progressChangeListener: OnProgressChangeListener? = null
+    var knobEnableListener: OnKnobEnableListener? = null
 
     // margin
     private var sideMargin = 0f
@@ -150,7 +153,6 @@ class RotaryKnob @JvmOverloads constructor(
         gestureDetector =
             GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
                 override fun onDoubleTap(e: MotionEvent): Boolean {
-                    val action = e.actionMasked
                     val pointerIndex = e.actionIndex
                     val touchX = e.getX(pointerIndex)
                     val touchY = e.getY(pointerIndex)
@@ -158,7 +160,7 @@ class RotaryKnob @JvmOverloads constructor(
                     if (distanceToCenter < mainCircleRadius * 2 / 5) {
                         if (doubleTouchToEnable) {
                             knobEnable = !knobEnable
-                            Log.e("onTouchEvent", "knobEnable: $knobEnable")
+                            knobEnableListener?.onKnobEnableChanged(knobEnable, currentProgress)
                             invalidate()
                         }
                     }
@@ -166,7 +168,6 @@ class RotaryKnob @JvmOverloads constructor(
                 }
 
                 override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-                    val action = e.actionMasked
                     val pointerIndex = e.actionIndex
                     val touchX = e.getX(pointerIndex)
                     val touchY = e.getY(pointerIndex)
@@ -174,7 +175,7 @@ class RotaryKnob @JvmOverloads constructor(
                     if (distanceToCenter < mainCircleRadius * 2 / 5) {
                         if (touchToEnable) {
                             knobEnable = !knobEnable
-                            Log.e("onTouchEvent", "knobEnable: $knobEnable")
+                            knobEnableListener?.onKnobEnableChanged(knobEnable, currentProgress)
                             invalidate()
                         }
                     }
@@ -208,10 +209,9 @@ class RotaryKnob @JvmOverloads constructor(
             // border
             showBorder = typedArray.getBoolean(R.styleable.RotaryKnob_show_border, showBorder)
             borderColor = typedArray.getColor(R.styleable.RotaryKnob_border_color, borderColor)
-            borderWidth =
-                typedArray.getDimension(
-                    R.styleable.RotaryKnob_border_width, borderWidth
-                )
+            borderWidth = typedArray.getDimension(
+                R.styleable.RotaryKnob_border_width, borderWidth
+            )
 
 
             // progress normal
@@ -245,10 +245,9 @@ class RotaryKnob @JvmOverloads constructor(
             indicatorColor = typedArray.getColor(
                 R.styleable.RotaryKnob_indicator_color, indicatorColor
             )
-            indicatorSize =
-                typedArray.getDimension(
-                    R.styleable.RotaryKnob_indicator_size, indicatorSize
-                )
+            indicatorSize = typedArray.getDimension(
+                R.styleable.RotaryKnob_indicator_size, indicatorSize
+            )
 
 
             // progress text
@@ -258,10 +257,9 @@ class RotaryKnob @JvmOverloads constructor(
             progressTextColor = typedArray.getColor(
                 R.styleable.RotaryKnob_progress_text_color, progressTextColor
             )
-            progressTextSize =
-                typedArray.getDimension(
-                    R.styleable.RotaryKnob_progress_text_size, progressTextSize
-                )
+            progressTextSize = typedArray.getDimension(
+                R.styleable.RotaryKnob_progress_text_size, progressTextSize
+            )
             val progressTextStyleOrdinal = typedArray.getInt(
                 R.styleable.RotaryKnob_progress_text_style, progressTextStyle.ordinal
             )
@@ -288,10 +286,9 @@ class RotaryKnob @JvmOverloads constructor(
             suffixTextColor = typedArray.getColor(
                 R.styleable.RotaryKnob_suffix_text_color, suffixTextColor
             )
-            suffixTextSize =
-                typedArray.getDimension(
-                    R.styleable.RotaryKnob_suffix_text_size, suffixTextSize
-                )
+            suffixTextSize = typedArray.getDimension(
+                R.styleable.RotaryKnob_suffix_text_size, suffixTextSize
+            )
 
             val suffixTextStyleOrdinal =
                 typedArray.getInt(R.styleable.RotaryKnob_suffix_text_style, suffixTextStyle.ordinal)
@@ -310,10 +307,9 @@ class RotaryKnob @JvmOverloads constructor(
             labelTextColor = typedArray.getColor(
                 R.styleable.RotaryKnob_label_text_color, labelTextColor
             )
-            labelTextSize =
-                typedArray.getDimension(
-                    R.styleable.RotaryKnob_label_text_size, labelTextSize
-                )
+            labelTextSize = typedArray.getDimension(
+                R.styleable.RotaryKnob_label_text_size, labelTextSize
+            )
             val labelTextStyleOrdinal =
                 typedArray.getInt(R.styleable.RotaryKnob_label_text_style, labelTextStyle.ordinal)
             labelTextStyle = TextStyle.values()[labelTextStyleOrdinal]
@@ -324,10 +320,9 @@ class RotaryKnob @JvmOverloads constructor(
             }
 
 
-            labelMargin =
-                typedArray.getDimension(
-                    R.styleable.RotaryKnob_label_margin, labelMargin
-                )
+            labelMargin = typedArray.getDimension(
+                R.styleable.RotaryKnob_label_margin, labelMargin
+            )
 
             // enabled
             knobEnable = typedArray.getBoolean(R.styleable.RotaryKnob_knob_enable, knobEnable)
@@ -456,6 +451,9 @@ class RotaryKnob @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+
+        progressChangeListener?.onProgressChanged(currentProgress)
+
         canvas.save()
 
         calculateAreas()
@@ -486,7 +484,6 @@ class RotaryKnob @JvmOverloads constructor(
         setupProgressPaint()
 
 
-        // large progress indices, it's every big_progress_diff-th index
         val largerDotIndices = mutableListOf<Int>()
         if (showBigProgress) {
             for (i in min..<max) {
@@ -502,27 +499,18 @@ class RotaryKnob @JvmOverloads constructor(
             }
         }
 
-        for (largeIndex in largerDotIndices) {
-            Log.e("drawProgressStepsFilled", "largeIndex: $largeIndex")
-        }
-
-
-
         for (i in min until max) {
-            // Calculate normalized progress for each dot
             val progress = (i - min).toFloat() / (max - 1 - min)
 
-            // Calculate angle for current dot
             val angle = 360f - (endOffset + progress * sweepAngle)
 
-            // Calculate x and y coordinates for the dot
             val x = midX + (progressRadius * sin(Math.toRadians(angle.toDouble()))).toFloat()
             val y = midY + (progressRadius * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
 
             if (sizeStyle == SizeStyle.CIRCLE) {
 
-                var dotSize = 0f
+                var dotSize: Float
 
                 if (showBigProgress) {
                     if (i in largerDotIndices) {
@@ -546,16 +534,15 @@ class RotaryKnob @JvmOverloads constructor(
                     normalDotSize = dotSize
                 }
 
-                // Draw the dot
                 canvas.drawCircle(x, y, dotSize, progressPaint)
-            } else {
-                // Draw the line
 
-                var lineSize = 0f
+            } else {
+
+                var lineSize: Float
 
                 if (i in largerDotIndices) {
                     lineSize =
-                        progressRadius / 10 * (20f / (max - min)) // Larger rectangle width for specified indices
+                        progressRadius / 10 * (20f / (max - min))
                     progressPaint.strokeWidth = if (bigProgressMultiplier == 0f) {
                         progressRadius / 20 * (20f / (max - min))
                     } else {
@@ -563,7 +550,7 @@ class RotaryKnob @JvmOverloads constructor(
                     }
 
                 } else {
-                    lineSize = progressRadius / 20 * (20f / (max - min)) // Regular rectangle width
+                    lineSize = progressRadius / 20 * (20f / (max - min))
                     progressPaint.strokeWidth = progressRadius / 40 * (20f / (max - min))
                 }
 
@@ -577,9 +564,7 @@ class RotaryKnob @JvmOverloads constructor(
                     x, y, indicatorEndX, indicatorEndY, progressPaint
                 )
 
-
             }
-
 
         }
 
@@ -593,7 +578,6 @@ class RotaryKnob @JvmOverloads constructor(
 
         setupProgressFilledPaint()
 
-        // large progress indices, it's every big_progress_diff-th index
         val largerDotIndices = mutableListOf<Int>()
         if (showBigProgress) {
             for (i in min..<max) {
@@ -611,17 +595,11 @@ class RotaryKnob @JvmOverloads constructor(
 
 
 
-
-
         for (i in min..<currentProgress) {
-            // Calculate normalized progress for each dot
             val progress = (i - min).toFloat() / (max - 1 - min)
 
-            // Calculate angle for current dot
             val angle = 360f - (endOffset + progress * sweepAngle)
 
-
-            // Calculate x and y coordinates for the dot
             val x = midX + (progressRadius * sin(Math.toRadians(angle.toDouble()))).toFloat()
             val y = midY + (progressRadius * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
@@ -642,8 +620,6 @@ class RotaryKnob @JvmOverloads constructor(
                     }
                 }
 
-
-                // Draw the dot
                 canvas.drawCircle(x, y, dotSize, progressFilled)
 
             } else {
@@ -764,7 +740,7 @@ class RotaryKnob @JvmOverloads constructor(
         setupLabelPaint()
 
         val textWidth = labelPaint.measureText(labelText)
-        val textHeight = labelPaint.descent() - labelPaint.ascent()
+//        val textHeight = labelPaint.descent() - labelPaint.ascent()
         val textX = midX - textWidth / 2
         val textY = if (labelMargin == 0f) {
             midY + radius
@@ -792,14 +768,12 @@ class RotaryKnob @JvmOverloads constructor(
             canvas.drawText(progressText, progressTextX, progressTextY, textPaint)
         }
 
-        var additionalText: String = if (suffixText.isNullOrEmpty()) {
+        val additionalText: String = suffixText.ifEmpty {
             "%"
-        } else {
-            suffixText
         }
 
-        val additionalTextWidth = suffixTextPaint.measureText(additionalText)
-        val additionalTextHeight = suffixTextPaint.descent() - suffixTextPaint.ascent()
+//        val additionalTextWidth = suffixTextPaint.measureText(additionalText)
+//        val additionalTextHeight = suffixTextPaint.descent() - suffixTextPaint.ascent()
         val additionalTextX = midX + progressTextWidth * 5 / 12
         val additionalTextY = progressTextY - progressTextHeight / 2
 
@@ -951,6 +925,7 @@ class RotaryKnob @JvmOverloads constructor(
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
 
         val handled = gestureDetector?.onTouchEvent(event) ?: false
@@ -984,30 +959,22 @@ class RotaryKnob @JvmOverloads constructor(
                 val dy = touchY - midY
 
                 var currentAngle = (atan2(dy.toDouble(), dx.toDouble()) * 180 / Math.PI).toFloat()
-                //    Log.e("onTouchEvent", "currentAngle: $currentAngle")
 
                 currentAngle -= 90
-                //     Log.e("onTouchEvent", "currentAngle - 90: $currentAngle")
 
                 currentAngle -= startOffset
 
                 if (currentAngle < 0) {
                     currentAngle += 360
-                    //     Log.e("onTouchEvent", "currentAngle + 360: $currentAngle")
                 }
 
-                var reVerseAngle = 360 - currentAngle
-                //  Log.e("onTouchEvent", "temp angle: $reVerseAngle -----------------")
+                val reVerseAngle = 360 - currentAngle
 
                 val temp1 = (reVerseAngle - 360) / sweepAngle
-                Log.e("onTouchEvent", "temp angle: $temp1 -----------------")
 
                 var temp = -(temp1 * (max - min)).toInt()
-                Log.e("onTouchEvent", "temp init: $temp")
 
                 temp += min + 1
-                Log.e("onTouchEvent", "temp final: $temp")
-
 
                 return if (temp in min..<max + 1) {
                     currentProgress = temp
@@ -1019,15 +986,6 @@ class RotaryKnob @JvmOverloads constructor(
 
 
             }
-//
-//            if (distanceToCenter < mainCircleRadius * 2 / 5) {
-//                if (touchToEnable) {
-//                    knobEnable = !knobEnable
-//                    Log.e("onTouchEvent", "knobEnable: $knobEnable")
-//                    invalidate()
-//                }
-//            }
-
             return true
 
         } else if (action == MotionEvent.ACTION_MOVE) {
@@ -1041,11 +999,8 @@ class RotaryKnob @JvmOverloads constructor(
 
             val distanceToCenter = sqrt((midX - touchX).pow(2) + (midY - touchY).pow(2))
 
-            Log.e("onTouchEvent", "distanceToCenter: $distanceToCenter")
-
             startingRadius = if (startingRadius == 0f) distanceToCenter else startingRadius
 
-            Log.e("onTouchEvent", "startingRadius: $startingRadius")
 
             if (startingRadius < radius && startingRadius > mainCircleRadius * 3 / 5) {
 
@@ -1053,31 +1008,21 @@ class RotaryKnob @JvmOverloads constructor(
                 val dy = touchY - midY
 
                 var currentAngle = (atan2(dy.toDouble(), dx.toDouble()) * 180 / Math.PI).toFloat()
-                Log.e("onTouchEvent", "currentAngle: $currentAngle")
 
                 currentAngle -= 90
-                Log.e("onTouchEvent", "currentAngle - 90: $currentAngle")
 
                 currentAngle -= startOffset
 
                 if (currentAngle < 0) {
                     currentAngle += 360
-                    Log.e("onTouchEvent", "currentAngle + 360: $currentAngle")
                 }
 
-                var reVerseAngle = 360 - currentAngle
-                Log.e("onTouchEvent", "reVerseAngle: $reVerseAngle")
+                val reVerseAngle = 360 - currentAngle
 
                 val temp1 = (reVerseAngle - 360) / sweepAngle
-                Log.e("onTouchEvent", "temp1: $temp1")
-
 
                 var temp = -(temp1 * (max - min)).toInt()
-                Log.e("onTouchEvent", "temp init: $temp")
-
                 temp += min + 1
-                Log.e("onTouchEvent", "temp final: $temp")
-
 
                 return if (temp in min..<max + 1) {
                     currentProgress = temp
@@ -1102,16 +1047,18 @@ class RotaryKnob @JvmOverloads constructor(
 
     }
 
-    fun convertDpToPixel(dp: Float, context: Context): Float {
+    private fun convertDpToPixel(dp: Float, context: Context): Float {
         val resources = context.resources
         val metrics = resources.displayMetrics
         return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 
-    fun convertPixelsToDp(px: Float, context: Context): Float {
-        val resources = context.resources
-        val metrics = resources.displayMetrics
-        return px / (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    interface OnProgressChangeListener {
+        fun onProgressChanged(progress: Int)
+    }
+
+    interface OnKnobEnableListener {
+        fun onKnobEnableChanged(isEnable: Boolean, progress: Int)
     }
 
 }
