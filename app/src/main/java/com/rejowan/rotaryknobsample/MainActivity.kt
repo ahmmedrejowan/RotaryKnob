@@ -1,5 +1,6 @@
 package com.rejowan.rotaryknobsample
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.knobPlaygroundCardView.setOnClickListener {
+            startActivity(Intent(this, KnobPlayground::class.java))
+        }
 
         binding.rotaryKnob.knobEnableListener = object : RotaryKnob.OnKnobEnableListener {
             override fun onKnobEnableChanged(isEnable: Boolean, progress: Int) {
@@ -28,6 +32,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
 
 
 

@@ -52,13 +52,29 @@ class RotaryKnob @JvmOverloads constructor(
 
     // attrs - circle
     var circleStyle = CircleStyle.GRADIENT
+        set(value) {
+            field = value
+            invalidate()
+        }
     var circleColor = Color.parseColor("#8062D6")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var circleGradientCenterColor = Color.parseColor("#8062D6")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var circleGradientOuterColor = Color.parseColor("#644AAC")
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // attrs - border
     var showBorder = true
-    var borderColor = Color.parseColor("#8062D6")
+    var borderColor = Color.parseColor("#8A73CD")
     var borderWidth = 0f
 
     // progress normal
@@ -821,6 +837,8 @@ class RotaryKnob @JvmOverloads constructor(
 
     private fun setupCirclePaint() {
         circlePaint.isAntiAlias = true
+
+        circlePaint.reset()
 
         if (circleStyle == CircleStyle.SOLID) {
             circlePaint.color = if (knobEnable) {
