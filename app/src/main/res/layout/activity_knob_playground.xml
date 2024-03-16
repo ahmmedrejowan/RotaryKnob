@@ -593,7 +593,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
 
                         <LinearLayout
@@ -797,7 +797,6 @@
                             <EditText
                                 android:id="@+id/bigProgressMultiplierEditText"
                                 android:layout_width="100dp"
-                                android:text="20"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center" />
 
@@ -851,7 +850,6 @@
                             <EditText
                                 android:id="@+id/bigProgressDiffEditText"
                                 android:layout_width="100dp"
-                                android:text="20"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center" />
 
