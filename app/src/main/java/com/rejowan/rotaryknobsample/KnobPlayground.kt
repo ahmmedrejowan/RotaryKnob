@@ -17,7 +17,8 @@ class KnobPlayground : AppCompatActivity() {
     private val binding by lazy { ActivityKnobPlaygroundBinding.inflate(layoutInflater) }
 
     private var isCircleArrowEnable = false
-    private var isBorderEnable = false
+    private var isBorderArrowEnable = false
+    private var isProgressArrowEnable = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,75 @@ class KnobPlayground : AppCompatActivity() {
         circleStyles()
 
         borderStyles()
+
+        progressStyles()
+
+
+    }
+
+    private fun progressStyles() {
+
+        val listOfStyles = RotaryKnob.SizeStyle.values().map { it.name }
+        val adapter =
+            android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, listOfStyles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.progressStyleSpinner.adapter = adapter
+        binding.progressStyleSpinner.setSelection(binding.rotaryKnob.progressStyle.ordinal)
+
+        binding.progressStyleSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val style = RotaryKnob.SizeStyle.values()[position]
+                    binding.rotaryKnob.progressStyle = style
+
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {
+                }
+
+            }
+
+        binding.progressColorView.setBackgroundColor(binding.rotaryKnob.progressColor)
+        binding.progressColorView.text = colorIntToHex(binding.rotaryKnob.progressColor)
+
+        binding.progressColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.progressColor = colorInt
+                    binding.progressColorView.setBackgroundColor(colorInt)
+                    binding.progressColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.showBigProgressSwitch.isChecked = binding.rotaryKnob.showBigProgress
+        binding.showBigProgressSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.showBigProgress = isChecked
+        }
+
+        binding.bigProgressMultiplierEditText.setText(binding.rotaryKnob.bigProgressMultiplier.toString())
+        binding.bigProgressMultiplierEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val multiplier = binding.bigProgressMultiplierEditText.text.toString().toFloatOrNull() ?: 1f
+                binding.rotaryKnob.bigProgressMultiplier = multiplier
+            }
+        }
+
+        binding.bigProgressDiffEditText.setText(binding.rotaryKnob.bigProgressDiff.toString())
+        binding.bigProgressDiffEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val diff = binding.bigProgressDiffEditText.text.toString().toIntOrNull() ?: 0
+                binding.rotaryKnob.bigProgressDiff = diff
+            }
+        }
+
 
 
     }
@@ -143,7 +213,10 @@ class KnobPlayground : AppCompatActivity() {
 
     private fun arrowMethods() {
         isCircleArrowEnable = binding.circleContentLayout.visibility == android.view.View.VISIBLE
-        isBorderEnable = binding.borderContentLayout.visibility == android.view.View.VISIBLE
+        isBorderArrowEnable = binding.borderContentLayout.visibility == android.view.View.VISIBLE
+        isProgressArrowEnable =
+            binding.progressContentLayout.visibility == android.view.View.VISIBLE
+
 
 
         binding.circleArrow.setOnClickListener {
@@ -163,16 +236,31 @@ class KnobPlayground : AppCompatActivity() {
             showHideBorderLayout()
         }
 
+        binding.progressArrow.setOnClickListener {
+            showHideProgressLayout()
+        }
+
+        binding.progressStyleTextView.setOnClickListener {
+            showHideProgressLayout()
+        }
 
 
     }
 
+    private fun showHideProgressLayout() {
+
+        isProgressArrowEnable = !isProgressArrowEnable
+        binding.progressArrow.setImageResource(if (isProgressArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.progressContentLayout.visibility =
+            if (isProgressArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
     private fun showHideBorderLayout() {
 
-        isBorderEnable = !isBorderEnable
-        binding.borderArrow.setImageResource(if (isBorderEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        isBorderArrowEnable = !isBorderArrowEnable
+        binding.borderArrow.setImageResource(if (isBorderArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
         binding.borderContentLayout.visibility =
-            if (isBorderEnable) android.view.View.VISIBLE else android.view.View.GONE
+            if (isBorderArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
 
     }
 

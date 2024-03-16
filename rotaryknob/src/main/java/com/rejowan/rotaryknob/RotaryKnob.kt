@@ -89,7 +89,7 @@ class RotaryKnob @JvmOverloads constructor(
         }
 
     // progress normal
-    var sizeStyle = SizeStyle.CIRCLE
+    var progressStyle = SizeStyle.CIRCLE
         set(value) {
             field = value
             invalidate()
@@ -423,8 +423,8 @@ class RotaryKnob @JvmOverloads constructor(
 
             // progress normal
             val progressStyleOrdinal =
-                typedArray.getInt(R.styleable.RotaryKnob_progress_style, sizeStyle.ordinal)
-            sizeStyle = SizeStyle.values()[progressStyleOrdinal]
+                typedArray.getInt(R.styleable.RotaryKnob_progress_style, progressStyle.ordinal)
+            progressStyle = SizeStyle.values()[progressStyleOrdinal]
             progressColor =
                 typedArray.getColor(R.styleable.RotaryKnob_progress_color, progressColor)
             showBigProgress =
@@ -715,7 +715,7 @@ class RotaryKnob @JvmOverloads constructor(
             val y = midY + (progressRadius * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
 
-            if (sizeStyle == SizeStyle.CIRCLE) {
+            if (progressStyle == SizeStyle.CIRCLE) {
 
                 var dotSize: Float
 
@@ -809,7 +809,7 @@ class RotaryKnob @JvmOverloads constructor(
             val x = midX + (progressRadius * sin(Math.toRadians(angle.toDouble()))).toFloat()
             val y = midY + (progressRadius * cos(Math.toRadians(angle.toDouble()))).toFloat()
 
-            if (sizeStyle == SizeStyle.CIRCLE) {
+            if (progressStyle == SizeStyle.CIRCLE) {
 
                 val dotSize: Float = if (progressFilledMultiplier == 0f) {
                     if (i in largerDotIndices) {

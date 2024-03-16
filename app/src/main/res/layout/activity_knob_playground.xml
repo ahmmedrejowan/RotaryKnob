@@ -71,7 +71,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="10dp"
-                                android:src="@drawable/baseline_keyboard_arrow_down_24"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
                                 app:tint="@color/white" />
 
                         </RelativeLayout>
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
 
                         <LinearLayout
@@ -313,7 +313,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="10dp">
 
@@ -523,6 +523,341 @@
 
 
                         </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#AB98E3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/progressStyleTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Progress Style"
+                                android:textColor="@color/white"
+                                android:textSize="17sp" />
+
+
+                            <ImageView
+                                android:id="@+id/progressArrow"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/progressContentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Progress Style"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="progress_style (enum)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/progressStyleSpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Progress Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="progress_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/progressColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Show Big Progress"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="show_big_progress (boolean)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/showBigProgressSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Big Progress Multiplier"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="big_progress_multiplier (float)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/bigProgressMultiplierEditText"
+                                android:layout_width="100dp"
+                                android:text="20"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Big Progress Differences"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="big_progress_diff (integer)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/bigProgressDiffEditText"
+                                android:layout_width="100dp"
+                                android:text="20"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
 
 
 
