@@ -1,12 +1,16 @@
 package com.rejowan.rotaryknobsample
 
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.rejowan.rotaryknob.RotaryKnob
-import com.rejowan.rotaryknobsample.colorpicker.MaterialColorPickerDialog
-import com.rejowan.rotaryknobsample.colorpicker.MaterialColorPickerDialog.ColorShape
-import com.rejowan.rotaryknobsample.colorpicker.MaterialColorPickerDialog.ColorSwatch
+import com.rejowan.rotaryknobsample.ColorPicker.Companion.colorIntToHex
 import com.rejowan.rotaryknobsample.databinding.ActivityKnobPlaygroundBinding
+
 
 class KnobPlayground : AppCompatActivity() {
 
@@ -15,6 +19,7 @@ class KnobPlayground : AppCompatActivity() {
     private var isCircleArrowEnable = false
     private var isBorderEnable = false
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -22,6 +27,41 @@ class KnobPlayground : AppCompatActivity() {
         arrowMethods()
 
         circleStyles()
+
+        borderStyles()
+
+
+    }
+
+    private fun borderStyles() {
+
+        binding.borderSwitch.isChecked = binding.rotaryKnob.showBorder
+        binding.borderSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.showBorder = isChecked
+        }
+
+        binding.borderColorView.setBackgroundColor(binding.rotaryKnob.borderColor)
+        binding.borderColorView.text = colorIntToHex(binding.rotaryKnob.borderColor)
+
+        binding.borderColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.borderColor = colorInt
+                    binding.borderColorView.setBackgroundColor(colorInt)
+                    binding.borderColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.borderWidthEditText.setText(binding.rotaryKnob.borderWidth.toString())
+        binding.borderWidthEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val width = binding.borderWidthEditText.text.toString().toFloatOrNull() ?: 0f
+                binding.rotaryKnob.borderWidth = width
+            }
+        }
 
 
     }
@@ -54,49 +94,49 @@ class KnobPlayground : AppCompatActivity() {
             }
 
         binding.circleColorView.setBackgroundColor(binding.rotaryKnob.circleColor)
+        binding.circleColorView.text = colorIntToHex(binding.rotaryKnob.circleColor)
         binding.circleGradientCenterColorView.setBackgroundColor(binding.rotaryKnob.circleGradientCenterColor)
+        binding.circleGradientCenterColorView.text =
+            colorIntToHex(binding.rotaryKnob.circleGradientCenterColor)
         binding.circleGradientOuterColorView.setBackgroundColor(binding.rotaryKnob.circleGradientOuterColor)
+        binding.circleGradientOuterColorView.text =
+            colorIntToHex(binding.rotaryKnob.circleGradientOuterColor)
 
         binding.circleColorView.setOnClickListener {
-            MaterialColorPickerDialog
-                .Builder(this)
-                .setTitle("Choose Color")
-                .setColorShape(ColorShape.SQAURE)
-                .setColorSwatch(ColorSwatch._500)
-                .setDefaultColor("#8062D6")
-                .setColorListener { color, colorHex ->
-                    binding.rotaryKnob.circleColor = color
-                    binding.circleColorView.setBackgroundColor(color)
+
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.circleColor = colorInt
+                    binding.circleColorView.setBackgroundColor(colorInt)
+                    binding.circleColorView.text = colorString
                 }
-                .showBottomSheet(supportFragmentManager)
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
         }
 
         binding.circleGradientCenterColorView.setOnClickListener {
-            MaterialColorPickerDialog
-                .Builder(this)
-                .setTitle("Choose Color")
-                .setColorShape(ColorShape.SQAURE)
-                .setColorSwatch(ColorSwatch._500)
-                .setDefaultColor("#8062D6")
-                .setColorListener { color, colorHex ->
-                    binding.rotaryKnob.circleGradientCenterColor = color
-                    binding.circleGradientCenterColorView.setBackgroundColor(color)
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.circleGradientCenterColor = colorInt
+                    binding.circleGradientCenterColorView.setBackgroundColor(colorInt)
+                    binding.circleGradientCenterColorView.text = colorString
                 }
-                .showBottomSheet(supportFragmentManager)
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
         }
 
         binding.circleGradientOuterColorView.setOnClickListener {
-            MaterialColorPickerDialog
-                .Builder(this)
-                .setTitle("Choose Color")
-                .setColorShape(ColorShape.SQAURE)
-                .setColorSwatch(ColorSwatch._500)
-                .setDefaultColor("#8062D6")
-                .setColorListener { color, colorHex ->
-                    binding.rotaryKnob.circleGradientOuterColor = color
-                    binding.circleGradientOuterColorView.setBackgroundColor(color)
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.circleGradientOuterColor = colorInt
+                    binding.circleGradientOuterColorView.setBackgroundColor(colorInt)
+                    binding.circleGradientOuterColorView.text = colorString
                 }
-                .showBottomSheet(supportFragmentManager)
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
         }
 
     }
@@ -107,20 +147,57 @@ class KnobPlayground : AppCompatActivity() {
 
 
         binding.circleArrow.setOnClickListener {
-            isCircleArrowEnable = !isCircleArrowEnable
-            binding.circleArrow.setImageResource(if (isCircleArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
-            binding.circleContentLayout.visibility =
-                if (isCircleArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+            showHideCircleLayout()
         }
 
-        binding.borderArrow.setOnClickListener {
-            isBorderEnable = !isBorderEnable
-            binding.borderArrow.setImageResource(if (isBorderEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
-            binding.borderContentLayout.visibility =
-                if (isBorderEnable) android.view.View.VISIBLE else android.view.View.GONE
+        binding.circleStyleTextView.setOnClickListener {
+            showHideCircleLayout()
         }
+
+
+        binding.borderArrow.setOnClickListener {
+            showHideBorderLayout()
+        }
+
+        binding.borderStyleTextView.setOnClickListener {
+            showHideBorderLayout()
+        }
+
+
 
     }
 
+    private fun showHideBorderLayout() {
+
+        isBorderEnable = !isBorderEnable
+        binding.borderArrow.setImageResource(if (isBorderEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.borderContentLayout.visibility =
+            if (isBorderEnable) android.view.View.VISIBLE else android.view.View.GONE
+
+    }
+
+    private fun showHideCircleLayout() {
+
+        isCircleArrowEnable = !isCircleArrowEnable
+        binding.circleArrow.setImageResource(if (isCircleArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.circleContentLayout.visibility =
+            if (isCircleArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
+    }
 
 }

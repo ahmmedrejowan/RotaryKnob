@@ -11,7 +11,6 @@ import android.graphics.Shader
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -74,71 +73,263 @@ class RotaryKnob @JvmOverloads constructor(
 
     // attrs - border
     var showBorder = true
+        set(value) {
+            field = value
+            invalidate()
+        }
     var borderColor = Color.parseColor("#8A73CD")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var borderWidth = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // progress normal
     var sizeStyle = SizeStyle.CIRCLE
+        set(value) {
+            field = value
+            invalidate()
+        }
     var progressColor = Color.parseColor("#444444")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var showBigProgress = true
+        set(value) {
+            field = value
+            invalidate()
+        }
     var bigProgressMultiplier = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
     var bigProgressDiff = 10
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // progress filled
     var progressFilledColor = Color.parseColor("#8062D6")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var progressFilledMultiplier = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // indicator
     var indicatorStyle = SizeStyle.CIRCLE
+        set(value) {
+            field = value
+            invalidate()
+        }
     var indicatorColor = Color.parseColor("#FFFFFF")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var indicatorSize = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
 
 
     // progress text
     var showProgressText = true
+        set(value) {
+            field = value
+            invalidate()
+        }
     var progressText = ""
+        set(value) {
+            field = value
+            invalidate()
+        }
     var progressTextColor = Color.parseColor("#FFFFFF")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var progressTextSize = 100f
+        set(value) {
+            field = value
+            invalidate()
+        }
     var progressTextStyle = TextStyle.BOLD
+        set(value) {
+            field = value
+            invalidate()
+        }
     var progressTextFont: Typeface? = null
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // suffix text
     var showSuffixText = false
+        set(value) {
+            field = value
+            invalidate()
+        }
     var suffixText = ""
+        set(value) {
+            field = value
+            invalidate()
+        }
     var suffixTextColor = Color.parseColor("#FFFFFF")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var suffixTextSize = 30f
+        set(value) {
+            field = value
+            invalidate()
+        }
     var suffixTextStyle = TextStyle.NORMAL
+        set(value) {
+            field = value
+            invalidate()
+        }
     var suffixTextFont: Typeface? = null
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // Label
     var showLabel = true
+        set(value) {
+            field = value
+            invalidate()
+        }
     var labelText = "Label"
+        set(value) {
+            field = value
+            invalidate()
+        }
     var labelTextColor = Color.parseColor("#444444")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var labelTextSize = 40f
+        set(value) {
+            field = value
+            invalidate()
+        }
     var labelTextStyle = TextStyle.NORMAL
+        set(value) {
+            field = value
+            invalidate()
+        }
     var labelTextFont: Typeface? = null
+        set(value) {
+            field = value
+            invalidate()
+        }
     var labelMargin = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // enabled
     var knobEnable = true
+        set(value) {
+            field = value
+            invalidate()
+        }
     var touchToEnable = true
+        set(value) {
+            field = value
+            invalidate()
+        }
     var doubleTouchToEnable = true
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledCircleColor = Color.parseColor("#555555")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledCircleGradientCenterColor = Color.parseColor("#555555")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledCircleGradientOuterColor = Color.parseColor("#444444")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledBorderColor = Color.parseColor("#333333")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledProgressColor = Color.parseColor("#888888")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledBigProgressColor = Color.parseColor("#888888")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledProgressFilledColor = Color.parseColor("#555555")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledIndicatorColor = Color.parseColor("#cccccc")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledProgressTextColor = Color.parseColor("#cccccc")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledsuffixTextColor = Color.parseColor("#cccccc")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var disabledLabelTextColor = Color.parseColor("#555555")
+        set(value) {
+            field = value
+            invalidate()
+        }
 
 
     // value
     var min = 0
+        set(value) {
+            field = value
+            invalidate()
+        }
     var max = 30
+        set(value) {
+            field = value
+            invalidate()
+        }
     var currentProgress = 0
 
     var progressChangeListener: OnProgressChangeListener? = null
@@ -557,8 +748,7 @@ class RotaryKnob @JvmOverloads constructor(
                 var lineSize: Float
 
                 if (i in largerDotIndices) {
-                    lineSize =
-                        progressRadius / 10 * (20f / (max - min))
+                    lineSize = progressRadius / 10 * (20f / (max - min))
                     progressPaint.strokeWidth = if (bigProgressMultiplier == 0f) {
                         progressRadius / 20 * (20f / (max - min))
                     } else {
@@ -804,6 +994,8 @@ class RotaryKnob @JvmOverloads constructor(
 
     private fun setupProgressPaint() {
 
+        progressPaint.reset()
+
         progressPaint.isAntiAlias = true
         progressPaint.color = if (knobEnable) {
             progressColor
@@ -816,6 +1008,8 @@ class RotaryKnob @JvmOverloads constructor(
 
     private fun setupProgressFilledPaint() {
 
+        progressFilled.reset()
+
         progressFilled.isAntiAlias = true
         progressFilled.color = if (knobEnable) {
             progressFilledColor
@@ -826,6 +1020,9 @@ class RotaryKnob @JvmOverloads constructor(
     }
 
     private fun setupBorderPaint() {
+
+        borderPaint.reset()
+
         borderPaint.isAntiAlias = true
         borderPaint.color = if (knobEnable) {
             borderColor
@@ -836,6 +1033,7 @@ class RotaryKnob @JvmOverloads constructor(
     }
 
     private fun setupCirclePaint() {
+
         circlePaint.isAntiAlias = true
 
         circlePaint.reset()
@@ -870,6 +1068,9 @@ class RotaryKnob @JvmOverloads constructor(
     }
 
     private fun setupDrawIndicator() {
+
+        indicatorPaint.reset()
+
         indicatorPaint.isAntiAlias = true
         indicatorPaint.color = if (knobEnable) {
             indicatorColor
@@ -881,6 +1082,8 @@ class RotaryKnob @JvmOverloads constructor(
     }
 
     private fun setupLabelPaint() {
+
+        labelPaint.reset()
 
         labelPaint.isAntiAlias = true
         labelPaint.color = if (knobEnable) {
@@ -903,6 +1106,8 @@ class RotaryKnob @JvmOverloads constructor(
     }
 
     private fun setupTextPaint() {
+
+        textPaint.reset()
 
         textPaint.isAntiAlias = true
         textPaint.color = if (knobEnable) {

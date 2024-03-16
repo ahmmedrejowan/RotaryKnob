@@ -52,6 +52,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:id="@+id/circleStyleTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
@@ -177,10 +178,11 @@
                             </LinearLayout>
 
 
-                            <View
+                            <TextView
                                 android:id="@+id/circleColorView"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
+                                android:gravity="center"
                                 android:layout_gravity="center"
                                 android:background="#FF0000" />
 
@@ -231,10 +233,11 @@
                             </LinearLayout>
 
 
-                            <View
+                            <TextView
                                 android:id="@+id/circleGradientCenterColorView"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
+                                android:gravity="center"
                                 android:layout_gravity="center"
                                 android:background="#FF0000" />
 
@@ -284,10 +287,11 @@
 
                             </LinearLayout>
 
-                            <View
+                            <TextView
                                 android:id="@+id/circleGradientOuterColorView"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
+                                android:gravity="center"
                                 android:layout_gravity="center"
                                 android:background="#FF0000" />
 
@@ -329,6 +333,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:id="@+id/borderStyleTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
@@ -454,9 +459,10 @@
                             </LinearLayout>
 
 
-                            <View
+                            <TextView
                                 android:id="@+id/borderColorView"
                                 android:layout_width="100dp"
+                                android:gravity="center"
                                 android:layout_height="30dp"
                                 android:layout_gravity="center"
                                 android:background="#FF0000" />
@@ -489,7 +495,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="Border Width"
+                                    android:text="Border Width (0.0 Default)"
                                     android:textColor="#656565"
                                     android:textSize="14sp" />
 
