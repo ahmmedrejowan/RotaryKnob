@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.rejowan.rotaryknob.RotaryKnob
 import com.rejowan.rotaryknobsample.ColorPicker.Companion.colorIntToHex
 import com.rejowan.rotaryknobsample.databinding.ActivityKnobPlaygroundBinding
@@ -19,6 +20,11 @@ class KnobPlayground : AppCompatActivity() {
     private var isCircleArrowEnable = false
     private var isBorderArrowEnable = false
     private var isProgressArrowEnable = false
+    private var isProgressFilledArrowEnable = false
+    private var isIndicatorArrowEnable = false
+    private var isProgressTextArrowEnable = false
+    private var isSuffixTextArrowEnable = false
+    private var isLabelArrowEnable = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +38,328 @@ class KnobPlayground : AppCompatActivity() {
         borderStyles()
 
         progressStyles()
+
+        progressFilledStyles()
+
+        indicatorStyles()
+
+        progressTextStyles()
+
+        suffixTextStyles()
+
+        labelTextStyles()
+
+
+    }
+
+    private fun labelTextStyles() {
+
+        binding.showLabelTextSwitch.isChecked = binding.rotaryKnob.showLabel
+        binding.showLabelTextSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.showLabel = isChecked
+        }
+
+        binding.labelTextColorView.setBackgroundColor(binding.rotaryKnob.labelTextColor)
+        binding.labelTextColorView.text = colorIntToHex(binding.rotaryKnob.labelTextColor)
+
+        binding.labelTextColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.labelTextColor = colorInt
+                    binding.labelTextColorView.setBackgroundColor(colorInt)
+                    binding.labelTextColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.labelTextSizeEditText.setText(binding.rotaryKnob.labelTextSize.toString())
+        binding.labelTextSizeEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val size = binding.labelTextSizeEditText.text.toString().toFloatOrNull() ?: 0f
+                binding.rotaryKnob.labelTextSize = size
+            }
+        }
+
+        binding.labelTextEditText.setText(binding.rotaryKnob.labelText)
+        binding.labelTextEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val text = binding.labelTextEditText.text.toString()
+                binding.rotaryKnob.labelText = text
+            }
+        }
+
+        val listOfStyles = RotaryKnob.TextStyle.values().map { it.name }
+        val adapter =
+            android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, listOfStyles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.labelTextStyleSpinner.adapter = adapter
+        binding.labelTextStyleSpinner.setSelection(binding.rotaryKnob.labelTextStyle.ordinal)
+
+        binding.labelTextStyleSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val style = RotaryKnob.TextStyle.values()[position]
+                    binding.rotaryKnob.labelTextStyle = style
+
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {
+                }
+
+            }
+
+        binding.setLabelCustomFontSwitch.isChecked = false
+        binding.setLabelCustomFontSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.labelTextFont = if (isChecked) {
+                ResourcesCompat.getFont(this, R.font.ubuntu_normal)
+            } else {
+                null
+            }
+
+        }
+
+        binding.labelMarginEditText.setText(binding.rotaryKnob.labelMargin.toString())
+        binding.labelMarginEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val margin = binding.labelMarginEditText.text.toString().toFloatOrNull() ?: 0f
+                binding.rotaryKnob.labelMargin = margin
+            }
+        }
+
+
+
+    }
+
+    private fun suffixTextStyles() {
+
+        binding.showSuffixTextSwitch.isChecked = binding.rotaryKnob.showSuffixText
+        binding.showSuffixTextSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.showSuffixText = isChecked
+        }
+
+        binding.suffixTextColorView.setBackgroundColor(binding.rotaryKnob.suffixTextColor)
+        binding.suffixTextColorView.text = colorIntToHex(binding.rotaryKnob.suffixTextColor)
+
+        binding.suffixTextColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.suffixTextColor = colorInt
+                    binding.suffixTextColorView.setBackgroundColor(colorInt)
+                    binding.suffixTextColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.suffixTextSizeEditText.setText(binding.rotaryKnob.suffixTextSize.toString())
+        binding.suffixTextSizeEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val size = binding.suffixTextSizeEditText.text.toString().toFloatOrNull() ?: 0f
+                binding.rotaryKnob.suffixTextSize = size
+            }
+        }
+
+        binding.suffixTextEditText.setText(binding.rotaryKnob.suffixText)
+        binding.suffixTextEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val text = binding.suffixTextEditText.text.toString()
+                binding.rotaryKnob.suffixText = text
+            }
+        }
+
+        val listOfStyles = RotaryKnob.TextStyle.values().map { it.name }
+        val adapter =
+            android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, listOfStyles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.suffixTextStyleSpinner.adapter = adapter
+        binding.suffixTextStyleSpinner.setSelection(binding.rotaryKnob.suffixTextStyle.ordinal)
+
+        binding.suffixTextStyleSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val style = RotaryKnob.TextStyle.values()[position]
+                    binding.rotaryKnob.suffixTextStyle = style
+
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {
+                }
+
+            }
+
+        binding.setSuffixCustomFontSwitch.isChecked = false
+        binding.setSuffixCustomFontSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.suffixTextFont = if (isChecked) {
+                ResourcesCompat.getFont(this, R.font.ubuntu_normal)
+            } else {
+                null
+            }
+
+        }
+
+
+
+    }
+
+    private fun progressTextStyles() {
+
+        binding.showProgressTextSwitch.isChecked = binding.rotaryKnob.showProgressText
+        binding.showProgressTextSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.showProgressText = isChecked
+        }
+
+        binding.progressTextColorView.setBackgroundColor(binding.rotaryKnob.progressTextColor)
+        binding.progressTextColorView.text = colorIntToHex(binding.rotaryKnob.progressTextColor)
+
+        binding.progressTextColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.progressTextColor = colorInt
+                    binding.progressTextColorView.setBackgroundColor(colorInt)
+                    binding.progressTextColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.progressTextSizeEditText.setText(binding.rotaryKnob.progressTextSize.toString())
+        binding.progressTextSizeEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val size = binding.progressTextSizeEditText.text.toString().toFloatOrNull() ?: 0f
+                binding.rotaryKnob.progressTextSize = size
+            }
+        }
+
+        val listOfStyles = RotaryKnob.TextStyle.values().map { it.name }
+        val adapter =
+            android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, listOfStyles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.progressTextStyleSpinner.adapter = adapter
+        binding.progressTextStyleSpinner.setSelection(binding.rotaryKnob.progressTextStyle.ordinal)
+
+        binding.progressTextStyleSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val style = RotaryKnob.TextStyle.values()[position]
+                    binding.rotaryKnob.progressTextStyle = style
+
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {
+                }
+
+            }
+
+        binding.setCustomFontSwitch.isChecked = false
+        binding.setCustomFontSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.progressTextFont = if (isChecked) {
+                ResourcesCompat.getFont(this, R.font.ubuntu_normal)
+            } else {
+                null
+            }
+
+        }
+
+    }
+
+    private fun indicatorStyles() {
+
+        val listOfStyles = RotaryKnob.SizeStyle.values().map { it.name }
+        val adapter =
+            android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, listOfStyles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.indicatorStyleSpinner.adapter = adapter
+        binding.indicatorStyleSpinner.setSelection(binding.rotaryKnob.indicatorStyle.ordinal)
+
+        binding.indicatorStyleSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val style = RotaryKnob.SizeStyle.values()[position]
+                    binding.rotaryKnob.indicatorStyle = style
+
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {
+                }
+
+            }
+
+        binding.indicatorColorView.setBackgroundColor(binding.rotaryKnob.indicatorColor)
+        binding.indicatorColorView.text = colorIntToHex(binding.rotaryKnob.indicatorColor)
+
+        binding.indicatorColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.indicatorColor = colorInt
+                    binding.indicatorColorView.setBackgroundColor(colorInt)
+                    binding.indicatorColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.indicatorSizeEditText.setText(binding.rotaryKnob.indicatorSize.toString())
+        binding.indicatorSizeEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val size = binding.indicatorSizeEditText.text.toString().toFloatOrNull() ?: 0f
+                binding.rotaryKnob.indicatorSize = size
+            }
+        }
+
+
+
+    }
+
+    private fun progressFilledStyles() {
+
+        binding.progressFilledColorView.setBackgroundColor(binding.rotaryKnob.progressFilledColor)
+        binding.progressFilledColorView.text = colorIntToHex(binding.rotaryKnob.progressFilledColor)
+
+        binding.progressFilledColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.progressFilledColor = colorInt
+                    binding.progressFilledColorView.setBackgroundColor(colorInt)
+                    binding.progressFilledColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.progressFilledMultiplierEditText.setText(binding.rotaryKnob.progressFilledMultiplier.toString())
+        binding.progressFilledMultiplierEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val multiplier =
+                    binding.progressFilledMultiplierEditText.text.toString().toFloatOrNull() ?: 1f
+                binding.rotaryKnob.progressFilledMultiplier = multiplier
+            }
+        }
 
 
     }
@@ -86,7 +414,8 @@ class KnobPlayground : AppCompatActivity() {
         binding.bigProgressMultiplierEditText.setText(binding.rotaryKnob.bigProgressMultiplier.toString())
         binding.bigProgressMultiplierEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                val multiplier = binding.bigProgressMultiplierEditText.text.toString().toFloatOrNull() ?: 1f
+                val multiplier =
+                    binding.bigProgressMultiplierEditText.text.toString().toFloatOrNull() ?: 1f
                 binding.rotaryKnob.bigProgressMultiplier = multiplier
             }
         }
@@ -98,7 +427,6 @@ class KnobPlayground : AppCompatActivity() {
                 binding.rotaryKnob.bigProgressDiff = diff
             }
         }
-
 
 
     }
@@ -216,7 +544,12 @@ class KnobPlayground : AppCompatActivity() {
         isBorderArrowEnable = binding.borderContentLayout.visibility == android.view.View.VISIBLE
         isProgressArrowEnable =
             binding.progressContentLayout.visibility == android.view.View.VISIBLE
-
+        isProgressFilledArrowEnable =
+            binding.progressFilledContentLayout.visibility == android.view.View.VISIBLE
+        isIndicatorArrowEnable = binding.indicatorContentLayout.visibility == android.view.View.VISIBLE
+        isProgressTextArrowEnable = binding.progressTextContentLayout.visibility == android.view.View.VISIBLE
+        isSuffixTextArrowEnable = binding.suffixTextContentLayout.visibility == android.view.View.VISIBLE
+        isLabelArrowEnable = binding.labelTextContentLayout.visibility == android.view.View.VISIBLE
 
 
         binding.circleArrow.setOnClickListener {
@@ -244,11 +577,86 @@ class KnobPlayground : AppCompatActivity() {
             showHideProgressLayout()
         }
 
+        binding.progressFilledArrow.setOnClickListener {
+            showHideProgressFilledLayout()
+        }
+
+        binding.progressFilledStyleTextView.setOnClickListener {
+            showHideProgressFilledLayout()
+        }
+
+        binding.indicatorArrow.setOnClickListener {
+            showHideIndicatorLayout()
+        }
+
+        binding.indicatorStyleTextView.setOnClickListener {
+            showHideIndicatorLayout()
+        }
+
+        binding.progressTextArrow.setOnClickListener {
+            showHideProgressTextLayout()
+        }
+
+        binding.progressTextStyleTextView.setOnClickListener {
+            showHideProgressTextLayout()
+        }
+
+        binding.suffixTextArrow.setOnClickListener {
+            showHideSuffixTextLayout()
+        }
+
+        binding.suffixTextStyleTextView.setOnClickListener {
+            showHideSuffixTextLayout()
+        }
+
+        binding.labelTextArrow.setOnClickListener {
+            showHideLabelLayout()
+        }
+
+        binding.labelTextStyleTextView.setOnClickListener {
+            showHideLabelLayout()
+        }
+
+
 
     }
 
-    private fun showHideProgressLayout() {
+    private fun showHideLabelLayout() {
+        isLabelArrowEnable = !isLabelArrowEnable
+        binding.labelTextArrow.setImageResource(if (isLabelArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.labelTextContentLayout.visibility =
+            if (isLabelArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+    }
 
+    private fun showHideSuffixTextLayout() {
+        isSuffixTextArrowEnable = !isSuffixTextArrowEnable
+        binding.suffixTextArrow.setImageResource(if (isSuffixTextArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.suffixTextContentLayout.visibility =
+            if (isSuffixTextArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    private fun showHideProgressTextLayout() {
+        isProgressTextArrowEnable = !isProgressTextArrowEnable
+        binding.progressTextArrow.setImageResource(if (isProgressTextArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.progressTextContentLayout.visibility =
+            if (isProgressTextArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    private fun showHideIndicatorLayout() {
+        isIndicatorArrowEnable = !isIndicatorArrowEnable
+        binding.indicatorArrow.setImageResource(if (isIndicatorArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.indicatorContentLayout.visibility =
+            if (isIndicatorArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    private fun showHideProgressFilledLayout() {
+        isProgressFilledArrowEnable = !isProgressFilledArrowEnable
+        binding.progressFilledArrow.setImageResource(if (isProgressFilledArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.progressFilledContentLayout.visibility =
+            if (isProgressFilledArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    private fun showHideProgressLayout() {
         isProgressArrowEnable = !isProgressArrowEnable
         binding.progressArrow.setImageResource(if (isProgressArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
         binding.progressContentLayout.visibility =
@@ -256,7 +664,6 @@ class KnobPlayground : AppCompatActivity() {
     }
 
     private fun showHideBorderLayout() {
-
         isBorderArrowEnable = !isBorderArrowEnable
         binding.borderArrow.setImageResource(if (isBorderArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
         binding.borderContentLayout.visibility =
@@ -265,7 +672,6 @@ class KnobPlayground : AppCompatActivity() {
     }
 
     private fun showHideCircleLayout() {
-
         isCircleArrowEnable = !isCircleArrowEnable
         binding.circleArrow.setImageResource(if (isCircleArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
         binding.circleContentLayout.visibility =

@@ -867,6 +867,1567 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#AB98E3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/progressFilledStyleTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Progress Filled Style"
+                                android:textColor="@color/white"
+                                android:textSize="17sp" />
+
+
+                            <ImageView
+                                android:id="@+id/progressFilledArrow"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/progressFilledContentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Progress Filled Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="progress_filled_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/progressFilledColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Progress Filled Multiplier"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="progress_filled_multiplier (float)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/progressFilledMultiplierEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#AB98E3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/indicatorStyleTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Indicator Style"
+                                android:textColor="@color/white"
+                                android:textSize="17sp" />
+
+
+                            <ImageView
+                                android:id="@+id/indicatorArrow"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/indicatorContentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Indicator Style"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="indicator_style (enum)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/indicatorStyleSpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Indicator Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="indicator_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/indicatorColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Indicator Size"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="indicator_size (float)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/indicatorSizeEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#AB98E3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/progressTextStyleTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Progress Text Style"
+                                android:textColor="@color/white"
+                                android:textSize="17sp" />
+
+
+                            <ImageView
+                                android:id="@+id/progressTextArrow"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/progressTextContentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Show Progress Text"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="show_progress_text (boolean)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/showProgressTextSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Progress Text Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="progress_text_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/progressTextColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Progress Text Size"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="progress_text_size (float)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/progressTextSizeEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Progress Text Style"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="progress_text_style (enum)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/progressTextStyleSpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Set Font (e.g. Ubuntu)"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="progress_text_font (reference)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/setCustomFontSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#AB98E3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/suffixTextStyleTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Suffix Text Style"
+                                android:textColor="@color/white"
+                                android:textSize="17sp" />
+
+
+                            <ImageView
+                                android:id="@+id/suffixTextArrow"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/suffixTextContentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Show Suffix Text"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="show_suffix_text (boolean)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/showSuffixTextSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Suffix Text"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="suffix_text (string)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/suffixTextEditText"
+                                android:layout_width="100dp"
+                                android:text="%"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Suffix Text Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="suffix_text_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/suffixTextColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Suffix Text Size"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="suffix_text_size (float)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/suffixTextSizeEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Suffix Text Style"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="suffix_text_style (enum)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/suffixTextStyleSpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Set Font (e.g. Ubuntu)"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="suffix_text_font (reference)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/setSuffixCustomFontSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#AB98E3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/labelTextStyleTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Label Text Style"
+                                android:textColor="@color/white"
+                                android:textSize="17sp" />
+
+
+                            <ImageView
+                                android:id="@+id/labelTextArrow"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/labelTextContentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Show Label Text"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="show_label (boolean)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/showLabelTextSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Label Text"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="label_text (string)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/labelTextEditText"
+                                android:layout_width="100dp"
+                                android:text="Rotary"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Label Text Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="label_text_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/labelTextColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Label Text Size"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="label_text_size (float)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/labelTextSizeEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Label Text Style"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="label_text_style (enum)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/labelTextStyleSpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Set Font (e.g. Ubuntu)"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="label_text_font (reference)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/setLabelCustomFontSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Label Margin"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="label_margin (float)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/labelMarginEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
 
         </LinearLayout>
 
