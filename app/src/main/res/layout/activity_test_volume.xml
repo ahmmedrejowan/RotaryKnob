@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".TestVolume">
+
+    <com.rejowan.rotaryknob.RotaryKnob
+        android:id="@+id/rotaryKnob"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:label_text="Volume"
+        app:show_big_progress="false"
+        app:show_suffix_text="true"
+        app:suffix_text="dB" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center"
+        android:text="Play a music and adjust the volume knob to see the changes in the volume." />
+
+
+</LinearLayout>

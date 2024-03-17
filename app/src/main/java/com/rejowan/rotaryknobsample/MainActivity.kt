@@ -1,10 +1,8 @@
 package com.rejowan.rotaryknobsample
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.rejowan.rotaryknob.RotaryKnob
 import com.rejowan.rotaryknobsample.databinding.ActivityMainBinding
 
@@ -20,22 +18,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, KnobPlayground::class.java))
         }
 
-        binding.rotaryKnob.knobEnableListener = object : RotaryKnob.OnKnobEnableListener {
-            override fun onKnobEnableChanged(isEnable: Boolean, progress: Int) {
-
-            }
+        binding.differentStylesCardView.setOnClickListener {
+            startActivity(Intent(this, DifferentStyles::class.java))
         }
 
-        binding.rotaryKnob.progressChangeListener = object : RotaryKnob.OnProgressChangeListener {
-            override fun onProgressChanged(progress: Int) {
-
-            }
-
+        binding.testVolumeCardView.setOnClickListener {
+            startActivity(Intent(this, TestVolume::class.java))
         }
-
-
-
-
 
     }
 
