@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DifferentStyles">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.rejowan.rotaryknob.RotaryKnob
+                android:id="@+id/rotaryKnob2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:big_progress_diff="5"
+                app:big_progress_multiplier="3"
+                app:border_color="#dddddd"
+                app:border_width="6dp"
+                app:circle_color="#ffffff"
+                app:circle_style="solid"
+                app:current_progress="10"
+                app:double_touch_to_enable="true"
+                app:indicator_color="#8062D6"
+                app:indicator_style="line"
+                app:label_text="Rotary"
+                app:label_text_color="#8062D6"
+                app:label_text_font="@font/ubuntu_normal"
+                app:label_text_size="12sp"
+                app:max="20"
+                app:min="0"
+                app:progress_color="#777777"
+                app:progress_filled_color="#8062D6"
+                app:progress_filled_multiplier="1.3"
+                app:progress_style="line"
+                app:progress_text_color="#8062D6"
+                app:progress_text_font="@font/ubuntu_normal"
+                app:progress_text_size="26sp"
+                app:progress_text_style="bold"
+                app:show_big_progress="true"
+                app:show_border="true"
+                app:show_label="true"
+                app:show_progress_text="true"
+                app:show_suffix_text="true"
+                app:suffix_text="db"
+                app:suffix_text_color="#8062D6"
+                app:suffix_text_size="10sp"
+                app:suffix_text_style="normal"
+                app:touch_to_enable="false"
+
+                />
+
+            <com.rejowan.rotaryknob.RotaryKnob
+                android:id="@+id/rotaryKnob3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:big_progress_diff="5"
+                app:big_progress_multiplier="2"
+                app:current_progress="20"
+                app:double_touch_to_enable="true"
+                app:indicator_style="line"
+                app:knob_enable="false"
+                app:label_text="Disabled"
+                app:label_text_font="@font/ubuntu_normal"
+                app:label_text_size="10sp"
+                app:max="30"
+                app:min="0"
+                app:progress_filled_multiplier="1"
+                app:progress_style="line"
+                app:progress_text_font="@font/ubuntu_normal"
+                app:show_big_progress="true"
+                app:show_label="true"
+                app:show_progress_text="true"
+                app:show_suffix_text="true"
+                app:suffix_text="%"
+                app:suffix_text_font="@font/ubuntu_normal"
+                app:touch_to_enable="false" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.rejowan.rotaryknob.RotaryKnob
+                android:id="@+id/rotaryKnob4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:label_text="Simple"
+                app:label_text_size="10sp"
+                app:show_big_progress="false"
+                app:show_progress_text="false" />
+
+            <com.rejowan.rotaryknob.RotaryKnob
+                android:id="@+id/rotaryKnob5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:big_progress_diff="5"
+                app:big_progress_multiplier="2"
+                app:current_progress="20"
+                app:double_touch_to_enable="true"
+                app:indicator_style="line"
+                app:label_text="Rotary"
+                app:label_text_font="@font/ubuntu_normal"
+                app:label_text_size="10sp"
+                app:max="30"
+                app:min="10"
+                app:progress_filled_multiplier="1"
+                app:progress_style="circle"
+                app:progress_text_font="@font/ubuntu_normal"
+                app:show_big_progress="true"
+                app:show_label="true"
+                app:show_progress_text="true"
+                app:show_suffix_text="false"
+                app:touch_to_enable="false" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

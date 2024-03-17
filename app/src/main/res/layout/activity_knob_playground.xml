@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     android:orientation="vertical"
+    tools:ignore="HardcodedText,TextFields,LabelFor,Autofill,ContentDescription,TooManyViews"
     tools:context=".KnobPlayground">
 
 
@@ -1988,7 +1989,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -2410,6 +2410,1066 @@
 
                             <EditText
                                 android:id="@+id/labelMarginEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#AB98E3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/enableStyleTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Enable Style"
+                                android:textColor="@color/white"
+                                android:textSize="17sp" />
+
+
+                            <ImageView
+                                android:id="@+id/enableArrow"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/enableContentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Enable Knob"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="knob_enable (boolean)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/enableKnobSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Center Touch to Enable"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="touch_to_enable (boolean)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/touchToEnableSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Double Touch to Enable"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="double_touch_to_enable (boolean)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/doubleTouchToEnableSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Circle Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_circle_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledCircleColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disable Circle Garidient Center"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_circle_gradient_center_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledCircleGradientOuterColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disable Circle Garidient Outer"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_circle_gradient_outer_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledCircleGradientCenterColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Border Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_border_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledBorderColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Progress Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_progress_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledProgressColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Big Progress Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_big_progress_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledBigProgressColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Progress Filled Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_progress_filled_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledProgressFilledColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Indicator Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_indicator_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledIndicatorColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Progress Text Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_progress_text_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledProgressTextColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Suffix Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_suffix_text_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledSuffixTextColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Disabled Label Text Color"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="d_label_text_color (color)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/disabledLabelTextColorView"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#FF0000" />
+
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="30dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#AB98E3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/valueTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Value"
+                                android:textColor="@color/white"
+                                android:textSize="17sp" />
+
+
+                            <ImageView
+                                android:id="@+id/valueArrow"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/valueContentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Minimum Value"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="min (int)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/minValueEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Maximum Value"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="max (int)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/maxValueEditText"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+
+                        </LinearLayout>
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_margin="5dp"
+                            android:background="#919191" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Current Progress"
+                                    android:textColor="#656565"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5sp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="current_progress (int)"
+                                    android:textColor="#212121"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <EditText
+                                android:id="@+id/currentProgressEditText"
                                 android:layout_width="100dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center" />

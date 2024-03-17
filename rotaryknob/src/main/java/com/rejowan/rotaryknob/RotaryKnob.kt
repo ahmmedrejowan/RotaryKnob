@@ -331,6 +331,10 @@ class RotaryKnob @JvmOverloads constructor(
             invalidate()
         }
     var currentProgress = 0
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     var progressChangeListener: OnProgressChangeListener? = null
     var knobEnableListener: OnKnobEnableListener? = null

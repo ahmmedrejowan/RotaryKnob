@@ -25,6 +25,8 @@ class KnobPlayground : AppCompatActivity() {
     private var isProgressTextArrowEnable = false
     private var isSuffixTextArrowEnable = false
     private var isLabelArrowEnable = false
+    private var isEnabledArrowEnable = false
+    private var isValueArrowEnable = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,233 @@ class KnobPlayground : AppCompatActivity() {
         suffixTextStyles()
 
         labelTextStyles()
+
+        enableStyles()
+
+        valueStyles()
+
+
+    }
+
+    private fun valueStyles() {
+
+        binding.minValueEditText.setText(binding.rotaryKnob.min.toString())
+        binding.minValueEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val value = binding.minValueEditText.text.toString().toIntOrNull() ?: 0
+                binding.rotaryKnob.min = value
+            }
+        }
+
+        binding.maxValueEditText.setText(binding.rotaryKnob.max.toString())
+        binding.maxValueEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val value = binding.maxValueEditText.text.toString().toIntOrNull() ?: 100
+                binding.rotaryKnob.max = value
+            }
+        }
+
+        binding.currentProgressEditText.setText(binding.rotaryKnob.currentProgress.toString())
+        binding.currentProgressEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val value = binding.currentProgressEditText.text.toString().toIntOrNull() ?: 0
+                binding.rotaryKnob.currentProgress = value
+            }
+        }
+
+
+    }
+
+    private fun enableStyles() {
+
+        binding.enableKnobSwitch.isChecked = binding.rotaryKnob.isEnabled
+        binding.enableKnobSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.knobEnable = isChecked
+        }
+
+        binding.touchToEnableSwitch.isChecked = binding.rotaryKnob.touchToEnable
+        binding.touchToEnableSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.touchToEnable = isChecked
+        }
+
+        binding.doubleTouchToEnableSwitch.isChecked = binding.rotaryKnob.doubleTouchToEnable
+        binding.doubleTouchToEnableSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.rotaryKnob.doubleTouchToEnable = isChecked
+        }
+
+        binding.disabledCircleColorView.setBackgroundColor(binding.rotaryKnob.disabledCircleColor)
+        binding.disabledCircleColorView.text = colorIntToHex(binding.rotaryKnob.disabledCircleColor)
+
+        binding.disabledCircleColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledCircleColor = colorInt
+                    binding.disabledCircleColorView.setBackgroundColor(colorInt)
+                    binding.disabledCircleColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledCircleGradientCenterColorView.setBackgroundColor(binding.rotaryKnob.disabledCircleGradientCenterColor)
+        binding.disabledCircleGradientCenterColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledCircleGradientCenterColor)
+
+        binding.disabledCircleGradientCenterColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledCircleGradientCenterColor = colorInt
+                    binding.disabledCircleGradientCenterColorView.setBackgroundColor(colorInt)
+                    binding.disabledCircleGradientCenterColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledCircleGradientOuterColorView.setBackgroundColor(binding.rotaryKnob.disabledCircleGradientOuterColor)
+        binding.disabledCircleGradientOuterColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledCircleGradientOuterColor)
+
+        binding.disabledCircleGradientOuterColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledCircleGradientOuterColor = colorInt
+                    binding.disabledCircleGradientOuterColorView.setBackgroundColor(colorInt)
+                    binding.disabledCircleGradientOuterColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledBorderColorView.setBackgroundColor(binding.rotaryKnob.disabledBorderColor)
+        binding.disabledBorderColorView.text = colorIntToHex(binding.rotaryKnob.disabledBorderColor)
+
+        binding.disabledBorderColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledBorderColor = colorInt
+                    binding.disabledBorderColorView.setBackgroundColor(colorInt)
+                    binding.disabledBorderColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledProgressColorView.setBackgroundColor(binding.rotaryKnob.disabledProgressColor)
+        binding.disabledProgressColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledProgressColor)
+
+        binding.disabledProgressColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledProgressColor = colorInt
+                    binding.disabledProgressColorView.setBackgroundColor(colorInt)
+                    binding.disabledProgressColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledBigProgressColorView.setBackgroundColor(binding.rotaryKnob.disabledBigProgressColor)
+        binding.disabledBigProgressColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledBigProgressColor)
+
+        binding.disabledBigProgressColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledBigProgressColor = colorInt
+                    binding.disabledBigProgressColorView.setBackgroundColor(colorInt)
+                    binding.disabledBigProgressColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledProgressFilledColorView.setBackgroundColor(binding.rotaryKnob.disabledProgressFilledColor)
+        binding.disabledProgressFilledColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledProgressFilledColor)
+
+        binding.disabledProgressFilledColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledProgressFilledColor = colorInt
+                    binding.disabledProgressFilledColorView.setBackgroundColor(colorInt)
+                    binding.disabledProgressFilledColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledIndicatorColorView.setBackgroundColor(binding.rotaryKnob.disabledIndicatorColor)
+        binding.disabledIndicatorColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledIndicatorColor)
+
+        binding.disabledIndicatorColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledIndicatorColor = colorInt
+                    binding.disabledIndicatorColorView.setBackgroundColor(colorInt)
+                    binding.disabledIndicatorColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledProgressTextColorView.setBackgroundColor(binding.rotaryKnob.disabledProgressTextColor)
+        binding.disabledProgressTextColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledProgressTextColor)
+
+        binding.disabledProgressTextColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledProgressTextColor = colorInt
+                    binding.disabledProgressTextColorView.setBackgroundColor(colorInt)
+                    binding.disabledProgressTextColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledSuffixTextColorView.setBackgroundColor(binding.rotaryKnob.disabledsuffixTextColor)
+        binding.disabledSuffixTextColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledsuffixTextColor)
+
+        binding.disabledSuffixTextColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledsuffixTextColor = colorInt
+                    binding.disabledSuffixTextColorView.setBackgroundColor(colorInt)
+                    binding.disabledSuffixTextColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
+
+        binding.disabledLabelTextColorView.setBackgroundColor(binding.rotaryKnob.disabledLabelTextColor)
+        binding.disabledLabelTextColorView.text =
+            colorIntToHex(binding.rotaryKnob.disabledLabelTextColor)
+
+        binding.disabledLabelTextColorView.setOnClickListener {
+            val colorPicker = ColorPicker()
+            colorPicker.setOnColorSelectedListener(object : ColorPicker.OnColorSelectedListener {
+                override fun onColorSelected(colorString: String, colorInt: Int) {
+                    binding.rotaryKnob.disabledLabelTextColor = colorInt
+                    binding.disabledLabelTextColorView.setBackgroundColor(colorInt)
+                    binding.disabledLabelTextColorView.text = colorString
+                }
+            })
+            colorPicker.show(supportFragmentManager, "colorPicker")
+        }
 
 
     }
@@ -134,7 +363,6 @@ class KnobPlayground : AppCompatActivity() {
         }
 
 
-
     }
 
     private fun suffixTextStyles() {
@@ -209,7 +437,6 @@ class KnobPlayground : AppCompatActivity() {
             }
 
         }
-
 
 
     }
@@ -330,7 +557,6 @@ class KnobPlayground : AppCompatActivity() {
                 binding.rotaryKnob.indicatorSize = size
             }
         }
-
 
 
     }
@@ -546,10 +772,15 @@ class KnobPlayground : AppCompatActivity() {
             binding.progressContentLayout.visibility == android.view.View.VISIBLE
         isProgressFilledArrowEnable =
             binding.progressFilledContentLayout.visibility == android.view.View.VISIBLE
-        isIndicatorArrowEnable = binding.indicatorContentLayout.visibility == android.view.View.VISIBLE
-        isProgressTextArrowEnable = binding.progressTextContentLayout.visibility == android.view.View.VISIBLE
-        isSuffixTextArrowEnable = binding.suffixTextContentLayout.visibility == android.view.View.VISIBLE
+        isIndicatorArrowEnable =
+            binding.indicatorContentLayout.visibility == android.view.View.VISIBLE
+        isProgressTextArrowEnable =
+            binding.progressTextContentLayout.visibility == android.view.View.VISIBLE
+        isSuffixTextArrowEnable =
+            binding.suffixTextContentLayout.visibility == android.view.View.VISIBLE
         isLabelArrowEnable = binding.labelTextContentLayout.visibility == android.view.View.VISIBLE
+        isEnabledArrowEnable = binding.enableContentLayout.visibility == android.view.View.VISIBLE
+        isValueArrowEnable = binding.valueContentLayout.visibility == android.view.View.VISIBLE
 
 
         binding.circleArrow.setOnClickListener {
@@ -617,8 +848,38 @@ class KnobPlayground : AppCompatActivity() {
             showHideLabelLayout()
         }
 
+        binding.enableArrow.setOnClickListener {
+            showHideEnableLayout()
+        }
+
+        binding.enableStyleTextView.setOnClickListener {
+            showHideEnableLayout()
+        }
+
+        binding.valueArrow.setOnClickListener {
+            showHideValueLayout()
+        }
+
+        binding.valueTextView.setOnClickListener {
+            showHideValueLayout()
+        }
 
 
+    }
+
+    private fun showHideValueLayout() {
+
+        isValueArrowEnable = !isValueArrowEnable
+        binding.valueArrow.setImageResource(if (isValueArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.valueContentLayout.visibility =
+            if (isValueArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    private fun showHideEnableLayout() {
+        isEnabledArrowEnable = !isEnabledArrowEnable
+        binding.enableArrow.setImageResource(if (isEnabledArrowEnable) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_left_24)
+        binding.enableContentLayout.visibility =
+            if (isEnabledArrowEnable) android.view.View.VISIBLE else android.view.View.GONE
     }
 
     private fun showHideLabelLayout() {
