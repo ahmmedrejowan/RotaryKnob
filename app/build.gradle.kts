@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-     implementation(project(":rotaryknob"))
+  //   implementation(project(":rotaryknob"))
 
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -52,4 +52,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+
+    implementation("com.github.ahmmedrejowan:RotaryKnob:0.1")
 }
