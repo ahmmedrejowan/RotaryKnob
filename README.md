@@ -31,9 +31,9 @@ Rotary Knob is a handy Android library crafted in Kotlin. It fills the gap where
 
 ## Demo
 
-|   |   | 
+| Description  |  Demo  | 
 |-------|--------------|
-|   Animated Demo of How the Knob Works. <br/><br/> You can Test various functions of this knob by downloading the demo apk. I've made a custom Knob Playground to test with the customizations - <a herf="https://github.com/ahmmedrejowan/RotaryKnob/raw/master/app/release/app-release.apk"> Download </a>    |  ![Gif](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/knob_demo.gif) | 
+|   Animated Demo of How the Knob Works. <br/><br/> You can Test various functions of this knob by downloading the demo apk. I've made a custom Knob Playground to test with the customizations - [Download](https://github.com/ahmmedrejowan/RotaryKnob/raw/master/app/release/app-release.apk) |  ![Gif](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/knob_demo.gif) | 
 
 **Shots Showing Styles and Customizations**
 
@@ -268,6 +268,13 @@ Full list of attributes available
 - The library is in its early stages, so there may be some bugs.
 - If you find any bugs, please report them in the `Issues` tab.
 - Sample app is available in the [app](https://github.com/ahmmedrejowan/RotaryKnob/tree/master/app) directory.
+- It doesn't Support Floating Numbers for Value.
+
+## Inspiration and Credit
+- Inspired by [Knob](https://github.com/CoDevBlocks/Knob) by  [CoDevBlocks](https://github.com/CoDevBlocks)
+- Inspired by [Knob](https://github.com/BeppiMenozzi/Knob) by  [BeppiMenozzi](https://github.com/BeppiMenozzi)
+- Inspired by [kotlin-rotary-knob](https://github.com/o4oren/kotlin-rotary-knob) by  [o4oren](https://github.com/o4oren)
+- Color Picker Inspired by [ColorPicker](https://github.com/Dhaval2404/ColorPicker) by  [Dhaval2404](https://github.com/Dhaval2404)
 
 ## Contribute
 Please fork this repository and contribute back using [pull requests](https://github.com/ahmmedrejowan/RotaryKnob/pulls).
