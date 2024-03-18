@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/ahmmedrejowan/RotaryKnob/blob/master/files/logo.svg?raw=true" width="100px" align="center"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/logo.svg" width="100px" align="center"/></p>
 <h1 align="center">Rotary Knob</h1> 
 <h3 align="center">A lightweight Rotating Knob for Android<b></b></h3>
 
