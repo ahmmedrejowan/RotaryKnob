@@ -1,17 +1,13 @@
 <p align="center"><img src="https://github.com/ahmmedrejowan/RotaryKnob/blob/master/files/logo.svg?raw=true" width="100px" align="center"/></p>
-<h1 align="center">Andrid Battery View</h1> 
+<h1 align="center">Rotary Knob</h1> 
+<h3 align="center">A lightweight Rotating Knob for Android<b></b></h3>
 
 <p align="center"> <a href="https://www.android.com"><img src="https://img.shields.io/badge/platform-Android-yellow.svg" alt="platform"></a>
  <a href="https://android-arsenal.com/api?level=21"><img src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat" alt="API"></a> <a href="https://jitpack.io/#ahmmedrejowan/RotaryKnob/"><img src="https://jitpack.io/v/ahmmedrejowan/RotaryKnob.svg" alt="JitPack"></a> <a href="https://github.com/ahmmedrejowan/RotaryKnob/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ahmmedrejowan/RotaryKnob" alt="GitHub license"></a> </p>
 
-<h3 align="center">A lightweight Battery Status View<b></b></h3>
-
  <p align="center"> <a href="https://github.com/ahmmedrejowan/RotaryKnob/issues"><img src="https://img.shields.io/github/issues/ahmmedrejowan/RotaryKnob" alt="GitHub issues"></a> <a href="https://github.com/ahmmedrejowan/RotaryKnob/network"><img src="https://img.shields.io/github/forks/ahmmedrejowan/RotaryKnob" alt="GitHub forks"></a> <a href="https://github.com/ahmmedrejowan/RotaryKnob/stargazers"><img src="https://img.shields.io/github/stars/ahmmedrejowan/RotaryKnob" alt="GitHub stars"></a> <a href="https://github.com/ahmmedrejowan/RotaryKnob/graphs/contributors"> <img src="https://img.shields.io/github/contributors/ahmmedrejowan/RotaryKnob" alt="GitHub contributors"></a>   </p>
 
 ## Table of Contents
-
-<details>
-<summary>Click to Expand</summary>
 
 - [Purpose](#purpose)
 - [Features](#features)
@@ -19,36 +15,37 @@
 - [Prerequisites](#prerequisites)
 - [Dependency](#dependency)
 - [Usage](#usage)
-- [BroadcastReceiver](#broadcastReceiver)
 - [Customization](#customization)
 - [Attributes](#attribute)
 - [Notes](#notes)
 - [Contribute](#contribute)
 - [License](#license)
 
-</details>
-
 ## Purpose
-The Advanced Battery View (ABV) library was born out of frustration with the time-consuming task of creating a battery view component for Android apps. Developed to avoid repetitive tasks and streamline development, ABV offers a simple solution for integrating a customizable battery view. It aims to save developers time and effort, enhancing user experience by providing a visually appealing representation of battery status without the hassle of reinventing the wheel.
+Rotary Knob is a handy Android library crafted in Kotlin. It fills the gap where Android lacks a volume knob view. Existing solutions are often outdated and incomplete. Rotary Knob steps in to provide a simple, customizable, and well-maintained volume knob for Android developers. It's your go-to solution for adding intuitive volume controls to your apps, enhancing user experience effortlessly.
 
 ## Features
 - Lightweight
 - Highly customizable
 - Supports both Kotlin and Java
-- Can be attached to BroadcastReceiver Intent
 
 ## Demo
 
-| Normal  | Charging  | Warning                                                                                             | Critical |
-|-------|--------------|-----------------------------------------------------------------------------------------------------|------|
-|  ![Shot1](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot1.png)  |  ![Shot2](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot2.png) | ![Shot3](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot3.png) |  ![Shot4](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot4.png) 
+|   |   | 
+|-------|--------------|
+|   Animated Demo of How the Knob Works. <br/><br/> You can Test various functions of this knob by downloading the demo apk. I've made a custom Knob Playground to test with the customizations - <a herf="https://github.com/ahmmedrejowan/RotaryKnob/raw/master/app/release/app-release.apk"> Download </a>    |  ![Gif](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/knob_demo.gif) | 
+
+**Shots Showing Styles and Customizations**
+
+|  Shots |  Shots  |         Shots                    | 
+|-------|--------------|-----------------------------------------------------------------------------------------------------|
+|  ![Shot1](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot1.png)  |  ![Shot2](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot2.png) | ![Shot3](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot3.png) |
+|  ![Shot1](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot1.png)  |  ![Shot2](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot2.png) | ![Shot3](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot3.png) |
 
 ## Prerequisites
 
 ### Kotlin DSL
 
-<details open>
-<summary>Kotlin DSL</summary>
 
 ``` Kotlin
 dependencyResolutionManagement {
@@ -62,10 +59,7 @@ dependencyResolutionManagement {
     }
 }
 ```
-</details>
 
-<details>
-<summary>Groovy DSL</summary>
 
 ``` groovy
 dependencyResolutionManagement {
@@ -76,14 +70,12 @@ dependencyResolutionManagement {
 		}
 	}
 ```
-</details>
+
 
 
 ## Dependency
 Add this to your module's `build.gradle.kts` file (latest version <a href="https://jitpack.io/#ahmmedrejowan/RotaryKnob"><img src="https://jitpack.io/v/ahmmedrejowan/RotaryKnob.svg" alt="JitPack"></a>):
 
-<details open>
-<summary>Kotlin DSL</summary>
 
 ``` kotlin
 dependencies {
@@ -91,10 +83,7 @@ dependencies {
     implementation("com.github.ahmmedrejowan:RotaryKnob:0.1")
 }
 ```
-</details>
 
-<details>
-<summary>Groovy DSL</summary>
 
 ``` groovy
 dependencies {
@@ -102,193 +91,182 @@ dependencies {
     implementation 'com.github.ahmmedrejowan:RotaryKnob:0.1'
 }
 ```
-</details>
 
 ## Usage
 
 ### XML
 
 ``` XML 
-<com.rejowan.abv.ABV
-    android:id="@+id/abv"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:abvBatteryOrientation="portrait"
-    app:abvRadius="10"
-    app:abvSize="50"/>
+    <com.rejowan.rotaryknob.RotaryKnob
+        android:id="@+id/rotaryKnob"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp" />
 
 ```
 
 ### Kotlin
 
 ``` Kotlin
-val abv = binding.abv
-abv.size = 50
-abv.mRadius = 10f
-abv.chargeLevel = 50
-abv.batteyOrientation = BatteryOrientation.PORTRAIT
-abv.isCharging = false
-```
 
-## BroadcastReceiver
-This is the most unique feature of the library. You can attach your broadcast receiver intent to this view and it'll automatically show the status of the device battery.
-
-- Create a broadcast receiver variable.
-- Register the receiver to the activity/fragment
-- Unregister when destroyed
-- Attach the intent from the receiver to the view
-
-**Benefits**
-- **You don't need to pass the charging level, status individually**
-- **Automatically it'll get the charging level, stauts from the intent**
-- **Minimal code with no issues**
-
-Here is an example
-
-``` Kotlin
-class MainActivity : AppCompatActivity() {
-
-    private val binding: ActivityMainBinding by lazy {ActivityMainBinding.inflate(layoutInflater)}
-
-    private val batteryReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent!=null){
-                binding.abv.attachBatteryIntent(intent)
+        binding.rotaryKnob.knobEnableListener = object : RotaryKnob.OnKnobEnableListener {
+            override fun onKnobEnableChanged(isEnable: Boolean, progress: Int) {
+                
             }
         }
-    }
+        
+        binding.rotaryKnob.progressChangeListener = object : RotaryKnob.OnProgressChangeListener {
+            override fun onProgressChanged(progress: Int) {
+                
+            }
+        }
+        
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(batteryReceiver)
-    }
-}
 ```
 
 ## Customization
 
 ### XML
 
-<details open>
-<summary>XML Customization</summary>
 
 ``` XML 
-<com.rejowan.abv.ABV
-    android:id="@+id/abv"
-    android:layout_width="wrap_content"
+
+<com.rejowan.rotaryknob.RotaryKnob
+    android:id="@+id/rotaryKnob2"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    app:abvNormalBgColor="#86B6F6"
-    app:abvNormalLevelColor="#4E94F1"
-    app:abvWarningBgColor="#FFCF96"
-    app:abvWarningLevelColor="#F5AD56"
-    app:abvCriticalBgColor="#EF5350"
-    app:abvCriticalLevelColor="#B71C1C"
-    app:abvChargingBgColor="#89EC9E"
-    app:abvChargingLevelColor="#4DD86C"
-    app:abvChargeLevel="5"
-    app:abvWarningChargeLevel="30"
-    app:abvCriticalChargeLevel="10"
-    app:abvIsCharging="false"
-    app:abvRadius="10"
-    app:abvBatteryOrientation="portrait"
-    app:abvSize="50"
-    app:abvChargingIcon="@drawable/ic_charge_abv"
-    app:abvWarningIcon="@drawable/ic_warning_abv" />
+    android:layout_gravity="center"
+    android:layout_weight="1"
+    app:big_progress_diff="5"
+    app:big_progress_multiplier="3"
+    app:border_color="#dddddd"
+    app:border_width="6dp"
+    app:circle_color="#ffffff"
+    app:circle_style="solid"
+    app:current_progress="10"
+    app:double_touch_to_enable="true"
+    app:indicator_color="#8062D6"
+    app:indicator_style="line"
+    app:label_text="Rotary"
+    app:label_text_color="#8062D6"
+    app:label_text_font="@font/ubuntu_normal"
+    app:label_text_size="12sp"
+    app:max="20"
+    app:min="0"
+    app:progress_color="#777777"
+    app:progress_filled_color="#8062D6"
+    app:progress_filled_multiplier="1.3"
+    app:progress_style="line"
+    app:progress_text_color="#8062D6"
+    app:progress_text_font="@font/ubuntu_normal"
+    app:progress_text_size="26sp"
+    app:progress_text_style="bold"
+    app:show_big_progress="true"
+    app:show_border="true"
+    app:show_label="true"
+    app:show_progress_text="true"
+    app:show_suffix_text="true"
+    app:suffix_text="db"
+    app:suffix_text_color="#8062D6"
+    app:suffix_text_size="10sp"
+    app:suffix_text_style="normal"
+    app:touch_to_enable="false"
+    />
 ```
-</details>
+
+All of this can be set programmatically using Kotlin or Java as well.
 
 ### Kotlin
 
-<details>
-<summary>Kotlin Customization (click to Expand)</summary>
 
 ``` Kotlin
-val abv = binding.abv
-abv.normalBackgroundColor = ContextCompat.getColor(this, R.color.yourColor)
-abv.normalLevelColor = ContextCompat.getColor(this, R.color.yourColor)
-abv.warningBackgroundColor = ContextCompat.getColor(this, R.color.yourColor)
-abv.warningLevelColor = ContextCompat.getColor(this, R.color.yourColor)
-abv.criticalBackgroundColor = ContextCompat.getColor(this, R.color.yourColor)
-abv.criticalLevelColor = ContextCompat.getColor(this, R.color.yourColor)
-abv.chargingBackgroundColor = ContextCompat.getColor(this, R.color.yourColor)
-abv.chargingLevelColor = ContextCompat.getColor(this, R.color.yourColor)
-abv.chargingIcon = R.drawable.ic_charge_abv
-abv.warningIcon = R.drawable.ic_warning_abv
-abv.size = 50
-abv.mRadius = 10f
-abv.chargeLevel = 50
-abv.warningChargeLevel = 30
-abv.criticalChargeLevel = 10
-abv.batteyOrientation = BatteryOrientation.PORTRAIT
-abv.isCharging = false
-```
-</details>
 
-### Java
+        // listener for knob enable/disable
+        binding.rotaryKnob.knobEnableListener = object : RotaryKnob.OnKnobEnableListener {
+            override fun onKnobEnableChanged(isEnable: Boolean, progress: Int) {
 
-<details>
-<summary>Java Customization (click to Expand)</summary>
+            }
+        }
 
-``` Java
-ABV abv = binding.avb;
-abv.setNormalBackgroundColor(ContextCompat.getColor(this, R.color.yourColor));
-abv.setNormalLevelColor(ContextCompat.getColor(this, R.color.yourColor));
-abv.setWarningBackgroundColor(ContextCompat.getColor(this, R.color.yourColor));
-abv.setWarningLevelColor(ContextCompat.getColor(this, R.color.yourColor));
-abv.setCriticalBackgroundColor(ContextCompat.getColor(this, R.color.yourColor));
-abv.setCriticalLevelColor(ContextCompat.getColor(this, R.color.yourColor));
-abv.setChargingBackgroundColor(ContextCompat.getColor(this, R.color.yourColor));
-abv.setChargingLevelColor(ContextCompat.getColor(this, R.color.yourColor));
-abv.setChargingIcon(R.drawable.ic_charge_abv);
-abv.setWarningIcon(R.drawable.ic_warning_abv);
-abv.setSize(50);
-abv.setRadius(10f);
-abv.setChargeLevel(50);
-abv.setWarningChargeLevel(30);
-abv.setCriticalChargeLevel(10);
-abv.setBatteryOrientation(BatteryOrientation.PORTRAIT);
-abv.setCharging(false);
+        // listener for knob progress change
+        binding.rotaryKnob.progressChangeListener = object : RotaryKnob.OnProgressChangeListener {
+            override fun onProgressChanged(progress: Int) {
+
+            }
+        }
+        
+        // set knob min, max and current progress
+        binding.rotaryKnob.currentProgress = 50
+        binding.rotaryKnob.min = 0
+        binding.rotaryKnob.max = 100
 
 ```
-</details>
 
 
 ## Attribute
 
 Full list of attributes available
 
-| Attribute                | Format       | Description                               |
-|--------------------------|--------------|-------------------------------------------|
-| `abvNormalBgColor`       | color        | Background color for normal state         |
-| `abvNormalLevelColor`    | color        | Level color for normal state              |
-| `abvWarningBgColor`      | color        | Background color for warning state        |
-| `abvWarningLevelColor`   | color        | Level color for warning state             |
-| `abvCriticalBgColor`     | color        | Background color for critical state       |
-| `abvCriticalLevelColor`  | color        | Level color for critical state            |
-| `abvChargingBgColor`     | color        | Background color for charging state       |
-| `abvChargingLevelColor`  | color        | Level color for charging state            |
-| `abvChargeLevel`         | integer      | Level of charge                           |
-| `abvWarningChargeLevel`  | integer      | Warning level of charge                   |
-| `abvCriticalChargeLevel` | integer      | Critical level of charge                  |
-| `abvIsCharging`          | boolean      | Indicates whether the device is charging  |
-| `abvRadius`              | integer      | Radius of the battery view                |
-| `abvBatteryOrientation`  | enum         | Orientation of the battery view           |
-| `abvSize`                | integer      | Size of the battery view                  |
-| `abvChargingIcon`        | reference    | Icon displayed when charging              |
-| `abvWarningIcon`         | reference    | Icon displayed in warning state           |
+| Attribute                   | Format       | Description                                   | Example                 |
+|-----------------------------|--------------|-----------------------------------------------|-------------------------|
+| `circle_style`              | enum         | Style of the circle (`solid` or `gradient`)   | `circle_style="solid"` |
+| `circle_color`              | color        | Color of the circle                           | `circle_color="#FF0000"`|
+| `circle_gradient_center_color` | color     | Center color of the circle gradient           | `circle_gradient_center_color="#FF0000"`|
+| `circle_gradient_outer_color`  | color     | Outer color of the circle gradient            | `circle_gradient_outer_color="#00FF00"`|
+| `show_border`               | boolean      | Indicates whether to show border             | `show_border="true"`    |
+| `border_color`              | color        | Color of the border                           | `border_color="#000000"`|
+| `border_width`              | dimension    | Width of the border                           | `border_width="2dp"`    |
+| `progress_style`            | enum         | Style of the progress (`circle` or `line`)    | `progress_style="circle"`|
+| `progress_color`            | color        | Color of the progress                         | `progress_color="#00FF00"`|
+| `show_big_progress`         | boolean      | Indicates whether to show big progress       | `show_big_progress="true"`|
+| `big_progress_multiplier`   | float        | Multiplier for big progress                   | `big_progress_multiplier="1.5"`|
+| `big_progress_diff`         | integer      | Difference for big progress                   | `big_progress_diff="20"`|
+| `progress_filled_color`     | color        | Color of filled progress                      | `progress_filled_color="#FF0000"`|
+| `progress_filled_multiplier`| float        | Multiplier for filled progress                | `progress_filled_multiplier="0.8"`|
+| `indicator_style`           | enum         | Style of the indicator (`circle` or `line`)   | `indicator_style="circle"`|
+| `indicator_color`           | color        | Color of the indicator                        | `indicator_color="#0000FF"`|
+| `indicator_size`            | dimension    | Size of the indicator                         | `indicator_size="8dp"`   |
+| `show_progress_text`        | boolean      | Indicates whether to show progress text       | `show_progress_text="true"`|
+| `progress_text`             | string       | Text for progress                             | `progress_text="Volume"`|
+| `progress_text_color`       | color        | Color of progress text                        | `progress_text_color="#000000"`|
+| `progress_text_size`        | dimension    | Size of progress text                         | `progress_text_size="14sp"`|
+| `progress_text_style`       | enum         | Style of progress text (`normal`, `bold`, `italic`, `bold_italic`) | `progress_text_style="bold"`|
+| `progress_text_font`        | reference    | Font for progress text                        | `progress_text_font="@font/my_font"`|
+| `show_suffix_text`          | boolean      | Indicates whether to show suffix text         | `show_suffix_text="true"`|
+| `suffix_text`               | string       | Text for suffix                               | `suffix_text="dB"`      |
+| `suffix_text_color`         | color        | Color of suffix text                          | `suffix_text_color="#00FF00"`|
+| `suffix_text_size`          | dimension    | Size of suffix text                           | `suffix_text_size="12sp"`|
+| `suffix_text_style`         | enum         | Style of suffix text (`normal`, `bold`, `italic`, `bold_italic`) | `suffix_text_style="italic"`|
+| `suffix_text_font`          | reference    | Font for suffix text                          | `suffix_text_font="@font/my_font"`|
+| `show_label`                | boolean      | Indicates whether to show label               | `show_label="true"`     |
+| `label_text`                | string       | Text for label                                | `label_text="Volume"`   |
+| `label_text_color`          | color        | Color of label text                           | `label_text_color="#000000"`|
+| `label_text_size`           | dimension    | Size of label text                            | `label_text_size="16sp"`|
+| `label_text_style`          | enum         | Style of label text (`normal`, `bold`, `italic`, `bold_italic`) | `label_text_style="bold"`|
+| `label_text_font`           | reference    | Font for label text                           | `label_text_font="@font/my_font"`|
+| `label_margin`              | dimension    | Margin for label                              | `label_margin="8dp"`    |
+| `knob_enable`               | boolean      | Indicates whether knob is enabled            | `knob_enable="true"`    |
+| `touch_to_enable`           | boolean      | Indicates whether touch enables knob          | `touch_to_enable="true"`|
+| `double_touch_to_enable`    | boolean      | Indicates whether double touch enables knob   | `double_touch_to_enable="true"`|
+| `d_circle_color`            | color        | Default color of the circle                   | `d_circle_color="#FFFFFF"`|
+| `d_circle_gradient_center_color` | color  | Default center color of the circle gradient  | `d_circle_gradient_center_color="#FFFFFF"`|
+| `d_circle_gradient_outer_color`  | color  | Default outer color of the circle gradient   | `d_circle_gradient_outer_color="#CCCCCC"`|
+| `d_border_color`            | color        | Default color of the border                   | `d_border_color="#000000"`|
+| `d_progress_color`          | color        | Default color of the progress                 | `d_progress_color="#00FF00"`|
+| `d_big_progress_color`      | color        | Default color of the big progress             | `d_big_progress_color="#FF0000"`|
+| `d_progress_filled_color`   | color        | Default color of filled progress              | `d_progress_filled_color="#FF0000"`|
+| `d_indicator_color`         | color        | Default color of the indicator                | `d_indicator_color="#0000FF"`|
+| `d_progress_text_color`     | color        | Default color of progress text                | `d_progress_text_color="#000000"`|
+| `d_suffix_text_color`       | color        | Default color of suffix text                  | `d_suffix_text_color="#00FF00"`|
+| `d_label_text_color`        | color        | Default color of label text                   | `d_label_text_color="#000000"`|
+| `min`                       | integer      | Minimum value                                 | `min="0"`               |
+| `max`                       | integer      | Maximum value                                 | `max="100"`             |
+| `current_progress`          | integer      | Current progress value                        | `current_progress="50"` |
+
 
 ## Notes
 - The library is in its early stages, so there may be some bugs.
 - If you find any bugs, please report them in the `Issues` tab.
-- For Documentation, please visit the [Documentation](https://ahmmedrejowan.github.io/RotaryKnob/documentation/html/index.html)
 - Sample app is available in the [app](https://github.com/ahmmedrejowan/RotaryKnob/tree/master/app) directory.
 
 ## Contribute
