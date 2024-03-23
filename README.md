@@ -37,10 +37,10 @@ Rotary Knob is a handy Android library crafted in Kotlin. It fills the gap where
 
 **Shots Showing Styles and Customizations**
 
-|  Shots |  Shots  |         Shots                    | 
-|-------|--------------|-----------------------------------------------------------------------------------------------------|
-|  ![Shot1](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot1.png)  |  ![Shot2](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot2.png) | ![Shot3](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot3.png) |
-|  ![Shot1](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot1.png)  |  ![Shot2](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot2.png) | ![Shot3](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot3.png) |
+| Shots                                                                                       | Shots                                                                                       | Shots                                                                                       | 
+|---------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| ![Shot1](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot1.png) | ![Shot2](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot2.png) | ![Shot3](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot3.png) |
+| ![Shot4](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot4.png) | ![Shot5](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot5.png) | ![Shot6](https://raw.githubusercontent.com/ahmmedrejowan/RotaryKnob/master/files/shot6.png) |
 
 ## Prerequisites
 
