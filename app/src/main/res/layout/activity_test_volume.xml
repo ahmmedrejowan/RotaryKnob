@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         app:label_text="Volume"
-        app:show_big_progress="false"
+        app:show_big_progress="true"
+        app:knob_image="@drawable/testbutton"
         app:show_suffix_text="true"
         app:suffix_text="dB" />
 

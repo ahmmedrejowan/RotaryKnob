@@ -101,6 +101,8 @@
         <attr name="max" format="integer" />
         <attr name="current_progress" format="integer" />
 
+        <!-- Knob image -->
+        <attr name="knob_image" format="reference" />
 
     </declare-styleable>
 
