@@ -17,9 +17,10 @@
         app:label_text="Volume"
         app:label_text_color="#808080"
         app:show_big_progress="true"
-        app:knob_image="@drawable/mattegray"
+        app:knob_image="@drawable/mattegraydark"
         app:progress_filled_color="#0097A7"
         app:indicator_color="#FF7043"
+        app:indicator_style="line"
         app:show_suffix_text="true"
         app:suffix_text="dB" />
 
