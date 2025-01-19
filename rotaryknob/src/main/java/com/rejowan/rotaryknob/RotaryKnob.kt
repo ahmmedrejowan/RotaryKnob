@@ -327,6 +327,7 @@ class RotaryKnob @JvmOverloads constructor(
             field = value
             invalidate()
         }
+    lateinit var knobImage: Bitmap
 
     // value
     var min = 0
@@ -792,6 +793,17 @@ class RotaryKnob @JvmOverloads constructor(
 
         }
 
+        // If a knob image is used, initialize it.
+        if (knobImageID != 0) {
+            val resKnobImage = BitmapFactory.decodeResource(resources, knobImageID)
+            knobImage = Bitmap.createScaledBitmap(
+                resKnobImage,
+                (mainCircleRadius * 2).roundToInt(),
+                (mainCircleRadius * 2).roundToInt(),
+                true
+            )
+        }
+
         canvas.restore()
 
     }
@@ -907,12 +919,9 @@ class RotaryKnob @JvmOverloads constructor(
         canvas.save()
 
         setupCirclePaint()
-        var knobImage: Bitmap
-        knobImage = BitmapFactory.decodeResource(resources, knobImageID)
 
-        knobImage?.let {
-            val fittingKnobImage = Bitmap.createScaledBitmap(knobImage, (mainCircleRadius*2).roundToInt(), (mainCircleRadius*2).roundToInt() , true)
-            canvas.drawBitmap(fittingKnobImage, midX.toFloat() - mainCircleRadius, midY.toFloat() - mainCircleRadius, null)
+        knobImage.let {
+            canvas.drawBitmap(knobImage, midX.toFloat() - mainCircleRadius, midY.toFloat() - mainCircleRadius, knobImagePaint)
         }
 
         canvas.restore()
