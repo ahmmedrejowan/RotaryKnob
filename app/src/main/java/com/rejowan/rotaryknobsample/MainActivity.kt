@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, TestVolume::class.java))
         }
 
+        binding.testRotate1.setOnClickListener {
+            startActivity(Intent(this, TestRotary1::class.java))
+        }
+
     }
 
 
