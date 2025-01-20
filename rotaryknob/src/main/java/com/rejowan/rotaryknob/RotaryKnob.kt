@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.RadialGradient
 import android.graphics.Shader
@@ -328,6 +329,11 @@ class RotaryKnob @JvmOverloads constructor(
             invalidate()
         }
     lateinit var knobImage: Bitmap
+    var isKnobRotate = false
+        get() = field
+        set(value) {
+            field = value
+        }
 
     // value
     var min = 0
@@ -590,7 +596,7 @@ class RotaryKnob @JvmOverloads constructor(
 
             // Get knob image resource, if any
             knobImageID = typedArray.getResourceId(R.styleable.RotaryKnob_knob_image, 0)
-
+            isKnobRotate = typedArray.getBoolean(R.styleable.RotaryKnob_knob_image_rotation, isKnobRotate)
             // value
             min = typedArray.getInt(R.styleable.RotaryKnob_min, min)
             max = typedArray.getInt(R.styleable.RotaryKnob_max, max)
@@ -920,8 +926,21 @@ class RotaryKnob @JvmOverloads constructor(
 
         setupCirclePaint()
 
+        val progress1 = (currentProgress - min - 1).toFloat() / (max - 1 - min)
+        val angle = (endOffset + progress1 * sweepAngle)
+
         knobImage.let {
-            canvas.drawBitmap(knobImage, midX.toFloat() - mainCircleRadius, midY.toFloat() - mainCircleRadius, knobImagePaint)
+            if (isKnobRotate) {
+                val matrix = Matrix()
+                matrix.postTranslate(
+                    midX.toFloat() - mainCircleRadius,
+                    midY.toFloat() - mainCircleRadius
+                )
+                matrix.postRotate(angle, midX.toFloat(), midY.toFloat())
+                canvas.drawBitmap(knobImage, matrix, knobImagePaint)
+            } else {
+                canvas.drawBitmap(knobImage, midX.toFloat() - mainCircleRadius, midY.toFloat() - mainCircleRadius, knobImagePaint)
+            }
         }
 
         canvas.restore()

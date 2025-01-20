@@ -18,6 +18,7 @@
         app:label_text_color="#808080"
         app:show_big_progress="true"
         app:knob_image="@drawable/mattegraydark"
+        app:knob_image_rotation="true"
         app:progress_filled_color="#0097A7"
         app:indicator_color="#FF7043"
         app:indicator_style="line"
