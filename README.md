@@ -282,6 +282,7 @@ Full list of attributes available
 - Inspired by [Knob](https://github.com/BeppiMenozzi/Knob) by  [BeppiMenozzi](https://github.com/BeppiMenozzi)
 - Inspired by [kotlin-rotary-knob](https://github.com/o4oren/kotlin-rotary-knob) by  [o4oren](https://github.com/o4oren)
 - Color Picker Inspired by [ColorPicker](https://github.com/Dhaval2404/ColorPicker) by  [Dhaval2404](https://github.com/Dhaval2404)
+- Knob images and knob rotation implemented by [SanMichele](https://github.com/SanMichele)
 
 ## Contribute
 Please fork this repository and contribute back using [pull requests](https://github.com/ahmmedrejowan/RotaryKnob/pulls).
