@@ -155,6 +155,8 @@ dependencies {
     app:label_text_size="12sp"
     app:max="20"
     app:min="0"
+    app:knob_image="@drawable/fenderblackface"
+    app:knob_image_rotation="true"
     app:progress_color="#777777"
     app:progress_filled_color="#8062D6"
     app:progress_filled_multiplier="1.3"
@@ -177,6 +179,7 @@ dependencies {
 ```
 
 All of this can be set programmatically using Kotlin or Java as well.
+If knob_image is used, no circles are drawn, so their attributes are ignored.
 
 ### Kotlin
 
@@ -209,61 +212,63 @@ All of this can be set programmatically using Kotlin or Java as well.
 
 Full list of attributes available
 
-| Attribute                   | Format       | Description                                   | Example                 |
-|-----------------------------|--------------|-----------------------------------------------|-------------------------|
-| `circle_style`              | enum         | Style of the circle (`solid` or `gradient`)   | `circle_style="solid"` |
-| `circle_color`              | color        | Color of the circle                           | `circle_color="#FF0000"`|
-| `circle_gradient_center_color` | color     | Center color of the circle gradient           | `circle_gradient_center_color="#FF0000"`|
-| `circle_gradient_outer_color`  | color     | Outer color of the circle gradient            | `circle_gradient_outer_color="#00FF00"`|
-| `show_border`               | boolean      | Indicates whether to show border             | `show_border="true"`    |
-| `border_color`              | color        | Color of the border                           | `border_color="#000000"`|
-| `border_width`              | dimension    | Width of the border                           | `border_width="2dp"`    |
-| `progress_style`            | enum         | Style of the progress (`circle` or `line`)    | `progress_style="circle"`|
-| `progress_color`            | color        | Color of the progress                         | `progress_color="#00FF00"`|
-| `show_big_progress`         | boolean      | Indicates whether to show big progress       | `show_big_progress="true"`|
-| `big_progress_multiplier`   | float        | Multiplier for big progress                   | `big_progress_multiplier="1.5"`|
-| `big_progress_diff`         | integer      | Difference for big progress                   | `big_progress_diff="20"`|
-| `progress_filled_color`     | color        | Color of filled progress                      | `progress_filled_color="#FF0000"`|
-| `progress_filled_multiplier`| float        | Multiplier for filled progress                | `progress_filled_multiplier="0.8"`|
-| `indicator_style`           | enum         | Style of the indicator (`circle` or `line`)   | `indicator_style="circle"`|
-| `indicator_color`           | color        | Color of the indicator                        | `indicator_color="#0000FF"`|
-| `indicator_size`            | dimension    | Size of the indicator                         | `indicator_size="8dp"`   |
-| `show_progress_text`        | boolean      | Indicates whether to show progress text       | `show_progress_text="true"`|
-| `progress_text`             | string       | Text for progress                             | `progress_text="Volume"`|
-| `progress_text_color`       | color        | Color of progress text                        | `progress_text_color="#000000"`|
-| `progress_text_size`        | dimension    | Size of progress text                         | `progress_text_size="14sp"`|
-| `progress_text_style`       | enum         | Style of progress text (`normal`, `bold`, `italic`, `bold_italic`) | `progress_text_style="bold"`|
-| `progress_text_font`        | reference    | Font for progress text                        | `progress_text_font="@font/my_font"`|
-| `show_suffix_text`          | boolean      | Indicates whether to show suffix text         | `show_suffix_text="true"`|
-| `suffix_text`               | string       | Text for suffix                               | `suffix_text="dB"`      |
-| `suffix_text_color`         | color        | Color of suffix text                          | `suffix_text_color="#00FF00"`|
-| `suffix_text_size`          | dimension    | Size of suffix text                           | `suffix_text_size="12sp"`|
-| `suffix_text_style`         | enum         | Style of suffix text (`normal`, `bold`, `italic`, `bold_italic`) | `suffix_text_style="italic"`|
-| `suffix_text_font`          | reference    | Font for suffix text                          | `suffix_text_font="@font/my_font"`|
-| `show_label`                | boolean      | Indicates whether to show label               | `show_label="true"`     |
-| `label_text`                | string       | Text for label                                | `label_text="Volume"`   |
-| `label_text_color`          | color        | Color of label text                           | `label_text_color="#000000"`|
-| `label_text_size`           | dimension    | Size of label text                            | `label_text_size="16sp"`|
-| `label_text_style`          | enum         | Style of label text (`normal`, `bold`, `italic`, `bold_italic`) | `label_text_style="bold"`|
-| `label_text_font`           | reference    | Font for label text                           | `label_text_font="@font/my_font"`|
-| `label_margin`              | dimension    | Margin for label                              | `label_margin="8dp"`    |
-| `knob_enable`               | boolean      | Indicates whether knob is enabled            | `knob_enable="true"`    |
-| `touch_to_enable`           | boolean      | Indicates whether touch enables knob          | `touch_to_enable="true"`|
-| `double_touch_to_enable`    | boolean      | Indicates whether double touch enables knob   | `double_touch_to_enable="true"`|
-| `d_circle_color`            | color        | Default color of the circle                   | `d_circle_color="#FFFFFF"`|
-| `d_circle_gradient_center_color` | color  | Default center color of the circle gradient  | `d_circle_gradient_center_color="#FFFFFF"`|
-| `d_circle_gradient_outer_color`  | color  | Default outer color of the circle gradient   | `d_circle_gradient_outer_color="#CCCCCC"`|
-| `d_border_color`            | color        | Default color of the border                   | `d_border_color="#000000"`|
-| `d_progress_color`          | color        | Default color of the progress                 | `d_progress_color="#00FF00"`|
-| `d_big_progress_color`      | color        | Default color of the big progress             | `d_big_progress_color="#FF0000"`|
-| `d_progress_filled_color`   | color        | Default color of filled progress              | `d_progress_filled_color="#FF0000"`|
-| `d_indicator_color`         | color        | Default color of the indicator                | `d_indicator_color="#0000FF"`|
-| `d_progress_text_color`     | color        | Default color of progress text                | `d_progress_text_color="#000000"`|
-| `d_suffix_text_color`       | color        | Default color of suffix text                  | `d_suffix_text_color="#00FF00"`|
-| `d_label_text_color`        | color        | Default color of label text                   | `d_label_text_color="#000000"`|
-| `min`                       | integer      | Minimum value                                 | `min="0"`               |
-| `max`                       | integer      | Maximum value                                 | `max="100"`             |
-| `current_progress`          | integer      | Current progress value                        | `current_progress="50"` |
+| Attribute                        | Format    | Description                                                        | Example                                    |
+|----------------------------------|-----------|--------------------------------------------------------------------|--------------------------------------------|
+| `circle_style`                   | enum      | Style of the circle (`solid` or `gradient`)                        | `circle_style="solid"`                     |
+| `circle_color`                   | color     | Color of the circle                                                | `circle_color="#FF0000"`                   |
+| `circle_gradient_center_color`   | color     | Center color of the circle gradient                                | `circle_gradient_center_color="#FF0000"`   |
+| `circle_gradient_outer_color`    | color     | Outer color of the circle gradient                                 | `circle_gradient_outer_color="#00FF00"`    |
+| `show_border`                    | boolean   | Indicates whether to show border                                   | `show_border="true"`                       |
+| `border_color`                   | color     | Color of the border                                                | `border_color="#000000"`                   |
+| `border_width`                   | dimension | Width of the border                                                | `border_width="2dp"`                       |
+| `progress_style`                 | enum      | Style of the progress (`circle` or `line`)                         | `progress_style="circle"`                  |
+| `progress_color`                 | color     | Color of the progress                                              | `progress_color="#00FF00"`                 |
+| `show_big_progress`              | boolean   | Indicates whether to show big progress                             | `show_big_progress="true"`                 |
+| `big_progress_multiplier`        | float     | Multiplier for big progress                                        | `big_progress_multiplier="1.5"`            |
+| `big_progress_diff`              | integer   | Difference for big progress                                        | `big_progress_diff="20"`                   |
+| `progress_filled_color`          | color     | Color of filled progress                                           | `progress_filled_color="#FF0000"`          |
+| `progress_filled_multiplier`     | float     | Multiplier for filled progress                                     | `progress_filled_multiplier="0.8"`         |
+| `indicator_style`                | enum      | Style of the indicator (`circle` or `line`)                        | `indicator_style="circle"`                 |
+| `indicator_color`                | color     | Color of the indicator                                             | `indicator_color="#0000FF"`                |
+| `indicator_size`                 | dimension | Size of the indicator                                              | `indicator_size="8dp"`                     |
+| `show_progress_text`             | boolean   | Indicates whether to show progress text                            | `show_progress_text="true"`                |
+| `progress_text`                  | string    | Text for progress                                                  | `progress_text="Volume"`                   |
+| `progress_text_color`            | color     | Color of progress text                                             | `progress_text_color="#000000"`            |
+| `progress_text_size`             | dimension | Size of progress text                                              | `progress_text_size="14sp"`                |
+| `progress_text_style`            | enum      | Style of progress text (`normal`, `bold`, `italic`, `bold_italic`) | `progress_text_style="bold"`               |
+| `progress_text_font`             | reference | Font for progress text                                             | `progress_text_font="@font/my_font"`       |
+| `show_suffix_text`               | boolean   | Indicates whether to show suffix text                              | `show_suffix_text="true"`                  |
+| `suffix_text`                    | string    | Text for suffix                                                    | `suffix_text="dB"`                         |
+| `suffix_text_color`              | color     | Color of suffix text                                               | `suffix_text_color="#00FF00"`              |
+| `suffix_text_size`               | dimension | Size of suffix text                                                | `suffix_text_size="12sp"`                  |
+| `suffix_text_style`              | enum      | Style of suffix text (`normal`, `bold`, `italic`, `bold_italic`)   | `suffix_text_style="italic"`               |
+| `suffix_text_font`               | reference | Font for suffix text                                               | `suffix_text_font="@font/my_font"`         |
+| `show_label`                     | boolean   | Indicates whether to show label                                    | `show_label="true"`                        |
+| `label_text`                     | string    | Text for label                                                     | `label_text="Volume"`                      |
+| `label_text_color`               | color     | Color of label text                                                | `label_text_color="#000000"`               |
+| `label_text_size`                | dimension | Size of label text                                                 | `label_text_size="16sp"`                   |
+| `label_text_style`               | enum      | Style of label text (`normal`, `bold`, `italic`, `bold_italic`)    | `label_text_style="bold"`                  |
+| `label_text_font`                | reference | Font for label text                                                | `label_text_font="@font/my_font"`          |
+| `label_margin`                   | dimension | Margin for label                                                   | `label_margin="8dp"`                       |
+| `knob_enable`                    | boolean   | Indicates whether knob is enabled                                  | `knob_enable="true"`                       |
+| `touch_to_enable`                | boolean   | Indicates whether touch enables knob                               | `touch_to_enable="true"`                   |
+| `double_touch_to_enable`         | boolean   | Indicates whether double touch enables knob                        | `double_touch_to_enable="true"`            |
+| `d_circle_color`                 | color     | Default color of the circle                                        | `d_circle_color="#FFFFFF"`                 |
+| `d_circle_gradient_center_color` | color     | Default center color of the circle gradient                        | `d_circle_gradient_center_color="#FFFFFF"` |
+| `d_circle_gradient_outer_color`  | color     | Default outer color of the circle gradient                         | `d_circle_gradient_outer_color="#CCCCCC"`  |
+| `d_border_color`                 | color     | Default color of the border                                        | `d_border_color="#000000"`                 |
+| `d_progress_color`               | color     | Default color of the progress                                      | `d_progress_color="#00FF00"`               |
+| `d_big_progress_color`           | color     | Default color of the big progress                                  | `d_big_progress_color="#FF0000"`           |
+| `d_progress_filled_color`        | color     | Default color of filled progress                                   | `d_progress_filled_color="#FF0000"`        |
+| `d_indicator_color`              | color     | Default color of the indicator                                     | `d_indicator_color="#0000FF"`              |
+| `d_progress_text_color`          | color     | Default color of progress text                                     | `d_progress_text_color="#000000"`          |
+| `d_suffix_text_color`            | color     | Default color of suffix text                                       | `d_suffix_text_color="#00FF00"`            |
+| `d_label_text_color`             | color     | Default color of label text                                        | `d_label_text_color="#000000"`             |
+| `min`                            | integer   | Minimum value                                                      | `min="0"`                                  |
+| `max`                            | integer   | Maximum value                                                      | `max="100"`                                |
+| `current_progress`               | integer   | Current progress value                                             | `current_progress="50"`                    |
+| `knob_image`                     | reference | A @drawable reference to an image                                  | `@drawable/fenderblackface`                |
+| `knob_image_rotation`            | boolean   | Should the image be rotated?                                       | `knob_image_rotation="true"`               |
 
 
 ## Notes
