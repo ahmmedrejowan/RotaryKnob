@@ -3,8 +3,11 @@ package com.rejowan.rotaryknob
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.RadialGradient
 import android.graphics.Shader
@@ -18,13 +21,13 @@ import androidx.core.content.res.ResourcesCompat
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
+import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 
 class RotaryKnob @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-
 
     enum class CircleStyle {
         SOLID, GRADIENT
@@ -47,6 +50,7 @@ class RotaryKnob @JvmOverloads constructor(
     private val labelPaint: Paint = Paint()
     private val textPaint: Paint = Paint()
     private val suffixTextPaint: Paint = Paint()
+    private val knobImagePaint: Paint = Paint()
 
 
     // attrs - circle
@@ -318,6 +322,18 @@ class RotaryKnob @JvmOverloads constructor(
             invalidate()
         }
 
+    // knob_image
+    var knobImageID = 0
+        set(value) {
+            field = value
+            invalidate()
+        }
+    lateinit var knobImage: Bitmap
+    var isKnobRotate = false
+        get() = field
+        set(value) {
+            field = value
+        }
 
     // value
     var min = 0
@@ -578,7 +594,9 @@ class RotaryKnob @JvmOverloads constructor(
                 R.styleable.RotaryKnob_d_label_text_color, disabledLabelTextColor
             )
 
-
+            // Get knob image resource, if any
+            knobImageID = typedArray.getResourceId(R.styleable.RotaryKnob_knob_image, 0)
+            isKnobRotate = typedArray.getBoolean(R.styleable.RotaryKnob_knob_image_rotation, isKnobRotate)
             // value
             min = typedArray.getInt(R.styleable.RotaryKnob_min, min)
             max = typedArray.getInt(R.styleable.RotaryKnob_max, max)
@@ -673,9 +691,12 @@ class RotaryKnob @JvmOverloads constructor(
 
         drawProgressStepsFilled(canvas)
 
-        drawBorder(canvas)
-
-        drawCircle(canvas)
+        if (knobImageID == 0) {
+            drawBorder(canvas)
+            drawCircle(canvas)
+        } else {
+            drawKnobImage(canvas)
+        }
 
         drawIndicator(canvas)
 
@@ -776,6 +797,17 @@ class RotaryKnob @JvmOverloads constructor(
 
             }
 
+        }
+
+        // If a knob image is used, initialize it.
+        if (knobImageID != 0) {
+            val resKnobImage = BitmapFactory.decodeResource(resources, knobImageID)
+            knobImage = Bitmap.createScaledBitmap(
+                resKnobImage,
+                (mainCircleRadius * 2).roundToInt(),
+                (mainCircleRadius * 2).roundToInt(),
+                true
+            )
         }
 
         canvas.restore()
@@ -883,6 +915,33 @@ class RotaryKnob @JvmOverloads constructor(
         setupBorderPaint()
 
         canvas.drawCircle(midX, midY, borderRadius, borderPaint)
+
+        canvas.restore()
+
+    }
+
+    private fun drawKnobImage(canvas: Canvas) {
+
+        canvas.save()
+
+        setupCirclePaint()
+
+        val progress1 = (currentProgress - min - 1).toFloat() / (max - 1 - min)
+        val angle = (endOffset + progress1 * sweepAngle)
+
+        knobImage.let {
+            if (isKnobRotate) {
+                val matrix = Matrix()
+                matrix.postTranslate(
+                    midX.toFloat() - mainCircleRadius,
+                    midY.toFloat() - mainCircleRadius
+                )
+                matrix.postRotate(angle, midX.toFloat(), midY.toFloat())
+                canvas.drawBitmap(knobImage, matrix, knobImagePaint)
+            } else {
+                canvas.drawBitmap(knobImage, midX.toFloat() - mainCircleRadius, midY.toFloat() - mainCircleRadius, knobImagePaint)
+            }
+        }
 
         canvas.restore()
 

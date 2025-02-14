@@ -14,11 +14,16 @@
         android:id="@+id/rotaryKnob"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        app:big_progress_diff="5"
+        app:big_progress_multiplier="2"
+        app:current_progress="1"
+        app:min="0"
+        app:max="50"
         app:label_text="Volume"
         app:label_text_color="#808080"
         app:show_big_progress="false"
-        app:knob_image="@drawable/mattegraydark"
-        app:knob_image_rotation="false"
+        app:knob_image="@drawable/fenderblackface"
+        app:knob_image_rotation="true"
         app:progress_filled_color="#0097A7"
         app:indicator_color="#FF7043"
         app:indicator_style="line"
@@ -27,17 +32,5 @@
         app:progress_text_size="30dp"
         app:show_suffix_text="false"
         app:suffix_text="dB" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="40dp"
-        android:gravity="center"
-        android:textColor="#707070"
-        android:text="Play a music and adjust the volume knob to see the changes in the volume." />
-
 
 </LinearLayout>
